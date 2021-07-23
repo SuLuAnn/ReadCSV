@@ -32,7 +32,7 @@ namespace Readcsv2020LuAnn.Dto
         /// <summary>
         /// 股價
         /// </summary>
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         /// <summary>
         /// 買進數量
         /// </summary>

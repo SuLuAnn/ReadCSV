@@ -42,6 +42,7 @@ namespace Readcsv2020LuAnn
             this.ReadData = new System.ComponentModel.BackgroundWorker();
             this.TotalList = new System.Windows.Forms.DataGridView();
             this.Top50List = new System.Windows.Forms.DataGridView();
+            this.TotalData = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.StockList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TotalList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Top50List)).BeginInit();
@@ -160,6 +161,11 @@ namespace Readcsv2020LuAnn
             this.Top50List.Size = new System.Drawing.Size(420, 695);
             this.Top50List.TabIndex = 10;
             // 
+            // TotalData
+            // 
+            this.TotalData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.WriteTotalData);
+            this.TotalData.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.DisplayTime);
+            // 
             // ReadCSV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
@@ -201,6 +207,7 @@ namespace Readcsv2020LuAnn
         private System.Windows.Forms.DataGridView StockList;
         private System.Windows.Forms.DataGridView TotalList;
         private System.Windows.Forms.DataGridView Top50List;
+        private BackgroundWorker TotalData;
     }
 }
 

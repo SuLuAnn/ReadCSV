@@ -8,6 +8,18 @@ namespace Readcsv2020LuAnn.Dto
 {
     public class TotalStockDto
     {
+        public TotalStockDto(Stock stock)
+        {
+            StockID = stock.StockID;
+            StockName = stock.StockName;
+            BuyTotal = stock.BuyQty;
+            SellTotal = stock.SellQty;
+            TotalPrice = stock.Price * (stock.SellQty + stock.BuyQty);
+            SecBrokerID = new HashSet<string> 
+            {
+                stock.SecBrokerID
+            };
+        }
         /// <summary>
         /// 股票代號
         /// </summary>
@@ -27,14 +39,43 @@ namespace Readcsv2020LuAnn.Dto
         /// <summary>
         /// 加權平均
         /// </summary>
-        public double AvgPrice { get; set; }
+        public decimal AvgPrice { get; set; }
         /// <summary>
         /// 買賣超
         /// </summary>
-        public int BuyCellOver { get; set; }
+        public int BuySellOver { get; set; }
         /// <summary>
         /// 券商總數
         /// </summary>
         public int SecBrokerCnt { get; set; }
+        /// <summary>
+        /// 所有交易數量*價格的總額
+        /// </summary>
+        private decimal TotalPrice;
+        /// <summary>
+        /// 所有券商id
+        /// </summary>
+        private HashSet<string> SecBrokerID;
+
+        public void Add(Stock stock)
+        {
+            BuyTotal += stock.BuyQty;
+            SellTotal += stock.SellQty;
+            TotalPrice += stock.Price * (stock.SellQty + stock.BuyQty);
+            SecBrokerID.Add(stock.SecBrokerID);
+        }
+        public void SettleTotal()
+        {
+            if (TotalPrice == 0)
+            {
+                AvgPrice = 0;
+            }
+            else 
+            {
+                AvgPrice = TotalPrice / (BuyTotal + SellTotal);
+            }
+            SecBrokerCnt = SecBrokerID.Count();
+            BuySellOver = BuyTotal - SellTotal;
+        }
     }
 }

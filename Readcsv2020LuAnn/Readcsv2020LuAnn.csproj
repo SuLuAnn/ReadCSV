@@ -57,9 +57,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Record.cs" />
     <Compile Include="Stock.cs" />
-    <Compile Include="StopWatch.cs" />
     <EmbeddedResource Include="ReadCSV.resx">
       <DependentUpon>ReadCSV.cs</DependentUpon>
     </EmbeddedResource>
