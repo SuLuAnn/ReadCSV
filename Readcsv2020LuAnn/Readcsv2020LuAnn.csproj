@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dto\StockDto.cs" />
     <Compile Include="Dto\Top50Dto.cs" />
     <Compile Include="Dto\TotalStockDto.cs" />
     <Compile Include="ReadCSV.cs">

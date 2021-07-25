@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace Readcsv2020LuAnn
 {
+    /// <summary>
+    /// 整個程式的主邏輯
+    /// </summary>
     public partial class ReadCSV : Form
     {
         /// <summary>
@@ -17,17 +20,26 @@ namespace Readcsv2020LuAnn
         /// </summary>
         private Dictionary<string, List<Stock>> Stocks;
 
-        private static Stopwatch Stopwatch;
         /// <summary>
-        /// 除了All以外，其他的股票list的第一個就是他的股票資料
+        /// 計時器
+        /// </summary>
+        private static Stopwatch Stopwatch;
+
+        /// <summary>
+        /// All
         /// </summary>
         public const string ALL = "All";
+
+        /// <summary>
+        /// ReadCSV建構子，初始化Stocks和Stopwatch
+        /// </summary>
         public ReadCSV()
         {
             InitializeComponent();
             Stocks = new Dictionary<string, List<Stock>>();
             Stopwatch = new Stopwatch();
         }
+
         /// <summary>
         /// 點擊讀取檔案讓使用者選擇檔案並觸發讀檔的動作
         /// </summary>
@@ -53,6 +65,7 @@ namespace Readcsv2020LuAnn
             }
 
         }
+
         /// <summary>
         /// 點擊讀取檔案時觸發新的執行緒已匯入資料
         /// </summary>
@@ -78,8 +91,8 @@ namespace Readcsv2020LuAnn
                 Stocks[ALL].AddRange(stock.Value);
                 Stocks.Add(stock.Key,stock.Value);
             }
-
         }
+
         /// <summary>
         /// 當讀完檔案輸出讀取時間及告知使用者讀檔完畢，並出現所有股票的下拉式選單
         /// </summary>
@@ -125,6 +138,12 @@ namespace Readcsv2020LuAnn
             }
             WriteBasicData(stocks);
         }
+
+        /// <summary>
+        /// 讀取完股票總值之後將他畫在左下表格並記錄時間
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="runWorker"></param>
         public void DisplayTime(object sender, RunWorkerCompletedEventArgs runWorker)
         {
             TotalList.DataSource = new BindingList<TotalStockDto>((IList<TotalStockDto>)runWorker.Result);
@@ -165,6 +184,7 @@ namespace Readcsv2020LuAnn
             }
             return stocks;
         }
+
         /// <summary>
         /// 將所選股票的基本資料顯示於畫面
         /// </summary>
@@ -173,6 +193,7 @@ namespace Readcsv2020LuAnn
         {
             StockList.DataSource = new BindingList<Stock>(stocks);
         }
+
         /// <summary>
         /// 將所選股票的BuyTotal、SellTotal、AvgPrice、BuySellOver、SecBroker顯示於畫面上
         /// </summary>
@@ -187,7 +208,7 @@ namespace Readcsv2020LuAnn
                 {
                     totalStock.Add(stock);
                 }
-                else 
+                else
                 {
                     stockList.Add(stock.StockID, new TotalStockDto(stock));
                 }
@@ -209,11 +230,8 @@ namespace Readcsv2020LuAnn
         {
             Stopwatch.Restart();
             List<Stock> stocks = ReadDropMenu();
-            Dictionary<string, Dictionary<string, Top50Dto>> top50 = GetTop50(stocks);
-            List<Top50Dto> top50result = SortTop50(ref top50);
-            Top50List.DataSource = new BindingList<Top50Dto>(top50result);
+            Top50List.DataSource = new BindingList<Top50Dto>(GetTop50(ref stocks));
             TextDisplay.Text += $"{Environment.NewLine}Top50 產生時間 :{EndStopwatch()}";
-
         }
 
         /// <summary>
@@ -221,48 +239,34 @@ namespace Readcsv2020LuAnn
         /// </summary>
         /// <param name="stocks">所選股票</param>
         /// <returns>top50資料</returns>
-        public Dictionary<string, Dictionary<string, Top50Dto>> GetTop50(List<Stock> stocks)
+        public List<Top50Dto> GetTop50(ref List<Stock> stocks)
         {
-            Dictionary<string, Dictionary<string, Top50Dto>> result = new Dictionary<string, Dictionary<string, Top50Dto>>();
+            Dictionary<string, Top50Dto> result = new Dictionary<string, Top50Dto>();
+            int topNum = 50;
+            List<Top50Dto> result50 = new List<Top50Dto>();
+            string stockID = stocks.First().StockID;
+            Top50Dto top50Dto;
             foreach (var stock in stocks)
             {
-                if (result.TryGetValue((stock.StockID), out Dictionary<string, Top50Dto> record))
+                if (stockID != stock.StockID)
                 {
-                    if (record.TryGetValue(stock.SecBrokerID, out Top50Dto top50))
-                    {
-                        top50.Add(stock.BuyQty - stock.SellQty);
-                    }
-                    else
-                    {
-                        record.Add(stock.SecBrokerID, new Top50Dto(stock));
-                    }
+                    stockID = stock.StockID;
+                    result50.AddRange(result.Values.Where(top50 => top50.BuySellOver > 0).OrderByDescending(top50 => top50.BuySellOver).Take(topNum));
+                    result50.AddRange(result.Values.Where(top50 => top50.BuySellOver < 0).OrderBy(top50 => top50.BuySellOver).Take(topNum));
+                    result.Clear();
+                }
+                if (result.TryGetValue(stock.SecBrokerID, out top50Dto))
+                {
+                    top50Dto.BuySellOver += stock.BuyQty - stock.SellQty;
                 }
                 else
                 {
-                    result.Add(stock.StockID, new Dictionary<string, Top50Dto>
-                    {
-                        {stock.SecBrokerID,new Top50Dto(stock)}
-                    });
+                    result.Add(stock.SecBrokerID, new Top50Dto(stock));
                 }
-            }
-            return result;
-        }
-        /// <summary>
-        /// 將top50資料做排序取出相同券商id最大且大於0及最小且小於0的各50筆買賣超
-        /// </summary>
-        /// <param name="stockList">已轉換成top50形式的所選股票資料</param>
-        /// <returns>篩選出的相同券商id最大且大於0及最小且小於0的各50筆買賣超</returns>
-        public List<Top50Dto> SortTop50(ref Dictionary<string, Dictionary<string, Top50Dto>> stockList)
-        {
-            int topNum = 50;
-            List<Top50Dto> result50 = new List<Top50Dto>();
-            foreach (var stock in stockList.Values)
-            {
-                result50.AddRange(stock.Values.Where(top50 => top50.BuySellOver > 0).OrderByDescending(top50 => top50.BuySellOver).Take(topNum).ToList());
-                result50.AddRange(stock.Values.Where(top50 => top50.BuySellOver < 0).OrderBy(top50 => top50.BuySellOver).Take(topNum).ToList());
             }
             return result50;
         }
+
         /// <summary>
         /// 當文字顯示框出現新文字，讓ScrollBar滾到最下
         /// </summary>
@@ -273,6 +277,7 @@ namespace Readcsv2020LuAnn
             TextDisplay.SelectionStart = TextDisplay.Text.Length;
             TextDisplay.ScrollToCaret();
         }
+
         /// <summary>
         /// 時間結束
         /// </summary>
@@ -283,22 +288,6 @@ namespace Readcsv2020LuAnn
             return Stopwatch.Elapsed.ToString(@"hh\:mm\:ss\:fff");
         }
 
-
-
-
-
-        //public List<Top50Dto> GetTop50(List<Stock> stocks)
-        //{
-        //    var result1 = stocks.GroupBy(stock => stock.StockID, (id, stockList) => new
-        //    {
-        //        SecBroker = stockList.GroupBy(record => record.SecBrokerID, (secId, records) => new Top50Dto
-        //        {
-        //            StockName = stockList.First().StockName,
-        //            SecBrokerName = records.First().SecBrokerName,
-        //            BuySellOver = records.Sum(data => data.BuyQty - data.SellQty)
-        //        }).OrderByDescending(stock => stock.BuySellOver).TakeWhile((stock, index) => (stock.BuySellOver > 0 && index < 51) || (stock.BuySellOver < 0 && index > stockList.Count() - 50))
-        //    }).SelectMany(stock=>stock.SecBroker).ToList();
-        //    return result1;
-        //}
     }
+
 }

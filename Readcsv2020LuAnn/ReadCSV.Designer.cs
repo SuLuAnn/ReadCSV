@@ -164,7 +164,8 @@ namespace Readcsv2020LuAnn
             // TotalData
             // 
             this.TotalData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.WriteTotalData);
-            this.TotalData.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.DisplayTime);
+            this.TotalData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.DisplayTime);
+            
             // 
             // ReadCSV
             // 

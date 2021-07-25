@@ -5,39 +5,46 @@ using System.Linq;
 
 namespace Readcsv2020LuAnn
 {
+    /// <summary>
+    /// 存放一筆csv資料
+    /// </summary>
     public class Stock
     {
-        public string DealDate { get; set; }
         /// <summary>
-        /// 券商代號
+        /// 交易日期
         /// </summary>
+        public string DealDate { get; set; }
 
         /// <summary>
         /// 股票代號
         /// </summary>
         public string StockID { get; set; }
+
         /// <summary>
         /// 股票名稱
         /// </summary>
         public string StockName { get; set; }
 
         /// <summary>
-        /// 交易日期
+        /// 券商代號
         /// </summary>
-
         public string SecBrokerID { get; set; }
+
         /// <summary>
         /// 券商名稱
         /// </summary>
         public string SecBrokerName { get; set; }
+
         /// <summary>
         /// 股價
         /// </summary>
         public decimal Price { get; set; }
+
         /// <summary>
         /// 買進數量
         /// </summary>
         public int BuyQty { get; set; }
+
         /// <summary>
         /// 賣出數量
         /// </summary>
@@ -58,6 +65,7 @@ namespace Readcsv2020LuAnn
             BuyQty = int.Parse(datas[(int)Stock.Column.BUY_QTY]);
             SellQty = int.Parse(datas[(int)Stock.Column.SELL_QTY]);
         }
+
         /// <summary>
         /// 將csv轉檔時欄位對應位置的enum
         /// </summary>
@@ -67,30 +75,37 @@ namespace Readcsv2020LuAnn
             /// 交易日在第零個
             /// </summary>
             DEAL_DATE,
+
             /// <summary>
             /// 股票代號在第一個
             /// </summary>
             STOCK_ID,
+
             /// <summary>
             /// 股票名在第二個
             /// </summary>
             STOCK_NAME,
+
             /// <summary>
             /// 券商代號在第三個
             /// </summary>
             SEC_BROKER_ID,
+
             /// <summary>
             /// 券商名稱在第四個
             /// </summary>
             SEC_BROKER_NAME,
+
             /// <summary>
             /// 股價在第五個
             /// </summary>
             PRICE,
+
             /// <summary>
             /// 買進量在第六個
             /// </summary>
             BUY_QTY,
+
             /// <summary>
             /// 賣出量在第七個
             /// </summary>
@@ -98,4 +113,5 @@ namespace Readcsv2020LuAnn
         }
 
     }
+
 }
