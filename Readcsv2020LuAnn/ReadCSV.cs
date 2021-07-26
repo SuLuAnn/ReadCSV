@@ -242,7 +242,6 @@ namespace Readcsv2020LuAnn
         public List<Top50Dto> GetTop50(ref List<Stock> stocks)
         {
             Dictionary<string, Top50Dto> result = new Dictionary<string, Top50Dto>();
-            int topNum = 50;
             List<Top50Dto> result50 = new List<Top50Dto>();
             string stockID = stocks.First().StockID;
             Top50Dto top50Dto;
@@ -251,8 +250,7 @@ namespace Readcsv2020LuAnn
                 if (stockID != stock.StockID)
                 {
                     stockID = stock.StockID;
-                    result50.AddRange(result.Values.Where(top50 => top50.BuySellOver > 0).OrderByDescending(top50 => top50.BuySellOver).Take(topNum));
-                    result50.AddRange(result.Values.Where(top50 => top50.BuySellOver < 0).OrderBy(top50 => top50.BuySellOver).Take(topNum));
+                    AddTop50(ref result,ref result50);
                     result.Clear();
                 }
                 if (result.TryGetValue(stock.SecBrokerID, out top50Dto))
@@ -263,8 +261,24 @@ namespace Readcsv2020LuAnn
                 {
                     result.Add(stock.SecBrokerID, new Top50Dto(stock));
                 }
+                if (stock == stocks.Last())
+                {
+                    AddTop50(ref result,ref result50);
+                }
             }
             return result50;
+        }
+
+        /// <summary>
+        /// 將算好的資料加進集合
+        /// </summary>
+        /// <param name="result">一隻股票的資料</param>
+        /// <param name="result50">要存進的總集合</param>
+        public void AddTop50(ref Dictionary<string, Top50Dto> result,ref List<Top50Dto> result50)
+        {
+            int topNum = 50;
+            result50.AddRange(result.Values.Where(top50 => top50.BuySellOver > 0).OrderByDescending(top50 => top50.BuySellOver).Take(topNum));
+            result50.AddRange(result.Values.Where(top50 => top50.BuySellOver < 0).OrderBy(top50 => top50.BuySellOver).Take(topNum));
         }
 
         /// <summary>
