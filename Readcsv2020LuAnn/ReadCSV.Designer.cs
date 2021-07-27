@@ -1,9 +1,11 @@
-﻿
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Readcsv2020LuAnn
 {
-    partial class ReadCSV
+    /// <summary>
+    /// 主要程式邏輯
+    /// </summary>
+     public partial class ReadCSV
     {
         /// <summary>
         /// 設計工具所需的變數。
@@ -47,9 +49,7 @@ namespace Readcsv2020LuAnn
             ((System.ComponentModel.ISupportInitialize)(this.TotalList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Top50List)).BeginInit();
             this.SuspendLayout();
-            // 
             // ReadButton
-            // 
             this.ReadButton.Location = new System.Drawing.Point(763, 10);
             this.ReadButton.Name = "ReadButton";
             this.ReadButton.Size = new System.Drawing.Size(108, 30);
@@ -57,16 +57,12 @@ namespace Readcsv2020LuAnn
             this.ReadButton.Text = "讀取檔案";
             this.ReadButton.UseVisualStyleBackColor = true;
             this.ReadButton.Click += new System.EventHandler(this.ClickReadButton);
-            // 
             // InputBox
-            // 
             this.InputBox.Location = new System.Drawing.Point(15, 10);
             this.InputBox.Name = "InputBox";
             this.InputBox.Size = new System.Drawing.Size(742, 29);
             this.InputBox.TabIndex = 1;
-            // 
             // Prompt
-            // 
             this.Prompt.BackColor = System.Drawing.Color.PaleTurquoise;
             this.Prompt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Prompt.Cursor = System.Windows.Forms.Cursors.IBeam;
@@ -76,9 +72,7 @@ namespace Readcsv2020LuAnn
             this.Prompt.Size = new System.Drawing.Size(79, 22);
             this.Prompt.TabIndex = 2;
             this.Prompt.Text = "讀取狀態";
-            // 
             // StockList
-            // 
             this.StockList.AllowUserToAddRows = false;
             this.StockList.AllowUserToDeleteRows = false;
             this.StockList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -89,9 +83,7 @@ namespace Readcsv2020LuAnn
             this.StockList.RowTemplate.Height = 31;
             this.StockList.Size = new System.Drawing.Size(1000, 340);
             this.StockList.TabIndex = 0;
-            // 
             // TextDisplay
-            // 
             this.TextDisplay.Location = new System.Drawing.Point(1024, 13);
             this.TextDisplay.Multiline = true;
             this.TextDisplay.Name = "TextDisplay";
@@ -99,17 +91,13 @@ namespace Readcsv2020LuAnn
             this.TextDisplay.Size = new System.Drawing.Size(420, 80);
             this.TextDisplay.TabIndex = 5;
             this.TextDisplay.TextChanged += new System.EventHandler(this.ChangTextDisplay);
-            // 
             // DropMenu
-            // 
             this.DropMenu.FormattingEnabled = true;
             this.DropMenu.Location = new System.Drawing.Point(15, 56);
             this.DropMenu.Name = "DropMenu";
             this.DropMenu.Size = new System.Drawing.Size(742, 26);
             this.DropMenu.TabIndex = 6;
-            // 
             // StockCheck
-            // 
             this.StockCheck.Location = new System.Drawing.Point(763, 53);
             this.StockCheck.Name = "StockCheck";
             this.StockCheck.Size = new System.Drawing.Size(108, 30);
@@ -117,9 +105,7 @@ namespace Readcsv2020LuAnn
             this.StockCheck.Text = "股票查詢";
             this.StockCheck.UseVisualStyleBackColor = true;
             this.StockCheck.Click += new System.EventHandler(this.ClickCheckStock);
-            // 
             // BuySellTop50
-            // 
             this.BuySellTop50.Location = new System.Drawing.Point(877, 52);
             this.BuySellTop50.Name = "BuySellTop50";
             this.BuySellTop50.Size = new System.Drawing.Size(122, 30);
@@ -127,16 +113,12 @@ namespace Readcsv2020LuAnn
             this.BuySellTop50.Text = "買賣超Top50";
             this.BuySellTop50.UseVisualStyleBackColor = true;
             this.BuySellTop50.Click += new System.EventHandler(this.ClickTop50Button);
-            // 
             // ReadData
-            // 
             this.ReadData.WorkerReportsProgress = true;
             this.ReadData.WorkerSupportsCancellation = true;
             this.ReadData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.ReadCSVData);
             this.ReadData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.RunWorkerCompleted);
-            // 
             // TotalList
-            // 
             this.TotalList.AllowUserToAddRows = false;
             this.TotalList.AllowUserToDeleteRows = false;
             this.TotalList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -147,9 +129,7 @@ namespace Readcsv2020LuAnn
             this.TotalList.RowTemplate.Height = 31;
             this.TotalList.Size = new System.Drawing.Size(1000, 340);
             this.TotalList.TabIndex = 9;
-            // 
             // Top50List
-            // 
             this.Top50List.AllowUserToAddRows = false;
             this.Top50List.AllowUserToDeleteRows = false;
             this.Top50List.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -160,15 +140,10 @@ namespace Readcsv2020LuAnn
             this.Top50List.RowTemplate.Height = 31;
             this.Top50List.Size = new System.Drawing.Size(420, 695);
             this.Top50List.TabIndex = 10;
-            // 
             // TotalData
-            // 
             this.TotalData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.WriteTotalData);
             this.TotalData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.DisplayTime);
-            
-            // 
             // ReadCSV
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
@@ -192,23 +167,67 @@ namespace Readcsv2020LuAnn
             ((System.ComponentModel.ISupportInitialize)(this.Top50List)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
-
+        /// <summary>
+        /// 讀取按鈕
+        /// </summary>
         private System.Windows.Forms.Button ReadButton;
+
+        /// <summary>
+        /// 輸入框
+        /// </summary>
         private System.Windows.Forms.TextBox InputBox;
+
+        /// <summary>
+        /// 顯示讀取狀態
+        /// </summary>
         private System.Windows.Forms.TextBox Prompt;
+
+        /// <summary>
+        /// 顯示時間訊息
+        /// </summary>
         private System.Windows.Forms.TextBox TextDisplay;
+
+        /// <summary>
+        /// 下拉式選單
+        /// </summary>
         private System.Windows.Forms.ComboBox DropMenu;
+
+        /// <summary>
+        /// 股票查詢按鈕
+        /// </summary>
         private System.Windows.Forms.Button StockCheck;
+
+        /// <summary>
+        /// top50查詢按鈕
+        /// </summary>
         private System.Windows.Forms.Button BuySellTop50;
+
+        /// <summary>
+        /// 執行顯示股票所有資料的背景程式
+        /// </summary>
         private System.ComponentModel.BackgroundWorker ReadData;
+
+        /// <summary>
+        /// 所有資料顯示欄位
+        /// </summary>
         private System.Windows.Forms.DataGridView StockList;
+
+        /// <summary>
+        /// 股票查詢結果欄位
+        /// </summary>
         private System.Windows.Forms.DataGridView TotalList;
+
+        /// <summary>
+        /// Top50查詢結果欄位
+        /// </summary>
         private System.Windows.Forms.DataGridView Top50List;
+
+        /// <summary>
+        /// 執行股票查詢的背景程式
+        /// </summary>
         private BackgroundWorker TotalData;
     }
 }
-

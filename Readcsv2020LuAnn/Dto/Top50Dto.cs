@@ -14,7 +14,7 @@ namespace Readcsv2020LuAnn.Dto
         /// <summary>
         /// 建構子，用一筆stock資料創出物件
         /// </summary>
-        /// <param name="stock"></param>
+        /// <param name="stock">一筆stock資料</param>
         public Top50Dto(Stock stock)
         {
             StockName = stock.StockName;
@@ -36,6 +36,5 @@ namespace Readcsv2020LuAnn.Dto
         /// 該券商買賣超
         /// </summary>
         public int BuySellOver { get; set; }
-
     }
 }

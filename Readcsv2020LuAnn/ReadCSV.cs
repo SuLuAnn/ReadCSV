@@ -63,7 +63,6 @@ namespace Readcsv2020LuAnn
             {
                 ReadData.RunWorkerAsync();
             }
-
         }
 
         /// <summary>
@@ -74,13 +73,13 @@ namespace Readcsv2020LuAnn
         private void ReadCSVData(object sender, DoWorkEventArgs doWork)
         {
             List<Stock> stocks = new List<Stock>();
-            using (StreamReader streamReader = new StreamReader(File.OpenRead(InputBox.Text), System.Text.Encoding.GetEncoding("Big5")))//打開data.csv檔
+            using (StreamReader streamReader = new StreamReader(File.OpenRead(InputBox.Text), System.Text.Encoding.GetEncoding("Big5")))
             {
                 Stopwatch.Restart();
-                streamReader.ReadLine();//讀檔
-                while (!streamReader.EndOfStream)//假如未讀取完所有資料
+                streamReader.ReadLine();
+                while (!streamReader.EndOfStream)
                 {
-                    string[] datas = streamReader.ReadLine().Split(',');//將資料以'，'做切割
+                    string[] datas = streamReader.ReadLine().Split(',');
                     stocks.Add(new Stock(datas));
                 }
             }
@@ -89,7 +88,7 @@ namespace Readcsv2020LuAnn
             foreach (var stock in list)
             {
                 Stocks[ALL].AddRange(stock.Value);
-                Stocks.Add(stock.Key,stock.Value);
+                Stocks.Add(stock.Key, stock.Value);
             }
         }
 
@@ -100,7 +99,6 @@ namespace Readcsv2020LuAnn
         /// <param name="runWorker">觸發的事件</param>
         private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs runWorker)
         {
-            
             WriteBasicData(Stocks.Values.First());
             TextDisplay.Text = $"讀取時間:{EndStopwatch()}";
             Prompt.Text = "讀取完畢";
@@ -120,7 +118,6 @@ namespace Readcsv2020LuAnn
             DropMenu.Text = ALL;
             DropMenu.EndUpdate();
             TextDisplay.Text += $"{Environment.NewLine}ComboBox時間:{EndStopwatch()}";
-
         }
 
         /// <summary>
@@ -142,8 +139,8 @@ namespace Readcsv2020LuAnn
         /// <summary>
         /// 讀取完股票總值之後將他畫在左下表格並記錄時間
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="runWorker"></param>
+        /// <param name="sender">觸發的物件</param>
+        /// <param name="runWorker">觸發的事件</param>
         public void DisplayTime(object sender, RunWorkerCompletedEventArgs runWorker)
         {
             TotalList.DataSource = new BindingList<TotalStockDto>((IList<TotalStockDto>)runWorker.Result);
@@ -197,7 +194,8 @@ namespace Readcsv2020LuAnn
         /// <summary>
         /// 將所選股票的BuyTotal、SellTotal、AvgPrice、BuySellOver、SecBroker顯示於畫面上
         /// </summary>
-        /// <param name="stocks">所選股票</param>
+        /// <param name="sender">觸發的物件</param>
+        /// <param name="e">觸發的事件</param>
         public void WriteTotalData(object sender, DoWorkEventArgs e)
         {
             List<Stock> stocks = (List<Stock>)e.Argument;
@@ -230,7 +228,7 @@ namespace Readcsv2020LuAnn
         {
             Stopwatch.Restart();
             List<Stock> stocks = ReadDropMenu();
-            Top50List.DataSource = new BindingList<Top50Dto>(GetTop50(ref stocks));
+            Top50List.DataSource = new BindingList<Top50Dto>(GetTop50(stocks));
             TextDisplay.Text += $"{Environment.NewLine}Top50 產生時間 :{EndStopwatch()}";
         }
 
@@ -239,21 +237,20 @@ namespace Readcsv2020LuAnn
         /// </summary>
         /// <param name="stocks">所選股票</param>
         /// <returns>top50資料</returns>
-        public List<Top50Dto> GetTop50(ref List<Stock> stocks)
+        public List<Top50Dto> GetTop50(List<Stock> stocks)
         {
             Dictionary<string, Top50Dto> result = new Dictionary<string, Top50Dto>();
             List<Top50Dto> result50 = new List<Top50Dto>();
             string stockID = stocks.First().StockID;
-            Top50Dto top50Dto;
             foreach (var stock in stocks)
             {
                 if (stockID != stock.StockID)
                 {
                     stockID = stock.StockID;
-                    AddTop50(ref result,ref result50);
+                    AddTop50(result, result50);
                     result.Clear();
                 }
-                if (result.TryGetValue(stock.SecBrokerID, out top50Dto))
+                if (result.TryGetValue(stock.SecBrokerID, out Top50Dto top50Dto))
                 {
                     top50Dto.BuySellOver += stock.BuyQty - stock.SellQty;
                 }
@@ -261,11 +258,8 @@ namespace Readcsv2020LuAnn
                 {
                     result.Add(stock.SecBrokerID, new Top50Dto(stock));
                 }
-                if (stock == stocks.Last())
-                {
-                    AddTop50(ref result,ref result50);
-                }
             }
+            AddTop50(result, result50);
             return result50;
         }
 
@@ -274,7 +268,7 @@ namespace Readcsv2020LuAnn
         /// </summary>
         /// <param name="result">一隻股票的資料</param>
         /// <param name="result50">要存進的總集合</param>
-        public void AddTop50(ref Dictionary<string, Top50Dto> result,ref List<Top50Dto> result50)
+        public void AddTop50(Dictionary<string, Top50Dto> result, List<Top50Dto> result50)
         {
             int topNum = 50;
             result50.AddRange(result.Values.Where(top50 => top50.BuySellOver > 0).OrderByDescending(top50 => top50.BuySellOver).Take(topNum));
@@ -301,7 +295,5 @@ namespace Readcsv2020LuAnn
             Stopwatch.Stop();
             return Stopwatch.Elapsed.ToString(@"hh\:mm\:ss\:fff");
         }
-
     }
-
 }

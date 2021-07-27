@@ -51,7 +51,7 @@ namespace Readcsv2020LuAnn
         public int SellQty { get; set; }
 
         /// <summary>
-        ///股票的建構子
+        /// 股票的建構子
         /// </summary>
         /// <param name="datas">傳入一個字串陣列放入從csv讀取到的一檔股票交易紀錄的資料</param>
         public Stock(string[] datas)
@@ -111,7 +111,5 @@ namespace Readcsv2020LuAnn
             /// </summary>
             SELL_QTY
         }
-
     }
-
 }

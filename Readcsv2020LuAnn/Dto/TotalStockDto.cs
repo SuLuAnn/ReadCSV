@@ -101,7 +101,5 @@ namespace Readcsv2020LuAnn.Dto
             SecBrokerCnt = SecBrokerID.Count();
             BuySellOver = BuyTotal - SellTotal;
         }
-
     }
-
 }
