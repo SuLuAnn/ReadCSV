@@ -1,0 +1,16 @@
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.exe.config
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.exe
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.pdb
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.dll
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.xml
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\bin\Debug\zh-Hant\EntityFramework.resources.dll
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.AssemblyReference.cache
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.LINQTraning.resources
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.Properties.Resources.resources
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.GenerateResource.cache
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CoreCompileInputs.cache
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CopyComplete
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.exe
+C:\Users\a0920\source\repos\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.pdb

@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StockDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="日收盤">
+          <Key>
+            <PropertyRef Name="日期" />
+            <PropertyRef Name="股票代號" />
+          </Key>
+          <Property Name="CTIME" Type="datetime2" Precision="3" />
+          <Property Name="MTIME" Type="int" />
+          <Property Name="RecordID" Type="bigint" />
+          <Property Name="日期" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="股票代號" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="股票名稱" Type="nvarchar" MaxLength="20" />
+          <Property Name="參考價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="開盤價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="最高價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="最低價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="收盤價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="漲跌" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="上市櫃" Type="nvarchar" MaxLength="2" />
+          <Property Name="產業代號" Type="nvarchar" MaxLength="2" />
+          <Property Name="漲停價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="跌停價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="漲跌狀況" Type="nvarchar" MaxLength="1" />
+          <Property Name="最後委買價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="最後委賣價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="漲幅(%)" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="振幅(%)" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="成交量" Type="bigint" />
+          <Property Name="成交量(股)" Type="bigint" />
+          <Property Name="成交筆數" Type="bigint" />
+          <Property Name="成交金額(千)" Type="bigint" />
+          <Property Name="成交值比重(%)" Type="decimal" Precision="9" Scale="3" />
+          <Property Name="成交量變動(%)" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="股本(百萬)2" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="均張變動(%)" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="均張" Type="decimal" Precision="9" Scale="1" />
+          <Property Name="總市值(億)" Type="decimal" Precision="9" Scale="1" />
+          <Property Name="市值比重(%)" Type="decimal" Precision="9" Scale="3" />
+          <Property Name="類股本益比" Type="decimal" Precision="9" Scale="1" />
+          <Property Name="類股股價淨值比" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="類股股價淨值比2" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="本益比" Type="decimal" Precision="9" Scale="1" />
+          <Property Name="本益比(近四季)" Type="decimal" Precision="9" Scale="1" />
+          <Property Name="股東權益(百萬)" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="股價淨值比" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="股價淨值比2" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="舊股本(百萬)" Type="real" />
+          <Property Name="委買張數" Type="int" />
+          <Property Name="委賣張數" Type="int" />
+          <Property Name="次日參考價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="成交金額_元" Type="bigint" />
+          <Property Name="均價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="股本(百萬)" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="週轉率" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="漲跌停" Type="smallint" />
+        </EntityType>
+        <EntityType Name="代號表指數">
+          <Key>
+            <PropertyRef Name="代號" />
+          </Key>
+          <Property Name="代號" Type="nvarchar" MaxLength="7" Nullable="false" />
+          <Property Name="名稱" Type="nvarchar" MaxLength="20" />
+          <Property Name="英文名稱" Type="nvarchar" MaxLength="20" />
+          <Property Name="種類" Type="nvarchar" MaxLength="1" />
+          <Property Name="代表號" Type="nvarchar" MaxLength="30" />
+          <Property Name="交易所產業編號" Type="nvarchar" MaxLength="2" />
+          <Property Name="整併後交易所產業編號" Type="nvarchar" MaxLength="200" />
+          <Property Name="備註" Type="nvarchar" MaxLength="50" />
+          <Property Name="200707交易所產業編號" Type="nvarchar" MaxLength="2" />
+          <Property Name="200707整併後交易所產業編號" Type="nvarchar" MaxLength="200" />
+          <Property Name="200707備註" Type="nvarchar" MaxLength="200" />
+          <Property Name="權證標的用代號" Type="nvarchar" MaxLength="6" />
+          <Property Name="權證標的用名稱" Type="nvarchar" MaxLength="20" />
+          <Property Name="參考名稱1" Type="nvarchar" MaxLength="10" />
+          <Property Name="參考名稱2" Type="nvarchar" MaxLength="10" />
+          <Property Name="參考名稱3" Type="nvarchar" MaxLength="10" />
+          <Property Name="啟用" Type="bit" />
+          <Property Name="CTIME" Type="datetime" />
+          <Property Name="MTIME" Type="datetime" />
+        </EntityType>
+        <EntityType Name="交易所產業分類代號表">
+          <Key>
+            <PropertyRef Name="代號" />
+            <PropertyRef Name="市場別" />
+          </Key>
+          <Property Name="代號" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="名稱" Type="nvarchar" MaxLength="10" />
+          <Property Name="市場別" Type="int" Nullable="false" />
+          <Property Name="市場別名稱" Type="nvarchar" MaxLength="10" />
+          <Property Name="掛牌數" Type="smallint" />
+          <Property Name="指數代號" Type="nvarchar" MaxLength="10" />
+          <Property Name="指數名稱" Type="nvarchar" MaxLength="50" />
+          <Property Name="CTIME" Type="datetime" />
+          <Property Name="MTIME" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="StockDBModelStoreContainer">
+          <EntitySet Name="日收盤" EntityType="Self.日收盤" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="代號表指數" EntityType="Self.代號表指數" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="交易所產業分類代號表" EntityType="Self.交易所產業分類代號表" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StockDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="日收盤">
+          <Key>
+            <PropertyRef Name="日期" />
+            <PropertyRef Name="股票代號" />
+          </Key>
+          <Property Name="CTIME" Type="DateTime" Precision="3" />
+          <Property Name="MTIME" Type="Int32" />
+          <Property Name="RecordID" Type="Int64" />
+          <Property Name="日期" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="股票代號" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="股票名稱" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="參考價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="開盤價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="最高價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="最低價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="收盤價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="漲跌" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="上市櫃" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="產業代號" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="漲停價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="跌停價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="漲跌狀況" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="最後委買價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="最後委賣價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="漲幅___" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="振幅___" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="成交量" Type="Int64" />
+          <Property Name="成交量_股_" Type="Int64" />
+          <Property Name="成交筆數" Type="Int64" />
+          <Property Name="成交金額_千_" Type="Int64" />
+          <Property Name="成交值比重___" Type="Decimal" Precision="9" Scale="3" />
+          <Property Name="成交量變動___" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="股本_百萬_2" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="均張變動___" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="均張" Type="Decimal" Precision="9" Scale="1" />
+          <Property Name="總市值_億_" Type="Decimal" Precision="9" Scale="1" />
+          <Property Name="市值比重___" Type="Decimal" Precision="9" Scale="3" />
+          <Property Name="類股本益比" Type="Decimal" Precision="9" Scale="1" />
+          <Property Name="類股股價淨值比" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="類股股價淨值比2" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="本益比" Type="Decimal" Precision="9" Scale="1" />
+          <Property Name="本益比_近四季_" Type="Decimal" Precision="9" Scale="1" />
+          <Property Name="股東權益_百萬_" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="股價淨值比" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="股價淨值比2" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="舊股本_百萬_" Type="Single" />
+          <Property Name="委買張數" Type="Int32" />
+          <Property Name="委賣張數" Type="Int32" />
+          <Property Name="次日參考價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="成交金額_元" Type="Int64" />
+          <Property Name="均價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="股本_百萬_" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="週轉率" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="漲跌停" Type="Int16" />
+        </EntityType>
+        <EntityType Name="代號表指數">
+          <Key>
+            <PropertyRef Name="代號" />
+          </Key>
+          <Property Name="代號" Type="String" MaxLength="7" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="名稱" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="英文名稱" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="種類" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="代表號" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="交易所產業編號" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="整併後交易所產業編號" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="備註" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="C200707交易所產業編號" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="C200707整併後交易所產業編號" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="C200707備註" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="權證標的用代號" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="權證標的用名稱" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="參考名稱1" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="參考名稱2" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="參考名稱3" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="啟用" Type="Boolean" />
+          <Property Name="CTIME" Type="DateTime" Precision="3" />
+          <Property Name="MTIME" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="交易所產業分類代號表">
+          <Key>
+            <PropertyRef Name="代號" />
+            <PropertyRef Name="市場別" />
+          </Key>
+          <Property Name="代號" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="名稱" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="市場別" Type="Int32" Nullable="false" />
+          <Property Name="市場別名稱" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="掛牌數" Type="Int16" />
+          <Property Name="指數代號" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="指數名稱" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CTIME" Type="DateTime" Precision="3" />
+          <Property Name="MTIME" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="StockDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="日收盤" EntityType="Self.日收盤" />
+          <EntitySet Name="代號表指數" EntityType="Self.代號表指數" />
+          <EntitySet Name="交易所產業分類代號表" EntityType="Self.交易所產業分類代號表" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StockDBModelStoreContainer" CdmEntityContainer="StockDBEntities">
+          <EntitySetMapping Name="日收盤">
+            <EntityTypeMapping TypeName="StockDBModel.日收盤">
+              <MappingFragment StoreEntitySet="日收盤">
+                <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+                <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="日期" ColumnName="日期" />
+                <ScalarProperty Name="股票代號" ColumnName="股票代號" />
+                <ScalarProperty Name="股票名稱" ColumnName="股票名稱" />
+                <ScalarProperty Name="參考價" ColumnName="參考價" />
+                <ScalarProperty Name="開盤價" ColumnName="開盤價" />
+                <ScalarProperty Name="最高價" ColumnName="最高價" />
+                <ScalarProperty Name="最低價" ColumnName="最低價" />
+                <ScalarProperty Name="收盤價" ColumnName="收盤價" />
+                <ScalarProperty Name="漲跌" ColumnName="漲跌" />
+                <ScalarProperty Name="上市櫃" ColumnName="上市櫃" />
+                <ScalarProperty Name="產業代號" ColumnName="產業代號" />
+                <ScalarProperty Name="漲停價" ColumnName="漲停價" />
+                <ScalarProperty Name="跌停價" ColumnName="跌停價" />
+                <ScalarProperty Name="漲跌狀況" ColumnName="漲跌狀況" />
+                <ScalarProperty Name="最後委買價" ColumnName="最後委買價" />
+                <ScalarProperty Name="最後委賣價" ColumnName="最後委賣價" />
+                <ScalarProperty Name="漲幅___" ColumnName="漲幅(%)" />
+                <ScalarProperty Name="振幅___" ColumnName="振幅(%)" />
+                <ScalarProperty Name="成交量" ColumnName="成交量" />
+                <ScalarProperty Name="成交量_股_" ColumnName="成交量(股)" />
+                <ScalarProperty Name="成交筆數" ColumnName="成交筆數" />
+                <ScalarProperty Name="成交金額_千_" ColumnName="成交金額(千)" />
+                <ScalarProperty Name="成交值比重___" ColumnName="成交值比重(%)" />
+                <ScalarProperty Name="成交量變動___" ColumnName="成交量變動(%)" />
+                <ScalarProperty Name="股本_百萬_2" ColumnName="股本(百萬)2" />
+                <ScalarProperty Name="均張變動___" ColumnName="均張變動(%)" />
+                <ScalarProperty Name="均張" ColumnName="均張" />
+                <ScalarProperty Name="總市值_億_" ColumnName="總市值(億)" />
+                <ScalarProperty Name="市值比重___" ColumnName="市值比重(%)" />
+                <ScalarProperty Name="類股本益比" ColumnName="類股本益比" />
+                <ScalarProperty Name="類股股價淨值比" ColumnName="類股股價淨值比" />
+                <ScalarProperty Name="類股股價淨值比2" ColumnName="類股股價淨值比2" />
+                <ScalarProperty Name="本益比" ColumnName="本益比" />
+                <ScalarProperty Name="本益比_近四季_" ColumnName="本益比(近四季)" />
+                <ScalarProperty Name="股東權益_百萬_" ColumnName="股東權益(百萬)" />
+                <ScalarProperty Name="股價淨值比" ColumnName="股價淨值比" />
+                <ScalarProperty Name="股價淨值比2" ColumnName="股價淨值比2" />
+                <ScalarProperty Name="舊股本_百萬_" ColumnName="舊股本(百萬)" />
+                <ScalarProperty Name="委買張數" ColumnName="委買張數" />
+                <ScalarProperty Name="委賣張數" ColumnName="委賣張數" />
+                <ScalarProperty Name="次日參考價" ColumnName="次日參考價" />
+                <ScalarProperty Name="成交金額_元" ColumnName="成交金額_元" />
+                <ScalarProperty Name="均價" ColumnName="均價" />
+                <ScalarProperty Name="股本_百萬_" ColumnName="股本(百萬)" />
+                <ScalarProperty Name="週轉率" ColumnName="週轉率" />
+                <ScalarProperty Name="漲跌停" ColumnName="漲跌停" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="代號表指數">
+            <EntityTypeMapping TypeName="StockDBModel.代號表指數">
+              <MappingFragment StoreEntitySet="代號表指數">
+                <ScalarProperty Name="代號" ColumnName="代號" />
+                <ScalarProperty Name="名稱" ColumnName="名稱" />
+                <ScalarProperty Name="英文名稱" ColumnName="英文名稱" />
+                <ScalarProperty Name="種類" ColumnName="種類" />
+                <ScalarProperty Name="代表號" ColumnName="代表號" />
+                <ScalarProperty Name="交易所產業編號" ColumnName="交易所產業編號" />
+                <ScalarProperty Name="整併後交易所產業編號" ColumnName="整併後交易所產業編號" />
+                <ScalarProperty Name="備註" ColumnName="備註" />
+                <ScalarProperty Name="C200707交易所產業編號" ColumnName="200707交易所產業編號" />
+                <ScalarProperty Name="C200707整併後交易所產業編號" ColumnName="200707整併後交易所產業編號" />
+                <ScalarProperty Name="C200707備註" ColumnName="200707備註" />
+                <ScalarProperty Name="權證標的用代號" ColumnName="權證標的用代號" />
+                <ScalarProperty Name="權證標的用名稱" ColumnName="權證標的用名稱" />
+                <ScalarProperty Name="參考名稱1" ColumnName="參考名稱1" />
+                <ScalarProperty Name="參考名稱2" ColumnName="參考名稱2" />
+                <ScalarProperty Name="參考名稱3" ColumnName="參考名稱3" />
+                <ScalarProperty Name="啟用" ColumnName="啟用" />
+                <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+                <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="交易所產業分類代號表">
+            <EntityTypeMapping TypeName="StockDBModel.交易所產業分類代號表">
+              <MappingFragment StoreEntitySet="交易所產業分類代號表">
+                <ScalarProperty Name="代號" ColumnName="代號" />
+                <ScalarProperty Name="名稱" ColumnName="名稱" />
+                <ScalarProperty Name="市場別" ColumnName="市場別" />
+                <ScalarProperty Name="市場別名稱" ColumnName="市場別名稱" />
+                <ScalarProperty Name="掛牌數" ColumnName="掛牌數" />
+                <ScalarProperty Name="指數代號" ColumnName="指數代號" />
+                <ScalarProperty Name="指數名稱" ColumnName="指數名稱" />
+                <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+                <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

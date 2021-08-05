@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StockDBModelStoreContainer" CdmEntityContainer="StockDBEntities">
+    <EntitySetMapping Name="日收盤">
+      <EntityTypeMapping TypeName="StockDBModel.日收盤">
+        <MappingFragment StoreEntitySet="日收盤">
+          <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+          <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+          <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+          <ScalarProperty Name="日期" ColumnName="日期" />
+          <ScalarProperty Name="股票代號" ColumnName="股票代號" />
+          <ScalarProperty Name="股票名稱" ColumnName="股票名稱" />
+          <ScalarProperty Name="參考價" ColumnName="參考價" />
+          <ScalarProperty Name="開盤價" ColumnName="開盤價" />
+          <ScalarProperty Name="最高價" ColumnName="最高價" />
+          <ScalarProperty Name="最低價" ColumnName="最低價" />
+          <ScalarProperty Name="收盤價" ColumnName="收盤價" />
+          <ScalarProperty Name="漲跌" ColumnName="漲跌" />
+          <ScalarProperty Name="上市櫃" ColumnName="上市櫃" />
+          <ScalarProperty Name="產業代號" ColumnName="產業代號" />
+          <ScalarProperty Name="漲停價" ColumnName="漲停價" />
+          <ScalarProperty Name="跌停價" ColumnName="跌停價" />
+          <ScalarProperty Name="漲跌狀況" ColumnName="漲跌狀況" />
+          <ScalarProperty Name="最後委買價" ColumnName="最後委買價" />
+          <ScalarProperty Name="最後委賣價" ColumnName="最後委賣價" />
+          <ScalarProperty Name="漲幅___" ColumnName="漲幅(%)" />
+          <ScalarProperty Name="振幅___" ColumnName="振幅(%)" />
+          <ScalarProperty Name="成交量" ColumnName="成交量" />
+          <ScalarProperty Name="成交量_股_" ColumnName="成交量(股)" />
+          <ScalarProperty Name="成交筆數" ColumnName="成交筆數" />
+          <ScalarProperty Name="成交金額_千_" ColumnName="成交金額(千)" />
+          <ScalarProperty Name="成交值比重___" ColumnName="成交值比重(%)" />
+          <ScalarProperty Name="成交量變動___" ColumnName="成交量變動(%)" />
+          <ScalarProperty Name="股本_百萬_2" ColumnName="股本(百萬)2" />
+          <ScalarProperty Name="均張變動___" ColumnName="均張變動(%)" />
+          <ScalarProperty Name="均張" ColumnName="均張" />
+          <ScalarProperty Name="總市值_億_" ColumnName="總市值(億)" />
+          <ScalarProperty Name="市值比重___" ColumnName="市值比重(%)" />
+          <ScalarProperty Name="類股本益比" ColumnName="類股本益比" />
+          <ScalarProperty Name="類股股價淨值比" ColumnName="類股股價淨值比" />
+          <ScalarProperty Name="類股股價淨值比2" ColumnName="類股股價淨值比2" />
+          <ScalarProperty Name="本益比" ColumnName="本益比" />
+          <ScalarProperty Name="本益比_近四季_" ColumnName="本益比(近四季)" />
+          <ScalarProperty Name="股東權益_百萬_" ColumnName="股東權益(百萬)" />
+          <ScalarProperty Name="股價淨值比" ColumnName="股價淨值比" />
+          <ScalarProperty Name="股價淨值比2" ColumnName="股價淨值比2" />
+          <ScalarProperty Name="舊股本_百萬_" ColumnName="舊股本(百萬)" />
+          <ScalarProperty Name="委買張數" ColumnName="委買張數" />
+          <ScalarProperty Name="委賣張數" ColumnName="委賣張數" />
+          <ScalarProperty Name="次日參考價" ColumnName="次日參考價" />
+          <ScalarProperty Name="成交金額_元" ColumnName="成交金額_元" />
+          <ScalarProperty Name="均價" ColumnName="均價" />
+          <ScalarProperty Name="股本_百萬_" ColumnName="股本(百萬)" />
+          <ScalarProperty Name="週轉率" ColumnName="週轉率" />
+          <ScalarProperty Name="漲跌停" ColumnName="漲跌停" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="代號表指數">
+      <EntityTypeMapping TypeName="StockDBModel.代號表指數">
+        <MappingFragment StoreEntitySet="代號表指數">
+          <ScalarProperty Name="代號" ColumnName="代號" />
+          <ScalarProperty Name="名稱" ColumnName="名稱" />
+          <ScalarProperty Name="英文名稱" ColumnName="英文名稱" />
+          <ScalarProperty Name="種類" ColumnName="種類" />
+          <ScalarProperty Name="代表號" ColumnName="代表號" />
+          <ScalarProperty Name="交易所產業編號" ColumnName="交易所產業編號" />
+          <ScalarProperty Name="整併後交易所產業編號" ColumnName="整併後交易所產業編號" />
+          <ScalarProperty Name="備註" ColumnName="備註" />
+          <ScalarProperty Name="C200707交易所產業編號" ColumnName="200707交易所產業編號" />
+          <ScalarProperty Name="C200707整併後交易所產業編號" ColumnName="200707整併後交易所產業編號" />
+          <ScalarProperty Name="C200707備註" ColumnName="200707備註" />
+          <ScalarProperty Name="權證標的用代號" ColumnName="權證標的用代號" />
+          <ScalarProperty Name="權證標的用名稱" ColumnName="權證標的用名稱" />
+          <ScalarProperty Name="參考名稱1" ColumnName="參考名稱1" />
+          <ScalarProperty Name="參考名稱2" ColumnName="參考名稱2" />
+          <ScalarProperty Name="參考名稱3" ColumnName="參考名稱3" />
+          <ScalarProperty Name="啟用" ColumnName="啟用" />
+          <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+          <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="交易所產業分類代號表">
+      <EntityTypeMapping TypeName="StockDBModel.交易所產業分類代號表">
+        <MappingFragment StoreEntitySet="交易所產業分類代號表">
+          <ScalarProperty Name="代號" ColumnName="代號" />
+          <ScalarProperty Name="名稱" ColumnName="名稱" />
+          <ScalarProperty Name="市場別" ColumnName="市場別" />
+          <ScalarProperty Name="市場別名稱" ColumnName="市場別名稱" />
+          <ScalarProperty Name="掛牌數" ColumnName="掛牌數" />
+          <ScalarProperty Name="指數代號" ColumnName="指數代號" />
+          <ScalarProperty Name="指數名稱" ColumnName="指數名稱" />
+          <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+          <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
