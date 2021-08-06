@@ -368,6 +368,7 @@
             this.SameRankingButton.TabIndex = 1;
             this.SameRankingButton.Text = "b.排名相同類股";
             this.SameRankingButton.UseVisualStyleBackColor = true;
+            this.SameRankingButton.Click += new System.EventHandler(this.ClickSameRankingButton);
             // 
             // RisingButton
             // 
@@ -377,6 +378,7 @@
             this.RisingButton.TabIndex = 0;
             this.RisingButton.Text = "a.上漲所有類股查詢";
             this.RisingButton.UseVisualStyleBackColor = true;
+            this.RisingButton.Click += new System.EventHandler(this.ClickRisingButton);
             // 
             // DataTabControl
             // 

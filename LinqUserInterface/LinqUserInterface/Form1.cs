@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinqUserInterface.Dto;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -146,7 +147,7 @@ namespace LinqUserInterface
                  && string.Compare(data.日期, last) <= 0).GroupBy(data => data.股票代號, data => data, (stockID, stocks) => new ERPDto
                  {
                      股票代號 = stockID,
-                     股票名稱 = stocks.Where( stock=> stock.股票名稱.Length == stocks.Min(item => item.股票名稱.Length)).FirstOrDefault().股票名稱,
+                     股票名稱 = stocks.Where(stock => stock.股票名稱.Length == stocks.Min(item => item.股票名稱.Length)).FirstOrDefault().股票名稱,
                      平均本益比 = decimal.Round((decimal)(stocks.Average(erp => erp.本益比)), 6)
                  }).ToList().Where(data => data.平均本益比 > targetERP).OrderByDescending(data => data.平均本益比);
             var top20 = records.Take(needDataNum).ToList();
@@ -167,7 +168,7 @@ namespace LinqUserInterface
             ERPIndustryMenu.DisplayMember = "Key";
             ERPIndustryMenu.ValueMember = "Value";
             var list = StockDB.交易所產業分類代號表.Where(industry => industry.市場別 == 1 || industry.市場別 == 2).GroupBy(industry => industry.代號)
-                .OrderBy(industry => industry.Key).ToDictionary(industry =>industry.FirstOrDefault(item=>item.名稱.Length== industry.Min(record => record.名稱.Length)).名稱, industry => industry.Key);
+                .OrderBy(industry => industry.Key).ToDictionary(industry => industry.FirstOrDefault(item => item.名稱.Length == industry.Min(record => record.名稱.Length)).名稱, industry => industry.Key);
             ERPIndustryMenu.DataSource = new BindingSource(list, null);
             DisplayTime.Text = $"Q3-下拉選單建立：{ShowTime(Stopwatch)}{Environment.NewLine}{DisplayTime.Text}";
         }
@@ -192,7 +193,7 @@ namespace LinqUserInterface
                       委買張數 = dayStocks.委買張數,
                       委賣張數 = dayStocks.委賣張數,
                       市場別名稱 = StockDB.交易所產業分類代號表.FirstOrDefault(data => SqlFunctions.StringConvert((decimal)data.市場別).Trim() == dayStocks.上市櫃).市場別名稱,
-                      產業名稱 = dayStocks.產業代號==null ? "無產業名稱" : StockDB.交易所產業分類代號表.FirstOrDefault(data => data.代號 == dayStocks.產業代號).名稱,
+                      產業名稱 = dayStocks.產業代號 == null ? "無產業名稱" : StockDB.交易所產業分類代號表.FirstOrDefault(data => data.代號 == dayStocks.產業代號).名稱,
                       成交值比重_比率 = dayStocks.成交值比重___,
                       成交筆數 = dayStocks.成交筆數,
                       成交量_股 = dayStocks.成交量_股_,
@@ -220,6 +221,104 @@ namespace LinqUserInterface
             CommonTable.DataSource = dayStock;
             ShowDataNum(CommonTable);
             DisplayTime.Text = $"Q2：{ShowTime(Stopwatch)}{Environment.NewLine}{DisplayTime.Text}";
+        }
+
+        private void ClickRisingButton(object sender, EventArgs e)
+        {
+            Stopwatch.Restart();
+            var results = GetRiseStocks("20080322");
+            results.AddRange(GetRiseStocks("20120114"));
+            CommonTable.DataSource =new BindingList<RiseStockDto>( results);
+            DisplayTime.Text = $"Q4a：{ShowTime(Stopwatch)}{Environment.NewLine}{DisplayTime.Text}";
+        }
+
+        private List<RiseStockDto> GetRiseStocks(string targetDay)
+        {
+            var dayInterval = GetPresidentialDay(targetDay);
+            var kindStocks = GetKindStocks();
+            return StockDB.日收盤.Join(kindStocks, day => day.股票代號, code => code.代號, (day, code) => new
+            {
+                day.日期,
+                code.代號,
+                code.名稱,
+                day.收盤價
+            }).GroupBy(day => day.代號, (id, days) => new RiseStockDto
+            {
+                年度 = days.FirstOrDefault(day => day.日期 == dayInterval.LastDay).日期.Substring(0, 4),
+                類股股票代號 = days.FirstOrDefault().代號,
+                類股股票名稱 = days.FirstOrDefault().名稱,
+                第30個交易日日期 = days.FirstOrDefault(day => day.日期 == dayInterval.LastDay).日期,
+                第30個交易日收盤價 = days.FirstOrDefault(day => day.日期 == dayInterval.LastDay).收盤價,
+                第1個交易日日期 = days.FirstOrDefault(day => day.日期 == dayInterval.FirstDay).日期,
+                第1個交易日收盤價 = days.FirstOrDefault(day => day.日期 == dayInterval.FirstDay).收盤價,
+                股價漲跌 = days.FirstOrDefault(day => day.日期 == dayInterval.LastDay).收盤價 - days.FirstOrDefault(day => day.日期 == dayInterval.FirstDay).收盤價
+            }).Where(day => day.股價漲跌 > 0).OrderBy(day => day.年度).ThenBy(day => day.類股股票代號).ToList();
+        }
+
+        private IQueryable<KindStock> GetKindStocks()
+        {
+            return StockDB.代號表指數.Where(code => (code.代號.StartsWith("TWB") || code.代號.StartsWith("TWC")) && code.代號 != "TWC00" &&
+             code.C200707整併後交易所產業編號 != null).Select(code => new KindStock
+             {
+                 代號 = code.代號,
+                 名稱 = code.名稱,
+                 C200707整併後交易所產業編號 = code.C200707整併後交易所產業編號
+             });
+        }
+
+        private DayDto GetPresidentialDay(string targetDay)
+        {
+            int lastDayPosition = 29;
+            var days = StockDB.日收盤.Where(day => day.股票代號 == "TWC00" && string.Compare(day.日期, targetDay) > 0)
+                .OrderBy(day => day.日期).Select(day => day.日期).ToList();
+            return new DayDto
+            {
+                FirstDay = days.First(),
+                LastDay = days.ElementAt(lastDayPosition)
+            };
+        }
+
+        private void ClickSameRankingButton(object sender, EventArgs e)
+        {
+            int firstRank = 1;
+            Stopwatch.Restart();
+            var result2008 = GetRateReturns("20080322");
+            var result2012 = GetRateReturns("20120114");
+            var results = result2008.Zip(result2012, (early, late) => (early, late))
+                .Select((day, index) => new List<RateReturn>
+                {
+                    day.early.SetRank(index+firstRank),day.late.SetRank(index+firstRank)
+                })
+                .Where(day => day.First().類股股票代號 == day.Last().類股股票代號)
+                .SelectMany(day => day).OrderBy(day => day.年度).ThenBy(day => day.報酬率).ToList();
+            CommonTable.DataSource = new BindingList<RateReturn>(results);
+            DisplayTime.Text = $"Q4b：{ShowTime(Stopwatch)}{Environment.NewLine}{DisplayTime.Text}";
+        }
+
+        private List<RateReturn> GetRateReturns(string targetDay)
+        {
+            var kindStocks = GetKindStocks();
+            var dayInterval = GetPresidentialDay(targetDay);
+            return StockDB.日收盤.Join(kindStocks, day => day.股票代號, code => code.代號, (day, code) => new
+            {
+                day.日期,
+                code.代號,
+                code.名稱,
+                day.收盤價
+            }).GroupBy(day => day.代號, (id, days) => new
+            {
+                年度 = days.FirstOrDefault(day => day.日期 == dayInterval.LastDay).日期.Substring(0, 4),
+                類股股票代號 = days.FirstOrDefault().代號,
+                類股股票名稱 = days.FirstOrDefault().名稱,
+                第30個交易日收盤價 = days.FirstOrDefault(day => day.日期 == dayInterval.LastDay).收盤價,
+                第1個交易日收盤價 = days.FirstOrDefault(day => day.日期 == dayInterval.FirstDay).收盤價
+            }).Select(day => new RateReturn
+            {
+                年度 = day.年度,
+                類股股票代號 = day.類股股票代號,
+                類股股票名稱 = day.類股股票名稱,
+                報酬率 = (day.第30個交易日收盤價 - day.第1個交易日收盤價) / day.第1個交易日收盤價 * 100
+            }).OrderByDescending(day => day.報酬率).Take(20).ToList();
         }
     }
 }
