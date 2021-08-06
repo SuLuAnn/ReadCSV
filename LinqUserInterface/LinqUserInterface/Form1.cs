@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -169,6 +170,56 @@ namespace LinqUserInterface
                 .OrderBy(industry => industry.Key).ToDictionary(industry =>industry.FirstOrDefault(item=>item.名稱.Length== industry.Min(record => record.名稱.Length)).名稱, industry => industry.Key);
             ERPIndustryMenu.DataSource = new BindingSource(list, null);
             DisplayTime.Text = $"Q3-下拉選單建立：{ShowTime(Stopwatch)}{Environment.NewLine}{DisplayTime.Text}";
+        }
+
+        /// <summary>
+        /// 點擊日收盤查詢及轉置
+        /// </summary>
+        /// <param name="sender">觸發事件的控件</param>
+        /// <param name="e">事件引數</param>
+        private void ClickDayButton(object sender, EventArgs e)
+        {
+            Stopwatch.Restart();
+            string[] days = CycleDayMenu.Text.Split('-');
+            string first = days.FirstOrDefault();
+            string last = days.LastOrDefault();
+            string[] keyWords = StockIDNameMenu.Text.Split(',');
+            var dayStock = StockDB.日收盤.Where(data => (keyWords.Contains(data.股票代號) || keyWords.Contains(data.股票名稱)) && string.Compare(data.日期, first) >= 0
+                  && string.Compare(data.日期, last) <= 0).OrderByDescending(stock => stock.日期).ThenBy(stock => stock.股票代號).Select(dayStocks => new DayStockChange
+                  {
+                      參考價 = dayStocks.參考價,
+                      均價 = dayStocks.均價,
+                      委買張數 = dayStocks.委買張數,
+                      委賣張數 = dayStocks.委賣張數,
+                      市場別名稱 = StockDB.交易所產業分類代號表.FirstOrDefault(data => SqlFunctions.StringConvert((decimal)data.市場別).Trim() == dayStocks.上市櫃).市場別名稱,
+                      產業名稱 = dayStocks.產業代號==null ? "無產業名稱" : StockDB.交易所產業分類代號表.FirstOrDefault(data => data.代號 == dayStocks.產業代號).名稱,
+                      成交值比重_比率 = dayStocks.成交值比重___,
+                      成交筆數 = dayStocks.成交筆數,
+                      成交量_股 = dayStocks.成交量_股_,
+                      成交量變動_比率 = dayStocks.成交量變動___,
+                      成交金額_元 = dayStocks.成交金額_元,
+                      振幅_比率 = dayStocks.振幅___,
+                      收盤價 = dayStocks.收盤價,
+                      日期 = dayStocks.日期,
+                      最低價 = dayStocks.最低價,
+                      最後委買價 = dayStocks.最後委買價,
+                      最後委賣價 = dayStocks.最後委賣價,
+                      最高價 = dayStocks.最高價,
+                      本益比 = dayStocks.本益比,
+                      漲停價 = dayStocks.漲停價,
+                      漲幅_比率 = dayStocks.漲幅___,
+                      漲跌 = dayStocks.漲跌,
+                      漲跌狀況 = dayStocks.漲跌狀況,
+                      總市值_億 = dayStocks.總市值_億_,
+                      股票代號 = dayStocks.股票代號,
+                      股票名稱 = dayStocks.股票名稱,
+                      跌停價 = dayStocks.跌停價,
+                      週轉率 = dayStocks.週轉率,
+                      開盤價 = dayStocks.開盤價,
+                  }).ToList();
+            CommonTable.DataSource = dayStock;
+            ShowDataNum(CommonTable);
+            DisplayTime.Text = $"Q2：{ShowTime(Stopwatch)}{Environment.NewLine}{DisplayTime.Text}";
         }
     }
 }

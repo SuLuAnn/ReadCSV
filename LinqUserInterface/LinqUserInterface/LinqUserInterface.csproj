@@ -70,6 +70,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DayStockChange.cs" />
     <Compile Include="ERPDto.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

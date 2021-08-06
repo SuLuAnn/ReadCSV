@@ -37,6 +37,11 @@
             this.IndustryName = new System.Windows.Forms.TextBox();
             this.MarketName = new System.Windows.Forms.TextBox();
             this.DayCheckChangePage = new System.Windows.Forms.TabPage();
+            this.StockIDNameMenu = new System.Windows.Forms.TextBox();
+            this.CycleDayMenu = new System.Windows.Forms.TextBox();
+            this.DayButton = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.CycleDay = new System.Windows.Forms.TextBox();
             this.DayPERPage = new System.Windows.Forms.TabPage();
             this.CheckPERButton = new System.Windows.Forms.Button();
             this.TargetPERMenu = new System.Windows.Forms.NumericUpDown();
@@ -46,19 +51,31 @@
             this.TargetPER = new System.Windows.Forms.TextBox();
             this.Cycle = new System.Windows.Forms.TextBox();
             this.ElectionStockPerformancePage = new System.Windows.Forms.TabPage();
+            this.RiseFallTop5Button = new System.Windows.Forms.Button();
+            this.Top5VolumeButton = new System.Windows.Forms.Button();
+            this.SameRankingButton = new System.Windows.Forms.Button();
+            this.RisingButton = new System.Windows.Forms.Button();
             this.DataTabControl = new System.Windows.Forms.TabControl();
             this.CommonPage = new System.Windows.Forms.TabPage();
             this.CommonTable = new System.Windows.Forms.DataGridView();
             this.PayMaxMinPage = new System.Windows.Forms.TabPage();
+            this.RiseFallTop5Table = new System.Windows.Forms.DataGridView();
             this.OriginalDataCalculatedPage = new System.Windows.Forms.TabPage();
+            this.OriginalDataTable = new System.Windows.Forms.DataGridView();
             this.DataNum = new System.Windows.Forms.TextBox();
             this.HeaderTabControl.SuspendLayout();
             this.IndustryDropDownPage.SuspendLayout();
+            this.DayCheckChangePage.SuspendLayout();
             this.DayPERPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TargetPERMenu)).BeginInit();
+            this.ElectionStockPerformancePage.SuspendLayout();
             this.DataTabControl.SuspendLayout();
             this.CommonPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CommonTable)).BeginInit();
+            this.PayMaxMinPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RiseFallTop5Table)).BeginInit();
+            this.OriginalDataCalculatedPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.OriginalDataTable)).BeginInit();
             this.SuspendLayout();
             // 
             // DisplayTime
@@ -152,6 +169,11 @@
             // 
             // DayCheckChangePage
             // 
+            this.DayCheckChangePage.Controls.Add(this.StockIDNameMenu);
+            this.DayCheckChangePage.Controls.Add(this.CycleDayMenu);
+            this.DayCheckChangePage.Controls.Add(this.DayButton);
+            this.DayCheckChangePage.Controls.Add(this.textBox1);
+            this.DayCheckChangePage.Controls.Add(this.CycleDay);
             this.DayCheckChangePage.Location = new System.Drawing.Point(4, 28);
             this.DayCheckChangePage.Name = "DayCheckChangePage";
             this.DayCheckChangePage.Padding = new System.Windows.Forms.Padding(3);
@@ -159,6 +181,56 @@
             this.DayCheckChangePage.TabIndex = 1;
             this.DayCheckChangePage.Text = "日收盤查詢及轉置";
             this.DayCheckChangePage.UseVisualStyleBackColor = true;
+            // 
+            // StockIDNameMenu
+            // 
+            this.StockIDNameMenu.Location = new System.Drawing.Point(693, 41);
+            this.StockIDNameMenu.Name = "StockIDNameMenu";
+            this.StockIDNameMenu.Size = new System.Drawing.Size(243, 29);
+            this.StockIDNameMenu.TabIndex = 4;
+            this.StockIDNameMenu.Text = "2330,2317,2610,台灣50";
+            // 
+            // CycleDayMenu
+            // 
+            this.CycleDayMenu.Location = new System.Drawing.Point(170, 41);
+            this.CycleDayMenu.Name = "CycleDayMenu";
+            this.CycleDayMenu.Size = new System.Drawing.Size(235, 29);
+            this.CycleDayMenu.TabIndex = 3;
+            this.CycleDayMenu.Text = "20150701-20151231";
+            // 
+            // DayButton
+            // 
+            this.DayButton.Location = new System.Drawing.Point(987, 36);
+            this.DayButton.Name = "DayButton";
+            this.DayButton.Size = new System.Drawing.Size(75, 34);
+            this.DayButton.TabIndex = 2;
+            this.DayButton.Text = "查詢";
+            this.DayButton.UseVisualStyleBackColor = true;
+            this.DayButton.Click += new System.EventHandler(this.ClickDayButton);
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.Color.White;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Font = new System.Drawing.Font("新細明體", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.textBox1.Location = new System.Drawing.Point(471, 43);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(229, 34);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "股票代號或名稱：";
+            // 
+            // CycleDay
+            // 
+            this.CycleDay.BackColor = System.Drawing.Color.White;
+            this.CycleDay.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.CycleDay.Font = new System.Drawing.Font("新細明體", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.CycleDay.Location = new System.Drawing.Point(85, 43);
+            this.CycleDay.Name = "CycleDay";
+            this.CycleDay.ReadOnly = true;
+            this.CycleDay.Size = new System.Drawing.Size(100, 34);
+            this.CycleDay.TabIndex = 0;
+            this.CycleDay.Text = "週期：";
             // 
             // DayPERPage
             // 
@@ -259,12 +331,52 @@
             // 
             // ElectionStockPerformancePage
             // 
+            this.ElectionStockPerformancePage.Controls.Add(this.RiseFallTop5Button);
+            this.ElectionStockPerformancePage.Controls.Add(this.Top5VolumeButton);
+            this.ElectionStockPerformancePage.Controls.Add(this.SameRankingButton);
+            this.ElectionStockPerformancePage.Controls.Add(this.RisingButton);
             this.ElectionStockPerformancePage.Location = new System.Drawing.Point(4, 28);
             this.ElectionStockPerformancePage.Name = "ElectionStockPerformancePage";
             this.ElectionStockPerformancePage.Size = new System.Drawing.Size(1272, 144);
             this.ElectionStockPerformancePage.TabIndex = 3;
             this.ElectionStockPerformancePage.Text = "總統大選類股表現";
             this.ElectionStockPerformancePage.UseVisualStyleBackColor = true;
+            // 
+            // RiseFallTop5Button
+            // 
+            this.RiseFallTop5Button.Location = new System.Drawing.Point(830, 44);
+            this.RiseFallTop5Button.Name = "RiseFallTop5Button";
+            this.RiseFallTop5Button.Size = new System.Drawing.Size(373, 30);
+            this.RiseFallTop5Button.TabIndex = 3;
+            this.RiseFallTop5Button.Text = "d.漲跌次數+漲跌連續天數是否在報酬率前五";
+            this.RiseFallTop5Button.UseVisualStyleBackColor = true;
+            // 
+            // Top5VolumeButton
+            // 
+            this.Top5VolumeButton.Location = new System.Drawing.Point(558, 44);
+            this.Top5VolumeButton.Name = "Top5VolumeButton";
+            this.Top5VolumeButton.Size = new System.Drawing.Size(223, 30);
+            this.Top5VolumeButton.TabIndex = 2;
+            this.Top5VolumeButton.Text = "c.成交量前五大的個股";
+            this.Top5VolumeButton.UseVisualStyleBackColor = true;
+            // 
+            // SameRankingButton
+            // 
+            this.SameRankingButton.Location = new System.Drawing.Point(280, 44);
+            this.SameRankingButton.Name = "SameRankingButton";
+            this.SameRankingButton.Size = new System.Drawing.Size(247, 30);
+            this.SameRankingButton.TabIndex = 1;
+            this.SameRankingButton.Text = "b.排名相同類股";
+            this.SameRankingButton.UseVisualStyleBackColor = true;
+            // 
+            // RisingButton
+            // 
+            this.RisingButton.Location = new System.Drawing.Point(22, 44);
+            this.RisingButton.Name = "RisingButton";
+            this.RisingButton.Size = new System.Drawing.Size(217, 30);
+            this.RisingButton.TabIndex = 0;
+            this.RisingButton.Text = "a.上漲所有類股查詢";
+            this.RisingButton.UseVisualStyleBackColor = true;
             // 
             // DataTabControl
             // 
@@ -301,6 +413,7 @@
             // 
             // PayMaxMinPage
             // 
+            this.PayMaxMinPage.Controls.Add(this.RiseFallTop5Table);
             this.PayMaxMinPage.Location = new System.Drawing.Point(4, 28);
             this.PayMaxMinPage.Name = "PayMaxMinPage";
             this.PayMaxMinPage.Padding = new System.Windows.Forms.Padding(3);
@@ -309,14 +422,41 @@
             this.PayMaxMinPage.Text = "Q4-d-類股報酬率最高、最低前五名";
             this.PayMaxMinPage.UseVisualStyleBackColor = true;
             // 
+            // RiseFallTop5Table
+            // 
+            this.RiseFallTop5Table.AllowUserToAddRows = false;
+            this.RiseFallTop5Table.AllowUserToDeleteRows = false;
+            this.RiseFallTop5Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.RiseFallTop5Table.Location = new System.Drawing.Point(6, 3);
+            this.RiseFallTop5Table.Name = "RiseFallTop5Table";
+            this.RiseFallTop5Table.ReadOnly = true;
+            this.RiseFallTop5Table.RowHeadersWidth = 62;
+            this.RiseFallTop5Table.RowTemplate.Height = 31;
+            this.RiseFallTop5Table.Size = new System.Drawing.Size(1532, 538);
+            this.RiseFallTop5Table.TabIndex = 0;
+            // 
             // OriginalDataCalculatedPage
             // 
+            this.OriginalDataCalculatedPage.Controls.Add(this.OriginalDataTable);
             this.OriginalDataCalculatedPage.Location = new System.Drawing.Point(4, 28);
             this.OriginalDataCalculatedPage.Name = "OriginalDataCalculatedPage";
             this.OriginalDataCalculatedPage.Size = new System.Drawing.Size(1544, 547);
             this.OriginalDataCalculatedPage.TabIndex = 2;
             this.OriginalDataCalculatedPage.Text = "Q4-d-計算後原始資料";
             this.OriginalDataCalculatedPage.UseVisualStyleBackColor = true;
+            // 
+            // OriginalDataTable
+            // 
+            this.OriginalDataTable.AllowUserToAddRows = false;
+            this.OriginalDataTable.AllowUserToDeleteRows = false;
+            this.OriginalDataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.OriginalDataTable.Location = new System.Drawing.Point(4, 4);
+            this.OriginalDataTable.Name = "OriginalDataTable";
+            this.OriginalDataTable.ReadOnly = true;
+            this.OriginalDataTable.RowHeadersWidth = 62;
+            this.OriginalDataTable.RowTemplate.Height = 31;
+            this.OriginalDataTable.Size = new System.Drawing.Size(1537, 540);
+            this.OriginalDataTable.TabIndex = 0;
             // 
             // DataNum
             // 
@@ -343,12 +483,19 @@
             this.HeaderTabControl.ResumeLayout(false);
             this.IndustryDropDownPage.ResumeLayout(false);
             this.IndustryDropDownPage.PerformLayout();
+            this.DayCheckChangePage.ResumeLayout(false);
+            this.DayCheckChangePage.PerformLayout();
             this.DayPERPage.ResumeLayout(false);
             this.DayPERPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TargetPERMenu)).EndInit();
+            this.ElectionStockPerformancePage.ResumeLayout(false);
             this.DataTabControl.ResumeLayout(false);
             this.CommonPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.CommonTable)).EndInit();
+            this.PayMaxMinPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.RiseFallTop5Table)).EndInit();
+            this.OriginalDataCalculatedPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.OriginalDataTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -380,6 +527,17 @@
         private System.Windows.Forms.NumericUpDown TargetPERMenu;
         private System.Windows.Forms.ComboBox ERPIndustryMenu;
         private System.Windows.Forms.TextBox CycleMenu;
+        private System.Windows.Forms.TextBox CycleDay;
+        private System.Windows.Forms.Button DayButton;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox StockIDNameMenu;
+        private System.Windows.Forms.TextBox CycleDayMenu;
+        private System.Windows.Forms.Button RiseFallTop5Button;
+        private System.Windows.Forms.Button Top5VolumeButton;
+        private System.Windows.Forms.Button SameRankingButton;
+        private System.Windows.Forms.Button RisingButton;
+        private System.Windows.Forms.DataGridView RiseFallTop5Table;
+        private System.Windows.Forms.DataGridView OriginalDataTable;
     }
 }
 
