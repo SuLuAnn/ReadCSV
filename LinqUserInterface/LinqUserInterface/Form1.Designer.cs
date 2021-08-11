@@ -350,6 +350,7 @@
             this.RiseFallTop5Button.TabIndex = 3;
             this.RiseFallTop5Button.Text = "d.漲跌次數+漲跌連續天數是否在報酬率前五";
             this.RiseFallTop5Button.UseVisualStyleBackColor = true;
+            this.RiseFallTop5Button.Click += new System.EventHandler(this.ClickRiseFallTop5Button);
             // 
             // Top5VolumeButton
             // 
@@ -359,6 +360,7 @@
             this.Top5VolumeButton.TabIndex = 2;
             this.Top5VolumeButton.Text = "c.成交量前五大的個股";
             this.Top5VolumeButton.UseVisualStyleBackColor = true;
+            this.Top5VolumeButton.Click += new System.EventHandler(this.ClickTop5VolumeButton);
             // 
             // SameRankingButton
             // 

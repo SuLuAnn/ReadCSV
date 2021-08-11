@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace LinqUserInterface.Dto
 {
     /// <summary>
-    /// 呈現Q4-b排名相同類股分頁的資訊
+    /// 呈現Q.4-d共用頁的物件
     /// </summary>
-    public class RateReturn
+    public class IndividualStockDto
     {
         /// <summary>
         /// 年度
@@ -27,13 +27,13 @@ namespace LinqUserInterface.Dto
         public string 類股股票名稱 { get; set; }
 
         /// <summary>
-        /// 報酬率
+        ///  項目
         /// </summary>
-        public decimal? 報酬率 { get; set; }
+        public string 項目 { get; set; }
 
         /// <summary>
-        /// 報酬率排名
+        /// 是否存在
         /// </summary>
-        public int 報酬率排名 { get; set; }
+        public string 是否存在 { get; set; }
     }
 }

@@ -70,9 +70,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Dto\DayDto.cs" />
-    <Compile Include="Dto\DayStockChangeDto.cs" />
     <Compile Include="Dto\ERPDto.cs" />
+    <Compile Include="Dto\IndividualStockDto.cs" />
+    <Compile Include="Dto\KindRateDto.cs" />
+    <Compile Include="Dto\OriginalDataDto.cs" />
+    <Compile Include="Dto\RiseFallDto.cs" />
+    <Compile Include="Dto\RiseFallTop5Dto.cs" />
+    <Compile Include="Dto\Top5VolumeDto.cs" />
     <Compile Include="Dto\RateReturn.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

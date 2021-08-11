@@ -1,0 +1,16 @@
+C:\Users\a0920\source\repos\LinqObj\LinqObj\bin\Debug\net5.0\LinqObj.exe
+C:\Users\a0920\source\repos\LinqObj\LinqObj\bin\Debug\net5.0\LinqObj.deps.json
+C:\Users\a0920\source\repos\LinqObj\LinqObj\bin\Debug\net5.0\LinqObj.runtimeconfig.json
+C:\Users\a0920\source\repos\LinqObj\LinqObj\bin\Debug\net5.0\LinqObj.runtimeconfig.dev.json
+C:\Users\a0920\source\repos\LinqObj\LinqObj\bin\Debug\net5.0\LinqObj.dll
+C:\Users\a0920\source\repos\LinqObj\LinqObj\bin\Debug\net5.0\ref\LinqObj.dll
+C:\Users\a0920\source\repos\LinqObj\LinqObj\bin\Debug\net5.0\LinqObj.pdb
+C:\Users\a0920\source\repos\LinqObj\LinqObj\obj\Debug\net5.0\LinqObj.csproj.AssemblyReference.cache
+C:\Users\a0920\source\repos\LinqObj\LinqObj\obj\Debug\net5.0\LinqObj.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\a0920\source\repos\LinqObj\LinqObj\obj\Debug\net5.0\LinqObj.AssemblyInfoInputs.cache
+C:\Users\a0920\source\repos\LinqObj\LinqObj\obj\Debug\net5.0\LinqObj.AssemblyInfo.cs
+C:\Users\a0920\source\repos\LinqObj\LinqObj\obj\Debug\net5.0\LinqObj.csproj.CoreCompileInputs.cache
+C:\Users\a0920\source\repos\LinqObj\LinqObj\obj\Debug\net5.0\LinqObj.dll
+C:\Users\a0920\source\repos\LinqObj\LinqObj\obj\Debug\net5.0\ref\LinqObj.dll
+C:\Users\a0920\source\repos\LinqObj\LinqObj\obj\Debug\net5.0\LinqObj.pdb
+C:\Users\a0920\source\repos\LinqObj\LinqObj\obj\Debug\net5.0\LinqObj.genruntimeconfig.cache

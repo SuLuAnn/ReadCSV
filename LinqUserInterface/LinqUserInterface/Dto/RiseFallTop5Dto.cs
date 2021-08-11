@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinqUserInterface
+namespace LinqUserInterface.Dto
 {
     /// <summary>
-    /// 呈現4-a上漲所有類股查詢分頁的物件
+    /// 呈現Q4-d類股報酬率最高、最低前五名分頁資訊
     /// </summary>
-    public class RiseStockDto
+    public class RiseFallTop5Dto
     {
         /// <summary>
         /// 年度
@@ -27,28 +27,18 @@ namespace LinqUserInterface
         public string 類股股票名稱 { get; set; }
 
         /// <summary>
-        /// 第30個交易日日期
+        /// 報酬率
         /// </summary>
-        public string 第30個交易日日期 { get; set; }
+        public decimal? 報酬率 { get; set; }
 
         /// <summary>
-        /// 第30個交易日收盤價
+        /// 項目
         /// </summary>
-        public decimal? 第30個交易日收盤價 { get; set; }
+        public string 項目 { get; set; }
 
         /// <summary>
-        /// 第1個交易日日期
+        /// 排名
         /// </summary>
-        public string 第1個交易日日期 { get; set; }
-
-        /// <summary>
-        /// 第1個交易日收盤價
-        /// </summary>
-        public decimal? 第1個交易日收盤價 { get; set; }
-
-        /// <summary>
-        /// 股價漲跌
-        /// </summary>
-        public decimal? 股價漲跌 { get; set; }
+        public int 排名 { get; set; }
     }
 }
