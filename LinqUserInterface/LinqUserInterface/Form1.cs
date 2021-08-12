@@ -444,8 +444,6 @@ namespace LinqUserInterface
         private List<Top5VolumeDto> GetTop5Volume(string targetDay, IEnumerable<Top5VolumeDto> sameStock)
         {
             List<string> dayInterval = GetPresidentialDay(targetDay, TRADING_DAY_30TH);
-            string LastDay = dayInterval.Last();
-            string FirstDay = dayInterval.First();
             string targetYear = targetDay.Substring(0, YEAR_WORDS);
             var sameData = sameStock.Where(same => same.年度 == targetYear)
                 .Select(same => new
@@ -456,35 +454,32 @@ namespace LinqUserInterface
                         same.產業代號,
                         StockDB.日收盤.FirstOrDefault(stock => stock.股票代號 == same.類股股票代號).上市櫃
                     });
-            return StockDB.日收盤.Where(stock => string.Compare(stock.日期, FirstDay) >= 0 && string.Compare(stock.日期, LastDay) <= 0 && stock.產業代號 != null).AsEnumerable()
-            .Join(sameData, stock => new { stock.產業代號, stock.上市櫃 }, same => new { same.產業代號, same.上市櫃 }, (stock, same) => new
-            {
-                same.年度,
-                same.類股股票代號,
-                same.類股股票名稱,
-                stock.股票代號,
-                stock.股票名稱,
-                stock.產業代號,
-                stock.成交量
-            })
-            .GroupBy(stock => new
-                {
-                    stock.年度,
-                    stock.類股股票代號,
-                    stock.股票代號,
-                    stock.產業代號
-                },
-                (key, data) => new Top5VolumeDto
-                    {
-                        年度 = key.年度,
-                        類股股票代號 = key.類股股票代號,
-                        類股股票名稱 = data.FirstOrDefault().類股股票名稱,
-                        股票代號 = key.股票代號,
-                        股票名稱 = data.FirstOrDefault().股票名稱,
-                        產業代號 = key.產業代號,
-                        平均成交量 = data.Average(item => (decimal)item.成交量)
-                    })
-            .OrderByDescending(stock => stock.平均成交量).Take(TOP_5).ToList();
+            return StockDB.日收盤.Where(stock => dayInterval.Contains(stock.日期) && stock.產業代號 != null)
+                            .GroupBy(stock => new
+                                {
+                                    stock.股票代號,
+                                    stock.產業代號,
+                                    stock.上市櫃
+                                },
+                                (key, data) => new
+                                {
+                                    key.上市櫃,
+                                    key.股票代號,
+                                    data.FirstOrDefault().股票名稱,
+                                    key.產業代號,
+                                    平均成交量 = data.Average(item => (decimal)item.成交量)
+                                }).AsEnumerable()
+                                .Join(sameData, stock => new { stock.產業代號, stock.上市櫃 }, same => new { same.產業代號, same.上市櫃 }, (stock, same) => new Top5VolumeDto
+                                    {
+                                        年度 = same.年度,
+                                        類股股票代號 = same.類股股票代號,
+                                        類股股票名稱 = same.類股股票名稱,
+                                        股票代號 = stock.股票代號,
+                                        股票名稱 = stock.股票名稱,
+                                        產業代號 = stock.產業代號,
+                                        平均成交量 = stock.平均成交量
+                                    })
+                                .OrderByDescending(stock => stock.平均成交量).Take(TOP_5).ToList();
         }
 
         /// <summary>
