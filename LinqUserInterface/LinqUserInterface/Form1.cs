@@ -224,7 +224,7 @@ namespace LinqUserInterface
                 .ToDictionary(industry =>
                 industry.FirstOrDefault(item => item.名稱.Length == industry.Min(record => record.名稱.Length)).名稱, industry => industry.Key);
             ERPIndustryMenu.DataSource = new BindingSource(list, null);
-            DisplayTime.Text = $"Q3-下拉選單建立：{(Stopwatch)}{Environment.NewLine}{DisplayTime.Text}";
+            DisplayTime.Text = $"Q3-下拉選單建立：{(ShowTime())}{Environment.NewLine}{DisplayTime.Text}";
         }
 
         /// <summary>
@@ -531,6 +531,8 @@ namespace LinqUserInterface
         private void ClickRiseFallTop5Button(object sender, EventArgs e)
         {
             Stopwatch.Restart();
+            CommonTable.Rows.Clear();
+            CommonTable.Columns.Clear();
             List<RiseFallDto> riseFall2008 = RiseFall(PRESIDENTIAL_DATE_2008).ToList();
             List<KindRateDto> kinds2008 = GetRate(PRESIDENTIAL_DATE_2008, TRADING_DAY_100TH).ToList();
             List<RiseFallDto> riseFall2012 = RiseFall(PRESIDENTIAL_DATE_2012).ToList();
@@ -543,8 +545,8 @@ namespace LinqUserInterface
             IEnumerable<OriginalDataDto> originalTop2012 = GetRiseOriginalData(riseFall2012, kinds2012);
             IEnumerable<OriginalDataDto> originalAfter2008 = GetFallOriginalData(riseFall2008, kinds2008);
             IEnumerable<OriginalDataDto> originalAfter2012 = GetFallOriginalData(riseFall2012, kinds2012);
-            RiseFallTop5Table.DataSource = riseTop2008.Union(riseAfter2008).Union(riseTop2012).Union(riseAfter2012).ToList();
-            OriginalDataTable.DataSource = originalTop2008.Union(originalAfter2008).Union(originalTop2012).Union(originalAfter2012).ToList();
+            RiseFallTop5Table.DataSource = new BindingList<RiseFallTop5Dto>(riseTop2008.Union(riseAfter2008).Union(riseTop2012).Union(riseAfter2012).ToList());
+            OriginalDataTable.DataSource = new BindingList<OriginalDataDto>(originalTop2008.Union(originalAfter2008).Union(originalTop2012).Union(originalAfter2012).ToList());
             CommonTable.DataSource = new BindingList<IndividualStockDto>(
                 GetIndividualStocks(riseTop2008, originalTop2008)
                 .Union(GetIndividualStocks(riseAfter2008, originalAfter2008))

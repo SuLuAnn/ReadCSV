@@ -19,7 +19,9 @@ namespace LinqObj
             {
                 Console.WriteLine(obj);
             }
+            Console.WriteLine("_______________________________________");
             Console.WriteLine(linqObject.GetMaxNum());
+            Console.WriteLine("_______________________________________");
             var list = linqObject.MyWhere(i => i < 50);
             foreach (var item in list)
             {

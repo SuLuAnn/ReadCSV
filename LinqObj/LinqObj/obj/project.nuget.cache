@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "odvZDwBLWUua4wcXJ6dQKyEiLboX7RE9AbZIE4w0rmDiocUV/a15uj3Maf9OF4db8WY8mPTctDpwe4iuhCcQDw==",
+  "dgSpecHash": "v0XuWpTxGJ0/TVUzOjpxSOyTmYc3s7kWlVQM/vz8FyfH6UUvZnBLT/kwT0x85oE89xttmpriIFbZOhvMMCH8lQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\a0920\\source\\repos\\LinqObj\\LinqObj\\LinqObj.csproj",
+  "projectFilePath": "C:\\Users\\a0920\\source\\repos\\ReadCSV\\LinqObj\\LinqObj\\LinqObj.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
