@@ -67,7 +67,7 @@ namespace LinqUserInterface
         /// <summary>
         /// 計時器
         /// </summary>
-        private static Stopwatch Stopwatch;
+        private Stopwatch Stopwatch;
 
         /// <summary>
         /// 建構子，建立winform UI
@@ -98,12 +98,13 @@ namespace LinqUserInterface
         private void DisplayMarketMenu(object sender, EventArgs e)
         {
             Stopwatch.Restart();
-            Dictionary<string, Dictionary<string, List<交易所產業分類代號表>>> IndustryClassification = StockDB.交易所產業分類代號表
+            Dictionary<string, Dictionary<string, List<交易所產業分類代號表>>> IndustryClassification =Enumerable.Repeat(StockDB.交易所產業分類代號表
                 .GroupBy(industry => industry.市場別)
                 .ToDictionary(industries => industries.First().市場別名稱, markets => markets
-                    .GroupBy(industry => industry.名稱).ToDictionary(item => item.Key, item => item.ToList()));
-            var noClassification = IndustryClassification.SelectMany(Industry => Industry.Value.Values.SelectMany(item => item)).ToList();
-            IndustryClassification.Add(NO_CLASSIFICATION, new Dictionary<string, List<交易所產業分類代號表>> { { NO_CLASSIFICATION, noClassification } });
+                    .GroupBy(industry => industry.名稱).ToDictionary(item => item.Key, item => item.ToList())), 2).Aggregate((first, second) => {
+                        first.Add(NO_CLASSIFICATION, new Dictionary<string, List<交易所產業分類代號表>> { { NO_CLASSIFICATION, second.SelectMany(Industry => Industry.Value.Values.SelectMany(item => item)).ToList() } });
+                        return first; });
+            
             MarketMenu.DisplayMember = "Key";
             MarketMenu.ValueMember = "Value";
             MarketMenu.DataSource = new BindingSource(IndustryClassification, null);
@@ -138,7 +139,8 @@ namespace LinqUserInterface
             Stopwatch.Restart();
             CommonTable.Columns.Clear();
             CommonTable.Rows.Clear();
-            CommonTable.DataSource = new BindingList<交易所產業分類代號表>((List<交易所產業分類代號表>)IndustryMenu.SelectedValue);
+            //這邊用BindingList是因為先查水泥產業在查無所屬會報錯
+            CommonTable.DataSource = new BindingList<交易所產業分類代號表>( (List<交易所產業分類代號表>)IndustryMenu.SelectedValue);
             ShowDataNum(CommonTable);
             DisplayTime.Text = $"Q1：{ShowTime()}{Environment.NewLine}{DisplayTime.Text}";
         }
@@ -157,14 +159,17 @@ namespace LinqUserInterface
             string last = days.LastOrDefault();
             string[] keyWords = StockIDNameMenu.Text.Split(',');
             List<日收盤> dayStock = StockDB.日收盤
-                .Where(data => (keyWords.Contains(data.股票代號) || keyWords.Contains(data.股票名稱)) && string.Compare(data.日期, first) >= 0 
-                && string.Compare(data.日期, last) <= 0)
-                .OrderByDescending(stock => stock.日期).ThenBy(stock => stock.股票代號).ToList()
+                .Where(data => (keyWords.Contains(data.股票代號) || keyWords.Contains(data.股票名稱)) 
+                                                && string.Compare(data.日期, first) >= 0  
+                                                && string.Compare(data.日期, last) <= 0)
+                .OrderByDescending(stock => stock.日期)
+                .ThenBy(stock => stock.股票代號).ToList()
                 .Select((dayStocks, index) =>
                     {
                           CommonTable.Columns.Add(index.ToString(), index.ToString());
                           return dayStocks;
-                      }).ToList();
+                      })
+                .ToList();
             CommonTable.Columns.Add(dayStock.Count().ToString(), dayStock.Count().ToString());
             CommonTable.Rows.Add(dayStock.Select(stock => stock.日期).Prepend("日期").ToArray());
             CommonTable.Rows.Add(dayStock.Select(stock => stock.股票代號).Prepend("股票代號").ToArray());
@@ -221,8 +226,8 @@ namespace LinqUserInterface
                 .Where(industry => marketNum.Contains(industry.市場別))
                 .GroupBy(industry => industry.代號)
                 .OrderBy(industry => industry.Key)
-                .ToDictionary(industry =>
-                industry.FirstOrDefault(item => item.名稱.Length == industry.Min(record => record.名稱.Length)).名稱, industry => industry.Key);
+                .ToDictionary(industry => industry.FirstOrDefault(item => item.名稱.Length == industry.Min(record => record.名稱.Length)).名稱
+                                        , industry => industry.Key);
             ERPIndustryMenu.DataSource = new BindingSource(list, null);
             DisplayTime.Text = $"Q3-下拉選單建立：{(ShowTime())}{Environment.NewLine}{DisplayTime.Text}";
         }
@@ -248,13 +253,14 @@ namespace LinqUserInterface
             {
                 return;
             }
-            IOrderedEnumerable<ERPDto> records = StockDB.日收盤.Where(data => data.產業代號 == industryCode && string.Compare(data.日期, first) >= 0
+           IOrderedEnumerable<ERPDto> records = StockDB.日收盤.Where(data => data.產業代號 == industryCode && string.Compare(data.日期, first) >= 0
                  && string.Compare(data.日期, last) <= 0).GroupBy(data => data.股票代號, data => data, (stockID, stocks) => new ERPDto
                  {
                      股票代號 = stockID,
                      股票名稱 = stocks.Where(stock => stock.股票名稱.Length == stocks.Min(item => item.股票名稱.Length)).FirstOrDefault().股票名稱,
                      平均本益比 = decimal.Round((decimal)(stocks.Average(erp => erp.本益比)), decimalPlaces)
                  }).ToList().Where(data => data.平均本益比 > targetERP).OrderByDescending(data => data.平均本益比);
+            //ToList()放這原因:https://www.notion.so/Q3_ClickCheckPERButton-03114dacc81f498da2bdf369c9996823
             List<ERPDto> top20 = records.Take(TOP_20).ToList();
             top20.AddRange(records.Skip(TOP_20).OrderBy(data => data.平均本益比).Take(TOP_20));
             CommonTable.DataSource = new BindingList<ERPDto>(top20);
@@ -379,14 +385,13 @@ namespace LinqUserInterface
         /// <returns>排好名的類股</returns>
         private IEnumerable<RateReturn> GetRateReturns(IEnumerable<KindRateDto> kindStocks)
         {
-            int first = 1;
             return kindStocks.Select((stock, index) => new RateReturn
                 {
                     年度 = stock.年度,
                     類股股票代號 = stock.類股股票代號,
                     類股股票名稱 = stock.類股股票名稱,
                     報酬率 = stock.報酬率,
-                    報酬率排名 = index + first
+                    報酬率排名 = index + 1
                 });
         }
 
@@ -452,7 +457,7 @@ namespace LinqUserInterface
                         same.類股股票代號,
                         same.類股股票名稱,
                         same.產業代號,
-                        StockDB.日收盤.FirstOrDefault(stock => stock.股票代號 == same.類股股票代號).上市櫃
+                       上市櫃 = StockDB.日收盤.FirstOrDefault(stock => stock.股票代號 == same.類股股票代號).上市櫃
                     });
             return StockDB.日收盤.Where(stock => dayInterval.Contains(stock.日期) && stock.產業代號 != null)
                             .GroupBy(stock => new
@@ -469,16 +474,19 @@ namespace LinqUserInterface
                                     key.產業代號,
                                     平均成交量 = data.Average(item => (decimal)item.成交量)
                                 }).AsEnumerable()
-                                .Join(sameData, stock => new { stock.產業代號, stock.上市櫃 }, same => new { same.產業代號, same.上市櫃 }, (stock, same) => new Top5VolumeDto
-                                    {
-                                        年度 = same.年度,
-                                        類股股票代號 = same.類股股票代號,
-                                        類股股票名稱 = same.類股股票名稱,
-                                        股票代號 = stock.股票代號,
-                                        股票名稱 = stock.股票名稱,
-                                        產業代號 = stock.產業代號,
-                                        平均成交量 = stock.平均成交量
-                                    })
+                                .Join(sameData,
+                                                stock => new { stock.產業代號, stock.上市櫃 },
+                                                same => new { same.產業代號, same.上市櫃 },
+                                                (stock, same) => new Top5VolumeDto
+                                                    {
+                                                        年度 = same.年度,
+                                                        類股股票代號 = same.類股股票代號,
+                                                        類股股票名稱 = same.類股股票名稱,
+                                                        股票代號 = stock.股票代號,
+                                                        股票名稱 = stock.股票名稱,
+                                                        產業代號 = stock.產業代號,
+                                                        平均成交量 = stock.平均成交量
+                                                    })
                                 .OrderByDescending(stock => stock.平均成交量).Take(TOP_5).ToList();
         }
 
@@ -564,7 +572,6 @@ namespace LinqUserInterface
         /// <returns>報酬率大於0前5名類股</returns>
         private IEnumerable<RiseFallTop5Dto> RiseFallTop5( List<KindRateDto> kinds)
         {
-            int first = 1;
             IEnumerable<RiseFallTop5Dto> top5 = kinds.Where(kind => kind.報酬率 > 0).Take(TOP_5)
                 .Select((top, index) => new RiseFallTop5Dto
                     {
@@ -573,8 +580,8 @@ namespace LinqUserInterface
                     類股股票名稱 = top.類股股票名稱,
                     報酬率 = top.報酬率,
                     項目 = "最高",
-                    排名 = index + first
-                    });
+                    排名 = index + 1
+                });
             return top5;
         }
 
@@ -585,7 +592,6 @@ namespace LinqUserInterface
         /// <returns>酬率小於0後5名類股</returns>
         private IEnumerable<RiseFallTop5Dto> RiseFallAfter5( List<KindRateDto> kinds)
         {
-            int first = 1;
             IEnumerable<RiseFallTop5Dto> after5 = kinds.Where(kind => kind.報酬率 < 0)
                 .OrderBy(kind => kind.報酬率).Take(5)
                 .Select((after, index) => new RiseFallTop5Dto
@@ -595,7 +601,7 @@ namespace LinqUserInterface
                     類股股票名稱 = after.類股股票名稱,
                     報酬率 = after.報酬率,
                     項目 = "最低",
-                    排名 = index + first
+                    排名 = index + 1
                 });
             return after5;
         }
@@ -792,7 +798,7 @@ namespace LinqUserInterface
         /// 顯示時間
         /// </summary>
         /// <returns></returns>
-        private static string ShowTime()
+        private string ShowTime()
         {
             Stopwatch.Stop();
             return Stopwatch.ElapsedMilliseconds.ToString();
