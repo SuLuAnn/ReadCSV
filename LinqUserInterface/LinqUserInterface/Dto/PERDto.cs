@@ -9,7 +9,7 @@ namespace LinqUserInterface
     /// <summary>
     /// 呈現Q3"日收盤本益比優劣榜"的物件
     /// </summary>
-    public class ERPDto
+    public class PERDto
     {
         /// <summary>
         /// 股票代號
