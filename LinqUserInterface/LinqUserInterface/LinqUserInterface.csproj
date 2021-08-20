@@ -72,6 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Dto\OriginalDto.cs" />
     <Compile Include="Dto\PERDto.cs" />
     <Compile Include="Dto\IndividualStockDto.cs" />
     <Compile Include="Dto\KindRateDto.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="Global.cs" />
     <Compile Include="MarketIndustryQuery.cs" />
     <Compile Include="PERList.cs" />
-    <Compile Include="PresidentialElectionPerformance.cs" />
+    <Compile Include="PresidentialPerformance.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Dto\RiseStockDto.cs" />

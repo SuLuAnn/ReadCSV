@@ -1,6 +1,9 @@
 ﻿namespace LinqUserInterface
 {
-    partial class LINQTraning
+    /// <summary>
+    /// 主程式
+    /// </summary>
+    public partial class LINQTraning
     {
         /// <summary>
         /// 設計工具所需的變數。
@@ -28,6 +31,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DisplayTime = new System.Windows.Forms.TextBox();
             this.HeaderTabControl = new System.Windows.Forms.TabControl();
             this.IndustryDropDownPage = new System.Windows.Forms.TabPage();
@@ -436,7 +440,19 @@
             // CommonTable
             // 
             this.CommonTable.AllowUserToAddRows = false;
-            this.CommonTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.CommonTable.AllowUserToDeleteRows = false;
+            this.CommonTable.AllowUserToResizeColumns = false;
+            this.CommonTable.AllowUserToResizeRows = false;
+            this.CommonTable.ColumnHeadersHeight = 34;
+            this.CommonTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("新細明體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.CommonTable.DefaultCellStyle = dataGridViewCellStyle3;
             this.CommonTable.Location = new System.Drawing.Point(2, 2);
             this.CommonTable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.CommonTable.Name = "CommonTable";
@@ -461,7 +477,9 @@
             // 
             this.RiseFallTop5Table.AllowUserToAddRows = false;
             this.RiseFallTop5Table.AllowUserToDeleteRows = false;
-            this.RiseFallTop5Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.RiseFallTop5Table.AllowUserToResizeColumns = false;
+            this.RiseFallTop5Table.AllowUserToResizeRows = false;
+            this.RiseFallTop5Table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.RiseFallTop5Table.Location = new System.Drawing.Point(4, 2);
             this.RiseFallTop5Table.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.RiseFallTop5Table.Name = "RiseFallTop5Table";
@@ -486,7 +504,9 @@
             // 
             this.OriginalDataTable.AllowUserToAddRows = false;
             this.OriginalDataTable.AllowUserToDeleteRows = false;
-            this.OriginalDataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.OriginalDataTable.AllowUserToResizeColumns = false;
+            this.OriginalDataTable.AllowUserToResizeRows = false;
+            this.OriginalDataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.OriginalDataTable.Location = new System.Drawing.Point(3, 3);
             this.OriginalDataTable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.OriginalDataTable.Name = "OriginalDataTable";

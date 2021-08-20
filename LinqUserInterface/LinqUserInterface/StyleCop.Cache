@@ -6,59 +6,6 @@
   <project key="-334572508">
     <configuration>DEBUG;TRACE</configuration>
   </project>
-  <project key="-1319860945">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
-  <sourcecode name="DatabaseModel.Designer.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:37.534</sourceFile>
-      <parser>2021/07/27 11:03:03.041</parser>
-      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
-      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
-  <sourcecode name="DatabaseModel.cs" parser="StyleCop.CSharp.CsParser">
-    <timestamps>
-      <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.869</sourceFile>
-      <parser>2021/07/27 11:03:03.041</parser>
-      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
-      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
-      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
-      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
-      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
-      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
-      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
-      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
-      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
-      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
-      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
-      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
-      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
-      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
-      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
-      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
-    </timestamps>
-    <violations />
-  </sourcecode>
   <sourcecode name="ERPDto.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
@@ -84,11 +31,89 @@
     </timestamps>
     <violations />
   </sourcecode>
+  <project key="-1319860945">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
+  <sourcecode name="DailyTranspose.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2021/07/27 11:03:03.041</styleCop>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/19 16:10:08.842</sourceFile>
+      <parser>2021/07/27 11:03:03.041</parser>
+      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
+      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="DatabaseModel.Designer.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2021/07/27 11:03:03.041</styleCop>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
+      <parser>2021/07/27 11:03:03.041</parser>
+      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
+      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="DatabaseModel.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2021/07/27 11:03:03.041</styleCop>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
+      <parser>2021/07/27 11:03:03.041</parser>
+      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
+      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
   <sourcecode name="IndividualStockDto.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.871</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -112,8 +137,8 @@
   <sourcecode name="KindRateDto.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.871</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -137,8 +162,8 @@
   <sourcecode name="KindStockDto.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.871</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -162,8 +187,58 @@
   <sourcecode name="OriginalDataDto.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.871</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
+      <parser>2021/07/27 11:03:03.041</parser>
+      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
+      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="OriginalDto.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2021/07/27 11:03:03.041</styleCop>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/17 12:38:20.223</sourceFile>
+      <parser>2021/07/27 11:03:03.041</parser>
+      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
+      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="PERDto.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2021/07/27 11:03:03.041</styleCop>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/19 20:03:48.781</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -187,8 +262,8 @@
   <sourcecode name="RateReturn.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.871</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/17 12:41:44.801</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -212,8 +287,8 @@
   <sourcecode name="RiseFallDto.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.872</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -237,8 +312,8 @@
   <sourcecode name="RiseFallTop5Dto.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.872</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -262,8 +337,8 @@
   <sourcecode name="RiseStockDto.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.872</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -287,8 +362,108 @@
   <sourcecode name="Top5VolumeDto.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.872</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/16 13:15:28.829</sourceFile>
+      <parser>2021/07/27 11:03:03.041</parser>
+      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
+      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="Global.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2021/07/27 11:03:03.041</styleCop>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/19 09:08:05.588</sourceFile>
+      <parser>2021/07/27 11:03:03.041</parser>
+      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
+      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="MarketIndustryQuery.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2021/07/27 11:03:03.041</styleCop>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/19 17:39:41.985</sourceFile>
+      <parser>2021/07/27 11:03:03.041</parser>
+      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
+      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="PERList.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2021/07/27 11:03:03.041</styleCop>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/20 08:38:48.692</sourceFile>
+      <parser>2021/07/27 11:03:03.041</parser>
+      <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2021/07/27 11:03:03.041</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2021/07/27 11:03:03.041</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2021/07/27 11:03:03.041</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+      <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
+      <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
+    </timestamps>
+    <violations />
+  </sourcecode>
+  <sourcecode name="PresidentialPerformance.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2021/07/27 11:03:03.041</styleCop>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/19 17:37:59.511</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -312,8 +487,8 @@
   <sourcecode name="Program.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.874</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -337,8 +512,8 @@
   <sourcecode name="AssemblyInfo.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.874</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -362,8 +537,8 @@
   <sourcecode name="Resources.Designer.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:37.870</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -387,8 +562,8 @@
   <sourcecode name="DatabaseModel.Context.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.868</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -412,8 +587,8 @@
   <sourcecode name="日收盤.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.997</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -437,8 +612,8 @@
   <sourcecode name="代號表指數.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.997</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -462,8 +637,8 @@
   <sourcecode name="交易所產業分類代號表.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.997</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -487,8 +662,8 @@
   <sourcecode name="Form1.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:57:39.930</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/19 18:38:51.687</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -507,61 +682,13 @@
       <StyleCopCustomRules.CMoneyRules>2021/07/27 11:03:03.041</StyleCopCustomRules.CMoneyRules>
       <StyleCopCustomRules.CMoneyRules.FilesHashCode>0</StyleCopCustomRules.CMoneyRules.FilesHashCode>
     </timestamps>
-    <violations>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="CurlyBracketsForMultiLineStatementsMustNotShareLine" ruleCheckId="SA1500">
-        <context>If a statement spans multiple lines, the opening curly bracket must be placed on its own line.</context>
-        <line>104</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.LayoutRules" rule="CurlyBracketsForMultiLineStatementsMustNotShareLine" ruleCheckId="SA1500">
-        <context>If a statement spans multiple lines, the closing curly bracket must be placed on its own line.</context>
-        <line>106</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SymbolsMustBeSpacedCorrectly" ruleCheckId="SA1003">
-        <context>The spacing around the symbol '=' is invalid.</context>
-        <line>101</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCopCustomRules.CMoneyRules" rule="MethodMustBeShort" ruleCheckId="CM1003">
-        <context>Method is too long: ClickDayButton</context>
-        <line>153</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.SpacingRules" rule="CommasMustBeSpacedCorrectly" ruleCheckId="SA1001">
-        <context>Invalid spacing around the comma.</context>
-        <line>230</line>
-        <index>11178</index>
-        <endIndex>11178</endIndex>
-        <startLine>230</startLine>
-        <startColumn>41</startColumn>
-        <endLine>230</endLine>
-        <endColumn>41</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.SpacingRules" rule="CodeMustNotContainMultipleWhitespaceInARow" ruleCheckId="SA1025">
-        <context>The code contains multiple spaces in a row. Only one space is needed.</context>
-        <line>372</line>
-        <index>18337</index>
-        <endIndex>18338</endIndex>
-        <startLine>372</startLine>
-        <startColumn>63</startColumn>
-        <endLine>372</endLine>
-        <endColumn>64</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCopCustomRules.CMoneyRules" rule="MethodMustBeShort" ruleCheckId="CM1003">
-        <context>Method is too long: RiseFall</context>
-        <line>679</line>
-        <warning>False</warning>
-      </violation>
-    </violations>
+    <violations />
   </sourcecode>
   <sourcecode name="Form1.Designer.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:14.873</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/19 18:39:43.220</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -583,164 +710,132 @@
     <violations>
       <violation namespace="StyleCop.CSharp.LayoutRules" rule="CodeMustNotContainMultipleBlankLinesInARow" ruleCheckId="SA1507">
         <context>The code must not contain multiple blank lines in a row.</context>
-        <line>547</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="PartialElementsMustBeDocumented" ruleCheckId="SA1601">
-        <context>The partial class element must have a documentation header containing either a summary tag or a content tag.</context>
-        <line>3</line>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.MaintainabilityRules" rule="AccessModifierMustBeDeclared" ruleCheckId="SA1400">
-        <context>The class must have an access modifier.</context>
-        <line>3</line>
+        <line>603</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCopCustomRules.CMoneyRules" rule="FieldNamesMustBeginWithUpperCaseLetter" ruleCheckId="CM1000">
         <context>Field name must begin with upper case letter: components</context>
-        <line>8</line>
+        <line>11</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.LayoutRules" rule="CurlyBracketsForMultiLineStatementsMustNotShareLine" ruleCheckId="SA1500">
         <context>If a statement spans multiple lines, the opening curly bracket must be placed on its own line.</context>
-        <line>264</line>
+        <line>284</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.LayoutRules" rule="CurlyBracketsForMultiLineStatementsMustNotShareLine" ruleCheckId="SA1500">
         <context>If a statement spans multiple lines, the closing curly bracket must be placed on its own line.</context>
-        <line>268</line>
+        <line>288</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.LayoutRules" rule="CurlyBracketsForMultiLineStatementsMustNotShareLine" ruleCheckId="SA1500">
         <context>If a statement spans multiple lines, the opening curly bracket must be placed on its own line.</context>
-        <line>273</line>
+        <line>294</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.LayoutRules" rule="CurlyBracketsForMultiLineStatementsMustNotShareLine" ruleCheckId="SA1500">
         <context>If a statement spans multiple lines, the closing curly bracket must be placed on its own line.</context>
-        <line>277</line>
+        <line>298</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketsMustNotBePrecededByBlankLine" ruleCheckId="SA1508">
         <context>A closing curly bracket must not be preceded by a blank line.</context>
-        <line>506</line>
+        <line>562</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>80</line>
-        <index>4189</index>
-        <endIndex>4191</endIndex>
-        <startLine>80</startLine>
+        <line>84</line>
+        <index>4379</index>
+        <endIndex>4381</endIndex>
+        <startLine>84</startLine>
         <startColumn>13</startColumn>
-        <endLine>80</endLine>
+        <endLine>84</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>82</line>
-        <index>4234</index>
-        <endIndex>4236</endIndex>
-        <startLine>82</startLine>
+        <line>86</line>
+        <index>4424</index>
+        <endIndex>4426</endIndex>
+        <startLine>86</startLine>
         <startColumn>13</startColumn>
-        <endLine>82</endLine>
+        <endLine>86</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>90</line>
-        <index>4719</index>
-        <endIndex>4721</endIndex>
-        <startLine>90</startLine>
+        <line>95</line>
+        <index>4992</index>
+        <endIndex>4994</endIndex>
+        <startLine>95</startLine>
         <startColumn>13</startColumn>
-        <endLine>90</endLine>
+        <endLine>95</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>92</line>
-        <index>4769</index>
-        <endIndex>4771</endIndex>
-        <startLine>92</startLine>
+        <line>97</line>
+        <index>5042</index>
+        <endIndex>5044</endIndex>
+        <startLine>97</startLine>
         <startColumn>13</startColumn>
-        <endLine>92</endLine>
+        <endLine>97</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>102</line>
-        <index>5409</index>
-        <endIndex>5411</endIndex>
-        <startLine>102</startLine>
+        <line>108</line>
+        <index>5769</index>
+        <endIndex>5771</endIndex>
+        <startLine>108</startLine>
         <startColumn>13</startColumn>
-        <endLine>102</endLine>
+        <endLine>108</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>104</line>
-        <index>5463</index>
-        <endIndex>5465</endIndex>
-        <startLine>104</startLine>
+        <line>110</line>
+        <index>5823</index>
+        <endIndex>5825</endIndex>
+        <startLine>110</startLine>
         <startColumn>13</startColumn>
-        <endLine>104</endLine>
+        <endLine>110</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>117</line>
-        <index>6341</index>
-        <endIndex>6343</endIndex>
-        <startLine>117</startLine>
+        <line>124</line>
+        <index>6802</index>
+        <endIndex>6804</endIndex>
+        <startLine>124</startLine>
         <startColumn>13</startColumn>
-        <endLine>117</endLine>
+        <endLine>124</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>119</line>
-        <index>6386</index>
-        <endIndex>6388</endIndex>
-        <startLine>119</startLine>
+        <line>126</line>
+        <index>6847</index>
+        <endIndex>6849</endIndex>
+        <startLine>126</startLine>
         <startColumn>13</startColumn>
-        <endLine>119</endLine>
-        <endColumn>15</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
-        <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>127</line>
-        <index>6837</index>
-        <endIndex>6839</endIndex>
-        <startLine>127</startLine>
-        <startColumn>13</startColumn>
-        <endLine>127</endLine>
-        <endColumn>15</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
-        <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>129</line>
-        <index>6883</index>
-        <endIndex>6885</endIndex>
-        <startLine>129</startLine>
-        <startColumn>13</startColumn>
-        <endLine>129</endLine>
+        <endLine>126</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>135</line>
-        <index>7205</index>
-        <endIndex>7207</endIndex>
+        <index>7383</index>
+        <endIndex>7385</endIndex>
         <startLine>135</startLine>
         <startColumn>13</startColumn>
         <endLine>135</endLine>
@@ -750,8 +845,8 @@
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>137</line>
-        <index>7249</index>
-        <endIndex>7251</endIndex>
+        <index>7429</index>
+        <endIndex>7431</endIndex>
         <startLine>137</startLine>
         <startColumn>13</startColumn>
         <endLine>137</endLine>
@@ -760,31 +855,42 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>145</line>
-        <index>7750</index>
-        <endIndex>7752</endIndex>
-        <startLine>145</startLine>
+        <line>144</line>
+        <index>7837</index>
+        <endIndex>7839</endIndex>
+        <startLine>144</startLine>
         <startColumn>13</startColumn>
-        <endLine>145</endLine>
+        <endLine>144</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>147</line>
-        <index>7796</index>
-        <endIndex>7798</endIndex>
-        <startLine>147</startLine>
+        <line>146</line>
+        <index>7881</index>
+        <endIndex>7883</endIndex>
+        <startLine>146</startLine>
         <startColumn>13</startColumn>
-        <endLine>147</endLine>
+        <endLine>146</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
+        <context>The comment is empty. Add text to the comment or remove it.</context>
+        <line>155</line>
+        <index>8466</index>
+        <endIndex>8468</endIndex>
+        <startLine>155</startLine>
+        <startColumn>13</startColumn>
+        <endLine>155</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>157</line>
-        <index>8471</index>
-        <endIndex>8473</endIndex>
+        <index>8512</index>
+        <endIndex>8514</endIndex>
         <startLine>157</startLine>
         <startColumn>13</startColumn>
         <endLine>157</endLine>
@@ -793,185 +899,163 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>159</line>
-        <index>8515</index>
-        <endIndex>8517</endIndex>
-        <startLine>159</startLine>
+        <line>168</line>
+        <index>9272</index>
+        <endIndex>9274</endIndex>
+        <startLine>168</startLine>
         <startColumn>13</startColumn>
-        <endLine>159</endLine>
+        <endLine>168</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>169</line>
-        <index>9170</index>
-        <endIndex>9172</endIndex>
-        <startLine>169</startLine>
+        <line>170</line>
+        <index>9316</index>
+        <endIndex>9318</endIndex>
+        <startLine>170</startLine>
         <startColumn>13</startColumn>
-        <endLine>169</endLine>
+        <endLine>170</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>171</line>
-        <index>9222</index>
-        <endIndex>9224</endIndex>
-        <startLine>171</startLine>
+        <line>181</line>
+        <index>10055</index>
+        <endIndex>10057</endIndex>
+        <startLine>181</startLine>
         <startColumn>13</startColumn>
-        <endLine>171</endLine>
+        <endLine>181</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>184</line>
-        <index>10068</index>
-        <endIndex>10070</endIndex>
-        <startLine>184</startLine>
+        <line>183</line>
+        <index>10107</index>
+        <endIndex>10109</endIndex>
+        <startLine>183</startLine>
         <startColumn>13</startColumn>
-        <endLine>184</endLine>
+        <endLine>183</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>186</line>
-        <index>10117</index>
-        <endIndex>10119</endIndex>
-        <startLine>186</startLine>
+        <line>197</line>
+        <index>11052</index>
+        <endIndex>11054</endIndex>
+        <startLine>197</startLine>
         <startColumn>13</startColumn>
-        <endLine>186</endLine>
+        <endLine>197</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>192</line>
-        <index>10461</index>
-        <endIndex>10463</endIndex>
-        <startLine>192</startLine>
+        <line>199</line>
+        <index>11101</index>
+        <endIndex>11103</endIndex>
+        <startLine>199</startLine>
         <startColumn>13</startColumn>
-        <endLine>192</endLine>
+        <endLine>199</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>194</line>
-        <index>10507</index>
-        <endIndex>10509</endIndex>
-        <startLine>194</startLine>
+        <line>206</line>
+        <index>11534</index>
+        <endIndex>11536</endIndex>
+        <startLine>206</startLine>
         <startColumn>13</startColumn>
-        <endLine>194</endLine>
+        <endLine>206</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>200</line>
-        <index>10831</index>
-        <endIndex>10833</endIndex>
-        <startLine>200</startLine>
+        <line>208</line>
+        <index>11580</index>
+        <endIndex>11582</endIndex>
+        <startLine>208</startLine>
         <startColumn>13</startColumn>
-        <endLine>200</endLine>
+        <endLine>208</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>202</line>
-        <index>10874</index>
-        <endIndex>10876</endIndex>
-        <startLine>202</startLine>
+        <line>215</line>
+        <index>11990</index>
+        <endIndex>11992</endIndex>
+        <startLine>215</startLine>
         <startColumn>13</startColumn>
-        <endLine>202</endLine>
+        <endLine>215</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>210</line>
-        <index>11307</index>
-        <endIndex>11309</endIndex>
-        <startLine>210</startLine>
+        <line>217</line>
+        <index>12033</index>
+        <endIndex>12035</endIndex>
+        <startLine>217</startLine>
         <startColumn>13</startColumn>
-        <endLine>210</endLine>
+        <endLine>217</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>212</line>
-        <index>11349</index>
-        <endIndex>11351</endIndex>
-        <startLine>212</startLine>
+        <line>226</line>
+        <index>12549</index>
+        <endIndex>12551</endIndex>
+        <startLine>226</startLine>
         <startColumn>13</startColumn>
-        <endLine>212</endLine>
+        <endLine>226</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>222</line>
-        <index>11987</index>
-        <endIndex>11989</endIndex>
-        <startLine>222</startLine>
+        <line>228</line>
+        <index>12591</index>
+        <endIndex>12593</endIndex>
+        <startLine>228</startLine>
         <startColumn>13</startColumn>
-        <endLine>222</endLine>
+        <endLine>228</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>224</line>
-        <index>12029</index>
-        <endIndex>12031</endIndex>
-        <startLine>224</startLine>
+        <line>239</line>
+        <index>13311</index>
+        <endIndex>13313</endIndex>
+        <startLine>239</startLine>
         <startColumn>13</startColumn>
-        <endLine>224</endLine>
+        <endLine>239</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>234</line>
-        <index>12661</index>
-        <endIndex>12663</endIndex>
-        <startLine>234</startLine>
+        <line>241</line>
+        <index>13353</index>
+        <endIndex>13355</endIndex>
+        <startLine>241</startLine>
         <startColumn>13</startColumn>
-        <endLine>234</endLine>
-        <endColumn>15</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
-        <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>236</line>
-        <index>12705</index>
-        <endIndex>12707</endIndex>
-        <startLine>236</startLine>
-        <startColumn>13</startColumn>
-        <endLine>236</endLine>
-        <endColumn>15</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
-        <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>250</line>
-        <index>13500</index>
-        <endIndex>13502</endIndex>
-        <startLine>250</startLine>
-        <startColumn>13</startColumn>
-        <endLine>250</endLine>
+        <endLine>241</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>252</line>
-        <index>13548</index>
-        <endIndex>13550</endIndex>
+        <index>14066</index>
+        <endIndex>14068</endIndex>
         <startLine>252</startLine>
         <startColumn>13</startColumn>
         <endLine>252</endLine>
@@ -980,42 +1064,42 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>260</line>
-        <index>14029</index>
-        <endIndex>14031</endIndex>
-        <startLine>260</startLine>
+        <line>254</line>
+        <index>14110</index>
+        <endIndex>14112</endIndex>
+        <startLine>254</startLine>
         <startColumn>13</startColumn>
-        <endLine>260</endLine>
+        <endLine>254</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>262</line>
-        <index>14076</index>
-        <endIndex>14078</endIndex>
-        <startLine>262</startLine>
+        <line>269</line>
+        <index>14987</index>
+        <endIndex>14989</endIndex>
+        <startLine>269</startLine>
         <startColumn>13</startColumn>
-        <endLine>262</endLine>
+        <endLine>269</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>278</line>
-        <index>14671</index>
-        <endIndex>14673</endIndex>
-        <startLine>278</startLine>
+        <line>271</line>
+        <index>15035</index>
+        <endIndex>15037</endIndex>
+        <startLine>271</startLine>
         <startColumn>13</startColumn>
-        <endLine>278</endLine>
+        <endLine>271</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>280</line>
-        <index>14720</index>
-        <endIndex>14722</endIndex>
+        <index>15600</index>
+        <endIndex>15602</endIndex>
         <startLine>280</startLine>
         <startColumn>13</startColumn>
         <endLine>280</endLine>
@@ -1024,64 +1108,42 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>287</line>
-        <index>15157</index>
-        <endIndex>15159</endIndex>
-        <startLine>287</startLine>
+        <line>282</line>
+        <index>15647</index>
+        <endIndex>15649</endIndex>
+        <startLine>282</startLine>
         <startColumn>13</startColumn>
-        <endLine>287</endLine>
+        <endLine>282</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>289</line>
-        <index>15200</index>
-        <endIndex>15202</endIndex>
-        <startLine>289</startLine>
+        <line>299</line>
+        <index>16328</index>
+        <endIndex>16330</endIndex>
+        <startLine>299</startLine>
         <startColumn>13</startColumn>
-        <endLine>289</endLine>
+        <endLine>299</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>295</line>
-        <index>15506</index>
-        <endIndex>15508</endIndex>
-        <startLine>295</startLine>
+        <line>301</line>
+        <index>16377</index>
+        <endIndex>16379</endIndex>
+        <startLine>301</startLine>
         <startColumn>13</startColumn>
-        <endLine>295</endLine>
-        <endColumn>15</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
-        <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>297</line>
-        <index>15555</index>
-        <endIndex>15557</endIndex>
-        <startLine>297</startLine>
-        <startColumn>13</startColumn>
-        <endLine>297</endLine>
-        <endColumn>15</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
-        <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>307</line>
-        <index>16260</index>
-        <endIndex>16262</endIndex>
-        <startLine>307</startLine>
-        <startColumn>13</startColumn>
-        <endLine>307</endLine>
+        <endLine>301</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>309</line>
-        <index>16303</index>
-        <endIndex>16305</endIndex>
+        <index>16903</index>
+        <endIndex>16905</endIndex>
         <startLine>309</startLine>
         <startColumn>13</startColumn>
         <endLine>309</endLine>
@@ -1090,31 +1152,42 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>319</line>
-        <index>16949</index>
-        <endIndex>16951</endIndex>
-        <startLine>319</startLine>
+        <line>311</line>
+        <index>16946</index>
+        <endIndex>16948</endIndex>
+        <startLine>311</startLine>
         <startColumn>13</startColumn>
-        <endLine>319</endLine>
+        <endLine>311</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>321</line>
-        <index>16988</index>
-        <endIndex>16990</endIndex>
-        <startLine>321</startLine>
+        <line>318</line>
+        <index>17334</index>
+        <endIndex>17336</endIndex>
+        <startLine>318</startLine>
         <startColumn>13</startColumn>
-        <endLine>321</endLine>
+        <endLine>318</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
+        <context>The comment is empty. Add text to the comment or remove it.</context>
+        <line>320</line>
+        <index>17383</index>
+        <endIndex>17385</endIndex>
+        <startLine>320</startLine>
+        <startColumn>13</startColumn>
+        <endLine>320</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>331</line>
-        <index>17590</index>
-        <endIndex>17592</endIndex>
+        <index>18176</index>
+        <endIndex>18178</endIndex>
         <startLine>331</startLine>
         <startColumn>13</startColumn>
         <endLine>331</endLine>
@@ -1124,8 +1197,8 @@
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>333</line>
-        <index>17652</index>
-        <endIndex>17654</endIndex>
+        <index>18219</index>
+        <endIndex>18221</endIndex>
         <startLine>333</startLine>
         <startColumn>13</startColumn>
         <endLine>333</endLine>
@@ -1135,8 +1208,8 @@
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>344</line>
-        <index>18477</index>
-        <endIndex>18479</endIndex>
+        <index>18948</index>
+        <endIndex>18950</endIndex>
         <startLine>344</startLine>
         <startColumn>13</startColumn>
         <endLine>344</endLine>
@@ -1146,8 +1219,8 @@
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>346</line>
-        <index>18529</index>
-        <endIndex>18531</endIndex>
+        <index>18987</index>
+        <endIndex>18989</endIndex>
         <startLine>346</startLine>
         <startColumn>13</startColumn>
         <endLine>346</endLine>
@@ -1156,75 +1229,64 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>354</line>
-        <index>19063</index>
-        <endIndex>19065</endIndex>
-        <startLine>354</startLine>
+        <line>357</line>
+        <index>19667</index>
+        <endIndex>19669</endIndex>
+        <startLine>357</startLine>
         <startColumn>13</startColumn>
-        <endLine>354</endLine>
+        <endLine>357</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>356</line>
-        <index>19113</index>
-        <endIndex>19115</endIndex>
-        <startLine>356</startLine>
+        <line>359</line>
+        <index>19729</index>
+        <endIndex>19731</endIndex>
+        <startLine>359</startLine>
         <startColumn>13</startColumn>
-        <endLine>356</endLine>
+        <endLine>359</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>364</line>
-        <index>19619</index>
-        <endIndex>19621</endIndex>
-        <startLine>364</startLine>
+        <line>371</line>
+        <index>20654</index>
+        <endIndex>20656</endIndex>
+        <startLine>371</startLine>
         <startColumn>13</startColumn>
-        <endLine>364</endLine>
+        <endLine>371</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>366</line>
-        <index>19670</index>
-        <endIndex>19672</endIndex>
-        <startLine>366</startLine>
+        <line>373</line>
+        <index>20706</index>
+        <endIndex>20708</endIndex>
+        <startLine>373</startLine>
         <startColumn>13</startColumn>
-        <endLine>366</endLine>
+        <endLine>373</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>374</line>
-        <index>20182</index>
-        <endIndex>20184</endIndex>
-        <startLine>374</startLine>
+        <line>382</line>
+        <index>21332</index>
+        <endIndex>21334</endIndex>
+        <startLine>382</startLine>
         <startColumn>13</startColumn>
-        <endLine>374</endLine>
-        <endColumn>15</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
-        <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>376</line>
-        <index>20228</index>
-        <endIndex>20230</endIndex>
-        <startLine>376</startLine>
-        <startColumn>13</startColumn>
-        <endLine>376</endLine>
+        <endLine>382</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>384</line>
-        <index>20696</index>
-        <endIndex>20698</endIndex>
+        <index>21382</index>
+        <endIndex>21384</endIndex>
         <startLine>384</startLine>
         <startColumn>13</startColumn>
         <endLine>384</endLine>
@@ -1233,20 +1295,20 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>386</line>
-        <index>20744</index>
-        <endIndex>20746</endIndex>
-        <startLine>386</startLine>
+        <line>393</line>
+        <index>21978</index>
+        <endIndex>21980</endIndex>
+        <startLine>393</startLine>
         <startColumn>13</startColumn>
-        <endLine>386</endLine>
+        <endLine>393</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>395</line>
-        <index>21284</index>
-        <endIndex>21286</endIndex>
+        <index>22029</index>
+        <endIndex>22031</endIndex>
         <startLine>395</startLine>
         <startColumn>13</startColumn>
         <endLine>395</endLine>
@@ -1255,20 +1317,20 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>397</line>
-        <index>21328</index>
-        <endIndex>21330</endIndex>
-        <startLine>397</startLine>
+        <line>404</line>
+        <index>22632</index>
+        <endIndex>22634</endIndex>
+        <startLine>404</startLine>
         <startColumn>13</startColumn>
-        <endLine>397</endLine>
+        <endLine>404</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>406</line>
-        <index>21823</index>
-        <endIndex>21825</endIndex>
+        <index>22678</index>
+        <endIndex>22680</endIndex>
         <startLine>406</startLine>
         <startColumn>13</startColumn>
         <endLine>406</endLine>
@@ -1277,20 +1339,20 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>408</line>
-        <index>21868</index>
-        <endIndex>21870</endIndex>
-        <startLine>408</startLine>
+        <line>415</line>
+        <index>23232</index>
+        <endIndex>23234</endIndex>
+        <startLine>415</startLine>
         <startColumn>13</startColumn>
-        <endLine>408</endLine>
+        <endLine>415</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>417</line>
-        <index>22423</index>
-        <endIndex>22425</endIndex>
+        <index>23280</index>
+        <endIndex>23282</endIndex>
         <startLine>417</startLine>
         <startColumn>13</startColumn>
         <endLine>417</endLine>
@@ -1299,42 +1361,42 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>419</line>
-        <index>22470</index>
-        <endIndex>22472</endIndex>
-        <startLine>419</startLine>
+        <line>427</line>
+        <index>23908</index>
+        <endIndex>23910</endIndex>
+        <startLine>427</startLine>
         <startColumn>13</startColumn>
-        <endLine>419</endLine>
+        <endLine>427</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>428</line>
-        <index>23014</index>
-        <endIndex>23016</endIndex>
-        <startLine>428</startLine>
+        <line>429</line>
+        <index>23952</index>
+        <endIndex>23954</endIndex>
+        <startLine>429</startLine>
         <startColumn>13</startColumn>
-        <endLine>428</endLine>
+        <endLine>429</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>430</line>
-        <index>23065</index>
-        <endIndex>23067</endIndex>
-        <startLine>430</startLine>
+        <line>439</line>
+        <index>24540</index>
+        <endIndex>24542</endIndex>
+        <startLine>439</startLine>
         <startColumn>13</startColumn>
-        <endLine>430</endLine>
+        <endLine>439</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>441</line>
-        <index>23794</index>
-        <endIndex>23796</endIndex>
+        <index>24585</index>
+        <endIndex>24587</endIndex>
         <startLine>441</startLine>
         <startColumn>13</startColumn>
         <endLine>441</endLine>
@@ -1343,64 +1405,31 @@
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>443</line>
-        <index>23854</index>
-        <endIndex>23856</endIndex>
-        <startLine>443</startLine>
+        <line>463</line>
+        <index>26286</index>
+        <endIndex>26288</endIndex>
+        <startLine>463</startLine>
         <startColumn>13</startColumn>
-        <endLine>443</endLine>
+        <endLine>463</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>451</line>
-        <index>24417</index>
-        <endIndex>24419</endIndex>
-        <startLine>451</startLine>
+        <line>465</line>
+        <index>26333</index>
+        <endIndex>26335</endIndex>
+        <startLine>465</startLine>
         <startColumn>13</startColumn>
-        <endLine>451</endLine>
-        <endColumn>15</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
-        <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>453</line>
-        <index>24468</index>
-        <endIndex>24470</endIndex>
-        <startLine>453</startLine>
-        <startColumn>13</startColumn>
-        <endLine>453</endLine>
-        <endColumn>15</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
-        <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>464</line>
-        <index>25197</index>
-        <endIndex>25199</endIndex>
-        <startLine>464</startLine>
-        <startColumn>13</startColumn>
-        <endLine>464</endLine>
-        <endColumn>15</endColumn>
-        <warning>False</warning>
-      </violation>
-      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
-        <context>The comment is empty. Add text to the comment or remove it.</context>
-        <line>466</line>
-        <index>25238</index>
-        <endIndex>25240</endIndex>
-        <startLine>466</startLine>
-        <startColumn>13</startColumn>
-        <endLine>466</endLine>
+        <endLine>465</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>475</line>
-        <index>25714</index>
-        <endIndex>25716</endIndex>
+        <index>26973</index>
+        <endIndex>26975</endIndex>
         <startLine>475</startLine>
         <startColumn>13</startColumn>
         <endLine>475</endLine>
@@ -1410,197 +1439,285 @@
       <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
         <context>The comment is empty. Add text to the comment or remove it.</context>
         <line>477</line>
-        <index>25759</index>
-        <endIndex>25761</endIndex>
+        <index>27024</index>
+        <endIndex>27026</endIndex>
         <startLine>477</startLine>
         <startColumn>13</startColumn>
         <endLine>477</endLine>
         <endColumn>15</endColumn>
         <warning>False</warning>
       </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
+        <context>The comment is empty. Add text to the comment or remove it.</context>
+        <line>491</line>
+        <index>27988</index>
+        <endIndex>27990</endIndex>
+        <startLine>491</startLine>
+        <startColumn>13</startColumn>
+        <endLine>491</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
+        <context>The comment is empty. Add text to the comment or remove it.</context>
+        <line>493</line>
+        <index>28048</index>
+        <endIndex>28050</endIndex>
+        <startLine>493</startLine>
+        <startColumn>13</startColumn>
+        <endLine>493</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
+        <context>The comment is empty. Add text to the comment or remove it.</context>
+        <line>502</line>
+        <index>28711</index>
+        <endIndex>28713</endIndex>
+        <startLine>502</startLine>
+        <startColumn>13</startColumn>
+        <endLine>502</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
+        <context>The comment is empty. Add text to the comment or remove it.</context>
+        <line>504</line>
+        <index>28762</index>
+        <endIndex>28764</endIndex>
+        <startLine>504</startLine>
+        <startColumn>13</startColumn>
+        <endLine>504</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
+        <context>The comment is empty. Add text to the comment or remove it.</context>
+        <line>518</line>
+        <index>29726</index>
+        <endIndex>29728</endIndex>
+        <startLine>518</startLine>
+        <startColumn>13</startColumn>
+        <endLine>518</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
+        <context>The comment is empty. Add text to the comment or remove it.</context>
+        <line>520</line>
+        <index>29767</index>
+        <endIndex>29769</endIndex>
+        <startLine>520</startLine>
+        <startColumn>13</startColumn>
+        <endLine>520</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
+        <context>The comment is empty. Add text to the comment or remove it.</context>
+        <line>530</line>
+        <index>30323</index>
+        <endIndex>30325</endIndex>
+        <startLine>530</startLine>
+        <startColumn>13</startColumn>
+        <endLine>530</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="CommentsMustContainText" ruleCheckId="SA1120">
+        <context>The comment is empty. Add text to the comment or remove it.</context>
+        <line>532</line>
+        <index>30368</index>
+        <endIndex>30370</endIndex>
+        <startLine>532</startLine>
+        <startColumn>13</startColumn>
+        <endLine>532</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
       <violation namespace="StyleCopCustomRules.CMoneyRules" rule="MethodMustBeShort" ruleCheckId="CM1003">
         <context>Method is too long: InitializeComponent</context>
-        <line>29</line>
+        <line>32</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>510</line>
+        <line>566</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>511</line>
+        <line>567</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>512</line>
+        <line>568</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>513</line>
+        <line>569</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>514</line>
+        <line>570</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>515</line>
+        <line>571</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>516</line>
+        <line>572</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>517</line>
+        <line>573</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>518</line>
+        <line>574</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>519</line>
+        <line>575</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>520</line>
+        <line>576</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>521</line>
+        <line>577</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>522</line>
+        <line>578</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>523</line>
+        <line>579</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>524</line>
+        <line>580</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>525</line>
+        <line>581</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>526</line>
+        <line>582</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>527</line>
+        <line>583</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>528</line>
+        <line>584</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>529</line>
+        <line>585</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>530</line>
+        <line>586</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>531</line>
+        <line>587</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>532</line>
+        <line>588</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>533</line>
+        <line>589</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>534</line>
+        <line>590</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>535</line>
+        <line>591</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>536</line>
+        <line>592</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCopCustomRules.CMoneyRules" rule="FieldNamesMustBeginWithUpperCaseLetter" ruleCheckId="CM1000">
         <context>Field name must begin with upper case letter: textBox1</context>
-        <line>536</line>
+        <line>592</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>537</line>
+        <line>593</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>538</line>
+        <line>594</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>539</line>
+        <line>595</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>540</line>
+        <line>596</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>541</line>
+        <line>597</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>542</line>
+        <line>598</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>543</line>
+        <line>599</line>
         <warning>False</warning>
       </violation>
       <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
         <context>The field must have a documentation header.</context>
-        <line>544</line>
+        <line>600</line>
         <warning>False</warning>
       </violation>
     </violations>
@@ -1608,8 +1725,8 @@
   <sourcecode name="Settings.Designer.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2021/07/27 11:03:03.041</styleCop>
-      <settingsFile>2021/08/13 08:42:14.875</settingsFile>
-      <sourceFile>2021/08/13 08:42:37.933</sourceFile>
+      <settingsFile>2021/08/15 22:59:16.000</settingsFile>
+      <sourceFile>2021/08/15 22:59:16.000</sourceFile>
       <parser>2021/07/27 11:03:03.041</parser>
       <StyleCop.CSharp.DocumentationRules>2021/07/27 11:03:03.041</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1693759376</StyleCop.CSharp.DocumentationRules.FilesHashCode>

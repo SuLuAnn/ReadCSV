@@ -62,3 +62,67 @@ C:\Users\user1\Documents\ReadCSV\LinqUserInterface\LinqUserInterface\bin\Debug\E
 C:\Users\user1\Documents\ReadCSV\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\user1\Documents\ReadCSV\LinqUserInterface\LinqUserInterface\bin\Debug\zh-Hant\EntityFramework.resources.dll
 C:\Users\user1\Documents\ReadCSV\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CopyComplete
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csprojAssemblyReference.cache
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.LINQTraning.resources
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.Properties.Resources.resources
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.GenerateResource.cache
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CoreCompileInputs.cache
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.exe
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.pdb
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.exe.config
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.exe
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.pdb
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.dll
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.xml
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\bin\Debug\zh-Hant\EntityFramework.resources.dll
+C:\Users\user1\Desktop\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CopyComplete
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.exe.config
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.exe
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.pdb
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.dll
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.dll
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.xml
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.xml
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\bin\Debug\zh-Hant\EntityFramework.resources.dll
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csprojAssemblyReference.cache
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.LINQTraning.resources
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.Properties.Resources.resources
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.GenerateResource.cache
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CoreCompileInputs.cache
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CopyComplete
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.exe
+\\nas3\00.共用區\luann\linq三讞前\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.pdb
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.exe.config
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.exe
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\bin\Debug\LinqUserInterface.pdb
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.dll
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.xml
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\bin\Debug\zh-Hant\EntityFramework.resources.dll
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csprojAssemblyReference.cache
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.LINQTraning.resources
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.Properties.Resources.resources
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.GenerateResource.cache
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CoreCompileInputs.cache
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CopyComplete
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.exe
+C:\Users\user1\Desktop\LinqUserInterface (1)\LinqUserInterface\LinqUserInterface\obj\Debug\LinqUserInterface.pdb
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\bin\Debug\LinqUserInterface.exe.config
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\bin\Debug\LinqUserInterface.exe
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\bin\Debug\LinqUserInterface.pdb
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\bin\Debug\EntityFramework.dll
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\bin\Debug\EntityFramework.xml
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\bin\Debug\zh-Hant\EntityFramework.resources.dll
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.AssemblyReference.cache
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\obj\Debug\LinqUserInterface.LINQTraning.resources
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\obj\Debug\LinqUserInterface.Properties.Resources.resources
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.GenerateResource.cache
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CoreCompileInputs.cache
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\obj\Debug\LinqUserInterface.csproj.CopyComplete
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\obj\Debug\LinqUserInterface.exe
+C:\Users\a0920\OneDrive\桌面\新增資料夾\LinqUserInterface0\LinqUserInterface\obj\Debug\LinqUserInterface.pdb

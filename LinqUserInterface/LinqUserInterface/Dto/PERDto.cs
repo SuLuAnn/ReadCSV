@@ -24,6 +24,6 @@ namespace LinqUserInterface
         /// <summary>
         /// 平均本益比
         /// </summary>
-        public decimal? 平均本益比 { get; set; }
+        public string 平均本益比 { get; set; }
     }
 }

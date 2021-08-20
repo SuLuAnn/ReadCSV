@@ -7,6 +7,9 @@ using static LinqUserInterface.Global;
 
 namespace LinqUserInterface
 {
+    /// <summary>
+    /// 存所有靜態屬性
+    /// </summary>
     public static class Global
     {
         /// <summary>
@@ -23,6 +26,11 @@ namespace LinqUserInterface
         /// 2012年總統大選日期
         /// </summary>
         public const string PRESIDENTIAL_DATE_2012 = "20120114";
+
+        /// <summary>
+        /// 總統大選日
+        /// </summary>
+        public static readonly string[] PRESIDENTIAL_DATE = { "20080322", "20120114" }; 
 
         /// <summary>
         /// 總統大選後30天
