@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FFB8A83F-56C8-44C9-8360-E81D4E5F80E8}</ProjectGuid>
+    <ProjectGuid>{13CB13C1-D0BA-4509-B095-1A9A004CCCDB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Readcsv2020LuAnn</RootNamespace>
-    <AssemblyName>Readcsv2020LuAnn</AssemblyName>
+    <RootNamespace>RegularExpressions</RootNamespace>
+    <AssemblyName>RegularExpressions</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,19 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dto\Top50Dto.cs" />
-    <Compile Include="Dto\TotalStockDto.cs" />
-    <Compile Include="ReadCSV.cs">
+    <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ReadCSV.Designer.cs">
-      <DependentUpon>ReadCSV.cs</DependentUpon>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stock.cs" />
-    <EmbeddedResource Include="ReadCSV.resx">
-      <DependentUpon>ReadCSV.cs</DependentUpon>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -147,7 +147,7 @@ namespace LinqUserInterface
                                                                                                                                             })
                                                                                                             .AsEnumerable()//報酬率計算需在程式算才會和範例相同
                                                                                                             .GroupBy(day => day.代號, (id, days) => new
-                                                                                                            {//依代號分群找出第一日語最後一日
+                                                                                                            {//依代號分群找出第一日與最後一日
                                                                                                                 年度 = target.年度,
                                                                                                                 類股股票代號 = days.First().代號,
                                                                                                                 類股股票名稱 = days.First().名稱,
@@ -182,7 +182,7 @@ namespace LinqUserInterface
                                                                                                                                        類股股票代號 = stock.類股股票代號,
                                                                                                                                        類股股票名稱 = stock.類股股票名稱,
                                                                                                                                        報酬率 = stock.報酬率,
-                                                                                                                                       報酬率排名 = index, //index初始會是0，但我要從1開始
+                                                                                                                                       報酬率排名 = index, 
                                                                                                                                    }))
                                                                                 .SelectMany(day => day)//將兩年資料變成一個list
                                                                                 .GroupBy(day => new { day.類股股票代號, day.報酬率排名 } )//當股票代號相同
