@@ -47,25 +47,28 @@
             // 
             // IDNumberBox
             // 
-            this.IDNumberBox.Location = new System.Drawing.Point(24, 21);
+            this.IDNumberBox.Location = new System.Drawing.Point(36, 32);
+            this.IDNumberBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IDNumberBox.Name = "IDNumberBox";
-            this.IDNumberBox.Size = new System.Drawing.Size(203, 22);
+            this.IDNumberBox.Size = new System.Drawing.Size(302, 29);
             this.IDNumberBox.TabIndex = 0;
             // 
             // IDNumberDisplay
             // 
             this.IDNumberDisplay.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.IDNumberDisplay.Location = new System.Drawing.Point(24, 49);
+            this.IDNumberDisplay.Location = new System.Drawing.Point(36, 74);
+            this.IDNumberDisplay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IDNumberDisplay.Name = "IDNumberDisplay";
             this.IDNumberDisplay.ReadOnly = true;
-            this.IDNumberDisplay.Size = new System.Drawing.Size(203, 15);
+            this.IDNumberDisplay.Size = new System.Drawing.Size(304, 22);
             this.IDNumberDisplay.TabIndex = 1;
             // 
             // IDButton
             // 
-            this.IDButton.Location = new System.Drawing.Point(242, 21);
+            this.IDButton.Location = new System.Drawing.Point(363, 32);
+            this.IDButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IDButton.Name = "IDButton";
-            this.IDButton.Size = new System.Drawing.Size(85, 23);
+            this.IDButton.Size = new System.Drawing.Size(128, 34);
             this.IDButton.TabIndex = 2;
             this.IDButton.Text = "身分證確認";
             this.IDButton.UseVisualStyleBackColor = true;
@@ -74,40 +77,45 @@
             // PasswordDisplay
             // 
             this.PasswordDisplay.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PasswordDisplay.Location = new System.Drawing.Point(24, 107);
+            this.PasswordDisplay.Location = new System.Drawing.Point(36, 160);
+            this.PasswordDisplay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PasswordDisplay.Name = "PasswordDisplay";
             this.PasswordDisplay.ReadOnly = true;
-            this.PasswordDisplay.Size = new System.Drawing.Size(203, 15);
+            this.PasswordDisplay.Size = new System.Drawing.Size(304, 22);
             this.PasswordDisplay.TabIndex = 3;
             // 
             // textBox4
             // 
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox4.Location = new System.Drawing.Point(24, 163);
+            this.textBox4.Location = new System.Drawing.Point(36, 244);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(203, 15);
+            this.textBox4.Size = new System.Drawing.Size(304, 22);
             this.textBox4.TabIndex = 4;
             // 
             // EnglishNameBox
             // 
-            this.EnglishNameBox.Location = new System.Drawing.Point(24, 135);
+            this.EnglishNameBox.Location = new System.Drawing.Point(36, 202);
+            this.EnglishNameBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.EnglishNameBox.Name = "EnglishNameBox";
-            this.EnglishNameBox.Size = new System.Drawing.Size(203, 22);
+            this.EnglishNameBox.Size = new System.Drawing.Size(302, 29);
             this.EnglishNameBox.TabIndex = 5;
             // 
             // PasswordBox
             // 
-            this.PasswordBox.Location = new System.Drawing.Point(24, 79);
+            this.PasswordBox.Location = new System.Drawing.Point(36, 118);
+            this.PasswordBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PasswordBox.Name = "PasswordBox";
-            this.PasswordBox.Size = new System.Drawing.Size(203, 22);
+            this.PasswordBox.Size = new System.Drawing.Size(302, 29);
             this.PasswordBox.TabIndex = 6;
             // 
             // PasswordButton
             // 
-            this.PasswordButton.Location = new System.Drawing.Point(242, 77);
+            this.PasswordButton.Location = new System.Drawing.Point(363, 116);
+            this.PasswordButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PasswordButton.Name = "PasswordButton";
-            this.PasswordButton.Size = new System.Drawing.Size(75, 23);
+            this.PasswordButton.Size = new System.Drawing.Size(112, 34);
             this.PasswordButton.TabIndex = 8;
             this.PasswordButton.Text = "密碼確認";
             this.PasswordButton.UseVisualStyleBackColor = true;
@@ -115,9 +123,10 @@
             // 
             // EnglishNameButton
             // 
-            this.EnglishNameButton.Location = new System.Drawing.Point(242, 135);
+            this.EnglishNameButton.Location = new System.Drawing.Point(363, 202);
+            this.EnglishNameButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.EnglishNameButton.Name = "EnglishNameButton";
-            this.EnglishNameButton.Size = new System.Drawing.Size(75, 23);
+            this.EnglishNameButton.Size = new System.Drawing.Size(112, 34);
             this.EnglishNameButton.TabIndex = 9;
             this.EnglishNameButton.Text = "取英文姓名";
             this.EnglishNameButton.UseVisualStyleBackColor = true;
@@ -127,17 +136,19 @@
             // 
             this.EnglishNameDisplay.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.EnglishNameDisplay.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.EnglishNameDisplay.Location = new System.Drawing.Point(24, 163);
+            this.EnglishNameDisplay.Location = new System.Drawing.Point(36, 244);
+            this.EnglishNameDisplay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.EnglishNameDisplay.Name = "EnglishNameDisplay";
             this.EnglishNameDisplay.ReadOnly = true;
-            this.EnglishNameDisplay.Size = new System.Drawing.Size(203, 15);
+            this.EnglishNameDisplay.Size = new System.Drawing.Size(304, 22);
             this.EnglishNameDisplay.TabIndex = 10;
             // 
             // H4ReadButton
             // 
-            this.H4ReadButton.Location = new System.Drawing.Point(752, 49);
+            this.H4ReadButton.Location = new System.Drawing.Point(1128, 74);
+            this.H4ReadButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.H4ReadButton.Name = "H4ReadButton";
-            this.H4ReadButton.Size = new System.Drawing.Size(75, 23);
+            this.H4ReadButton.Size = new System.Drawing.Size(112, 34);
             this.H4ReadButton.TabIndex = 12;
             this.H4ReadButton.Text = "H4讀取";
             this.H4ReadButton.UseVisualStyleBackColor = true;
@@ -145,18 +156,20 @@
             // 
             // H4ReadDisplay
             // 
-            this.H4ReadDisplay.Location = new System.Drawing.Point(384, 50);
+            this.H4ReadDisplay.Location = new System.Drawing.Point(576, 75);
+            this.H4ReadDisplay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.H4ReadDisplay.Multiline = true;
             this.H4ReadDisplay.Name = "H4ReadDisplay";
             this.H4ReadDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.H4ReadDisplay.Size = new System.Drawing.Size(362, 107);
+            this.H4ReadDisplay.Size = new System.Drawing.Size(541, 158);
             this.H4ReadDisplay.TabIndex = 13;
             // 
             // H5ReadButton
             // 
-            this.H5ReadButton.Location = new System.Drawing.Point(869, 48);
+            this.H5ReadButton.Location = new System.Drawing.Point(1128, 118);
+            this.H5ReadButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.H5ReadButton.Name = "H5ReadButton";
-            this.H5ReadButton.Size = new System.Drawing.Size(75, 23);
+            this.H5ReadButton.Size = new System.Drawing.Size(112, 34);
             this.H5ReadButton.TabIndex = 14;
             this.H5ReadButton.Text = "H5讀取";
             this.H5ReadButton.UseVisualStyleBackColor = true;
@@ -167,18 +180,20 @@
             this.DataView.AllowUserToAddRows = false;
             this.DataView.AllowUserToDeleteRows = false;
             this.DataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataView.Location = new System.Drawing.Point(24, 185);
+            this.DataView.Location = new System.Drawing.Point(13, 282);
+            this.DataView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.DataView.Name = "DataView";
             this.DataView.ReadOnly = true;
+            this.DataView.RowHeadersWidth = 62;
             this.DataView.RowTemplate.Height = 24;
-            this.DataView.Size = new System.Drawing.Size(1415, 485);
+            this.DataView.Size = new System.Drawing.Size(1239, 476);
             this.DataView.TabIndex = 15;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1451, 682);
+            this.ClientSize = new System.Drawing.Size(1265, 771);
             this.Controls.Add(this.DataView);
             this.Controls.Add(this.H5ReadButton);
             this.Controls.Add(this.H4ReadDisplay);
@@ -193,6 +208,7 @@
             this.Controls.Add(this.IDButton);
             this.Controls.Add(this.IDNumberDisplay);
             this.Controls.Add(this.IDNumberBox);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.DataView)).EndInit();
