@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StockDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="日期貨盤後行情表_luann">
+          <Key>
+            <PropertyRef Name="交易日期" />
+            <PropertyRef Name="契約" />
+            <PropertyRef Name="到期月份(週別)" />
+          </Key>
+          <Property Name="交易日期" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="契約" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="到期月份(週別)" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="開盤價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="最高價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="最低價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="收盤價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="CTIME" Type="datetime" />
+          <Property Name="MTIME" Type="bigint" />
+        </EntityType>
+        <EntityType Name="日期貨盤後統計表_luann">
+          <Key>
+            <PropertyRef Name="交易日期" />
+            <PropertyRef Name="契約" />
+          </Key>
+          <Property Name="交易日期" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="契約" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="開盤價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="最高價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="最低價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="收盤價" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="CTIME" Type="datetime" />
+          <Property Name="MTIME" Type="bigint" />
+        </EntityType>
+        <EntityType Name="股東會投票日明細_luann">
+          <Key>
+            <PropertyRef Name="投票日期" />
+            <PropertyRef Name="證券代號" />
+          </Key>
+          <Property Name="投票日期" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="證券代號" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="證券名稱" Type="nvarchar" MaxLength="7" />
+          <Property Name="召集人" Type="nvarchar" MaxLength="9" />
+          <Property Name="股東會日期" Type="char" MaxLength="8" />
+          <Property Name="發行代理機構" Type="nvarchar" MaxLength="11" />
+          <Property Name="聯絡電話" Type="char" MaxLength="12" />
+          <Property Name="CTIME" Type="datetime" />
+          <Property Name="MTIME" Type="bigint" />
+        </EntityType>
+        <EntityType Name="股東會投票資料表_luann">
+          <Key>
+            <PropertyRef Name="證券代號" />
+            <PropertyRef Name="股東會日期" />
+          </Key>
+          <Property Name="證券代號" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="證券名稱" Type="nvarchar" MaxLength="7" />
+          <Property Name="召集人" Type="nvarchar" MaxLength="9" />
+          <Property Name="股東會日期" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="投票起日" Type="char" MaxLength="8" />
+          <Property Name="投票迄日" Type="char" MaxLength="8" />
+          <Property Name="發行代理機構" Type="nvarchar" MaxLength="11" />
+          <Property Name="聯絡電話" Type="char" MaxLength="12" />
+          <Property Name="CTIME" Type="datetime" />
+          <Property Name="MTIME" Type="bigint" />
+        </EntityType>
+        <EntityType Name="基金非營業日明細_luann">
+          <Key>
+            <PropertyRef Name="非營業日" />
+            <PropertyRef Name="基金統編" />
+          </Key>
+          <Property Name="非營業日" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="公司代號" Type="char" MaxLength="5" />
+          <Property Name="基金統編" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="基金名稱" Type="nvarchar" MaxLength="40" />
+          <Property Name="排序" Type="tinyint" />
+          <Property Name="CTIME" Type="datetime" />
+          <Property Name="MTIME" Type="bigint" />
+        </EntityType>
+        <EntityType Name="基金非營業日統計_luann">
+          <Key>
+            <PropertyRef Name="非營業日" />
+            <PropertyRef Name="公司代號" />
+          </Key>
+          <Property Name="非營業日" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="公司代號" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="基金總數" Type="tinyint" />
+          <Property Name="CTIME" Type="datetime" />
+          <Property Name="MTIME" Type="bigint" />
+        </EntityType>
+        <EntityContainer Name="StockDBModelStoreContainer">
+          <EntitySet Name="日期貨盤後行情表_luann" EntityType="Self.日期貨盤後行情表_luann" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="日期貨盤後統計表_luann" EntityType="Self.日期貨盤後統計表_luann" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="股東會投票日明細_luann" EntityType="Self.股東會投票日明細_luann" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="股東會投票資料表_luann" EntityType="Self.股東會投票資料表_luann" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="基金非營業日明細_luann" EntityType="Self.基金非營業日明細_luann" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="基金非營業日統計_luann" EntityType="Self.基金非營業日統計_luann" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StockDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="日期貨盤後行情表_luann">
+          <Key>
+            <PropertyRef Name="交易日期" />
+            <PropertyRef Name="契約" />
+            <PropertyRef Name="到期月份_週別_" />
+          </Key>
+          <Property Name="交易日期" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="契約" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="到期月份_週別_" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="開盤價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="最高價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="最低價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="收盤價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="CTIME" Type="DateTime" Precision="3" />
+          <Property Name="MTIME" Type="Int64" />
+        </EntityType>
+        <EntityType Name="日期貨盤後統計表_luann">
+          <Key>
+            <PropertyRef Name="交易日期" />
+            <PropertyRef Name="契約" />
+          </Key>
+          <Property Name="交易日期" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="契約" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="開盤價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="最高價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="最低價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="收盤價" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="CTIME" Type="DateTime" Precision="3" />
+          <Property Name="MTIME" Type="Int64" />
+        </EntityType>
+        <EntityType Name="股東會投票日明細_luann">
+          <Key>
+            <PropertyRef Name="投票日期" />
+            <PropertyRef Name="證券代號" />
+          </Key>
+          <Property Name="投票日期" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="證券代號" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="證券名稱" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="召集人" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="股東會日期" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="發行代理機構" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="聯絡電話" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="CTIME" Type="DateTime" Precision="3" />
+          <Property Name="MTIME" Type="Int64" />
+        </EntityType>
+        <EntityType Name="股東會投票資料表_luann">
+          <Key>
+            <PropertyRef Name="證券代號" />
+            <PropertyRef Name="股東會日期" />
+          </Key>
+          <Property Name="證券代號" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="證券名稱" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="召集人" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="股東會日期" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="投票起日" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="投票迄日" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="發行代理機構" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="聯絡電話" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="CTIME" Type="DateTime" Precision="3" />
+          <Property Name="MTIME" Type="Int64" />
+        </EntityType>
+        <EntityType Name="基金非營業日明細_luann">
+          <Key>
+            <PropertyRef Name="非營業日" />
+            <PropertyRef Name="基金統編" />
+          </Key>
+          <Property Name="非營業日" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="公司代號" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="基金統編" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="基金名稱" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="排序" Type="Byte" />
+          <Property Name="CTIME" Type="DateTime" Precision="3" />
+          <Property Name="MTIME" Type="Int64" />
+        </EntityType>
+        <EntityType Name="基金非營業日統計_luann">
+          <Key>
+            <PropertyRef Name="非營業日" />
+            <PropertyRef Name="公司代號" />
+          </Key>
+          <Property Name="非營業日" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="公司代號" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="基金總數" Type="Byte" />
+          <Property Name="CTIME" Type="DateTime" Precision="3" />
+          <Property Name="MTIME" Type="Int64" />
+        </EntityType>
+        <EntityContainer Name="StockDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="日期貨盤後行情表_luann" EntityType="Self.日期貨盤後行情表_luann" />
+          <EntitySet Name="日期貨盤後統計表_luann" EntityType="Self.日期貨盤後統計表_luann" />
+          <EntitySet Name="股東會投票日明細_luann" EntityType="Self.股東會投票日明細_luann" />
+          <EntitySet Name="股東會投票資料表_luann" EntityType="Self.股東會投票資料表_luann" />
+          <EntitySet Name="基金非營業日明細_luann" EntityType="Self.基金非營業日明細_luann" />
+          <EntitySet Name="基金非營業日統計_luann" EntityType="Self.基金非營業日統計_luann" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StockDBModelStoreContainer" CdmEntityContainer="StockDBEntities">
+          <EntitySetMapping Name="日期貨盤後行情表_luann">
+            <EntityTypeMapping TypeName="StockDBModel.日期貨盤後行情表_luann">
+              <MappingFragment StoreEntitySet="日期貨盤後行情表_luann">
+                <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+                <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+                <ScalarProperty Name="交易日期" ColumnName="交易日期" />
+                <ScalarProperty Name="契約" ColumnName="契約" />
+                <ScalarProperty Name="到期月份_週別_" ColumnName="到期月份(週別)" />
+                <ScalarProperty Name="開盤價" ColumnName="開盤價" />
+                <ScalarProperty Name="最高價" ColumnName="最高價" />
+                <ScalarProperty Name="最低價" ColumnName="最低價" />
+                <ScalarProperty Name="收盤價" ColumnName="收盤價" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="日期貨盤後統計表_luann">
+            <EntityTypeMapping TypeName="StockDBModel.日期貨盤後統計表_luann">
+              <MappingFragment StoreEntitySet="日期貨盤後統計表_luann">
+                <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+                <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+                <ScalarProperty Name="交易日期" ColumnName="交易日期" />
+                <ScalarProperty Name="契約" ColumnName="契約" />
+                <ScalarProperty Name="開盤價" ColumnName="開盤價" />
+                <ScalarProperty Name="最高價" ColumnName="最高價" />
+                <ScalarProperty Name="最低價" ColumnName="最低價" />
+                <ScalarProperty Name="收盤價" ColumnName="收盤價" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="股東會投票日明細_luann">
+            <EntityTypeMapping TypeName="StockDBModel.股東會投票日明細_luann">
+              <MappingFragment StoreEntitySet="股東會投票日明細_luann">
+                <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+                <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+                <ScalarProperty Name="投票日期" ColumnName="投票日期" />
+                <ScalarProperty Name="證券代號" ColumnName="證券代號" />
+                <ScalarProperty Name="證券名稱" ColumnName="證券名稱" />
+                <ScalarProperty Name="召集人" ColumnName="召集人" />
+                <ScalarProperty Name="股東會日期" ColumnName="股東會日期" />
+                <ScalarProperty Name="發行代理機構" ColumnName="發行代理機構" />
+                <ScalarProperty Name="聯絡電話" ColumnName="聯絡電話" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="股東會投票資料表_luann">
+            <EntityTypeMapping TypeName="StockDBModel.股東會投票資料表_luann">
+              <MappingFragment StoreEntitySet="股東會投票資料表_luann">
+                <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+                <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+                <ScalarProperty Name="證券代號" ColumnName="證券代號" />
+                <ScalarProperty Name="證券名稱" ColumnName="證券名稱" />
+                <ScalarProperty Name="召集人" ColumnName="召集人" />
+                <ScalarProperty Name="股東會日期" ColumnName="股東會日期" />
+                <ScalarProperty Name="投票起日" ColumnName="投票起日" />
+                <ScalarProperty Name="投票迄日" ColumnName="投票迄日" />
+                <ScalarProperty Name="發行代理機構" ColumnName="發行代理機構" />
+                <ScalarProperty Name="聯絡電話" ColumnName="聯絡電話" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="基金非營業日明細_luann">
+            <EntityTypeMapping TypeName="StockDBModel.基金非營業日明細_luann">
+              <MappingFragment StoreEntitySet="基金非營業日明細_luann">
+                <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+                <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+                <ScalarProperty Name="非營業日" ColumnName="非營業日" />
+                <ScalarProperty Name="公司代號" ColumnName="公司代號" />
+                <ScalarProperty Name="基金統編" ColumnName="基金統編" />
+                <ScalarProperty Name="基金名稱" ColumnName="基金名稱" />
+                <ScalarProperty Name="排序" ColumnName="排序" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="基金非營業日統計_luann">
+            <EntityTypeMapping TypeName="StockDBModel.基金非營業日統計_luann">
+              <MappingFragment StoreEntitySet="基金非營業日統計_luann">
+                <ScalarProperty Name="MTIME" ColumnName="MTIME" />
+                <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+                <ScalarProperty Name="非營業日" ColumnName="非營業日" />
+                <ScalarProperty Name="公司代號" ColumnName="公司代號" />
+                <ScalarProperty Name="基金總數" ColumnName="基金總數" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

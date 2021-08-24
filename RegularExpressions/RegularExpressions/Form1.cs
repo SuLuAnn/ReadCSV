@@ -34,7 +34,7 @@ namespace RegularExpressions
         {
             string id = IDNumberBox.Text;
             //開頭一位A-Z，第二位1或2,在8位數字
-            var idNumber = Regex.Match(id, @"^(?<id>[A-Z]){1}(?<number>[1-2]{1}[0-9]{8})$");
+            Match idNumber = Regex.Match(id, @"^(?<id>[A-Z]){1}(?<number>[1-2]{1}[0-9]{8})$");
             if (idNumber.Success)
             {
                 string value = $"{TransformToNumber(idNumber.Groups["id"].Value)}{idNumber.Groups["number"]}";
@@ -83,7 +83,7 @@ namespace RegularExpressions
         private void ClickPassword(object sender, EventArgs e)
         {
             string password = PasswordBox.Text;
-            PasswordDisplay.Text = Regex.IsMatch(password, @"^\w{8,}$").ToString();
+            PasswordDisplay.Text = Regex.IsMatch(password, @"^[\w]{8,}$").ToString();
         }
 
         /// <summary>
@@ -94,8 +94,9 @@ namespace RegularExpressions
         private void ClickEnglishNameButton(object sender, EventArgs e)
         {
             string englishName = EnglishNameBox.Text;
+            string pattern = @"(?<name>^[\S]*)@cmoney\.(com\.tw$|asia$)";
             //@cmoney前面的英文名
-            EnglishNameDisplay.Text = Regex.Match(englishName, @"(^\S*)(?=@cmoney)").Value;
+            EnglishNameDisplay.Text = Regex.Match(englishName, pattern).Groups["name"].Value;
         }
 
         /// <summary>
@@ -106,11 +107,11 @@ namespace RegularExpressions
         private string ReadFile(string fileName)
         {
             //檔案路徑
-            string path = $"{Environment.CurrentDirectory}/{fileName}.htm";
+            string path = Path.Combine(Environment.CurrentDirectory, $"{fileName}.htm");
             //讀出來的資料
             string datas;
             //讀檔
-            using (StreamReader streamReader = new StreamReader(path, System.Text.Encoding.GetEncoding("Big5")))
+            using (StreamReader streamReader = new StreamReader(path, Encoding.GetEncoding("Big5")))
             {
                 datas = streamReader.ReadToEnd();
             }
@@ -124,14 +125,17 @@ namespace RegularExpressions
         /// <param name="e">觸發事件</param>
         private void ClickH4ReadButton(object sender, EventArgs e)
         {
-            string path = $"{Environment.CurrentDirectory}/Q4.htm"; //檔案路徑
             string datas = ReadFile("Q4"); //讀出來的資料
+            string pattern = @"<h4>(?<name>.*?)</h4>[\s]*?<div class=""fl_txt""><p>(?<num>[\S]+?)</p>";
             //欄位在<h4>標籤裡，數值在<p>標籤裡
-            MatchCollection items = Regex.Matches(datas, @"(?<=<h4>)(?<date>[^&nbsp;]*)?[&nbsp;]*(?<name>\S*?)<\/h4>\s*?<div class=\""fl_txt\""><p>[NT$&nbsp;]*(?<num1>[-]?\d+?)[,]?(?<num2>[.]?\d*?)[,]?(?<num3>\d*?)(?=<\/p>)");
+            MatchCollection items = Regex.Matches(datas, pattern);
+            StringBuilder dataConnect = new StringBuilder();
             foreach (Match item in items)
             {
-                H4ReadDisplay.Text += $"{item.Groups["date"].Value}{item.Groups["name"].Value}:{item.Groups["num1"].Value}{item.Groups["num2"].Value}{item.Groups["num3"].Value}{Environment.NewLine}";
+                string data = Regex.Replace( $"{ item.Groups["name"].Value }:{ item.Groups["num"].Value}", @"NT\$|&nbsp;|,", string.Empty);
+                dataConnect.Append($"{data}{Environment.NewLine}");
             }
+            H4ReadDisplay.Text = dataConnect.ToString();
         }
 
         /// <summary>
@@ -145,7 +149,8 @@ namespace RegularExpressions
             DataTable table = new DataTable();
             AddColumn(datas, table);
             //取要入的資料
-            MatchCollection items = Regex.Matches(datas, @"(?<=<td align='center'>)(?<year>\d{3}|\d{3}\/\d{2}\/\d{2})(?=<\/td>)|(?<=<td align='center'>|<td>|<td align='right'>)[&nbsp;]*(?<data1>\S*?)\s*?(?<data2>\S*?)(?=<\/td>)");
+            string pattern = @"(<td.*?>)(?<data>.*?)</td>";
+            MatchCollection items = Regex.Matches(datas, pattern);
             //每17筆(欄位數)是1列資料，cell是紀錄取資料的index取到第幾筆
             int cell = items.Count / table.Columns.Count;
             DataRow row;
@@ -154,19 +159,24 @@ namespace RegularExpressions
                 row = table.NewRow();
                 for (int k = 0; k < table.Columns.Count; k++)
                 {
-                    int index = (i * table.Columns.Count) + k;
-                    //i * table.Columns.Count + k是目前要取的資料的index,資料要取代掉&nbsp;和空白
-                    if (items[index].Groups["year"].Success)
-                    {
-                        //將民國轉西元
-                        row[k] = $"{(int.Parse(items[index].Value.Substring(0, 3)) + 1911)}{items[index].Value.Substring(3)}";
-                    }
-                    else
-                    {
-                        row[k] = $"{ items[index].Groups["data1"].Value}{ items[index].Groups["data2"].Value}";
-                    }
+                    //第一個index是不要的東西
+                    int index = (i * table.Columns.Count) + k+1;
+                    //將民國轉西元
+                    row[k] = Regex.Replace(items[index].Groups["data"].Value, @"&nbsp;| ", string.Empty);
                 }
                 table.Rows.Add(row);
+            }
+            List<string> columnName = new List<string>() { "權利分派基準日", "除權交易日", "除息交易日", "現金股利發放日", "公告日期" };
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                table.Rows[i]["股利所屬年度"]= $"{int.Parse(table.Rows[i].Field<string>("股利所屬年度"))+ 1911}";
+                foreach (string name in columnName)
+                {
+                    if (int.TryParse(table.Rows[i].Field<string>(name).Replace("/", string.Empty), out int result))
+                    {
+                        table.Rows[i][name] = $"{result + 19110000}";
+                    }
+                }
             }
             DataView.DataSource = table;
         }
@@ -179,15 +189,17 @@ namespace RegularExpressions
         private void AddColumn(string datas, DataTable table)
         {
             //先取出所有欄位資料
-            MatchCollection data = Regex.Matches(datas, @"(?<=<th rowspan='2'>)(?<column>.*?)(?=<\/th>)|(?<=<th>)(?<downColumn>.*?)(?=<\/th>)");
+            string pattern = @"<tr class='tblHead'>(?<data>.*)</tr>";
+            string item = Regex.Match(datas, pattern).Groups["data"].Value;
+            string columnPattern = @"'2'>(?<column>.+?)</th>|<th>(?<downColumn>.+?)</th>";
+            MatchCollection columns = Regex.Matches(item, columnPattern);
             //要放入欄位的資料順序:0~3,10~16,4~9
-            int[] indexs = Enumerable.Range(0, 4).Concat(Enumerable.Range(10, 7)).Concat(Enumerable.Range(4, 6)).ToArray();
-            foreach (var index in indexs)
-            {
-                table.Columns.Add(data[index].Value);
-            }
+            Enumerable.Range(0, 4)
+                                  .Concat(Enumerable.Range(10, 7))
+                                  .Concat(Enumerable.Range(4, 6))
+                                  .ToList()
+                                  .ForEach(index => table.Columns.Add($"{columns[index].Groups["column"].Value}{columns[index].Groups["downColumn"].Value}"));
         }
-
         //測試
         //private void ClickIDButton(object sender, EventArgs e)
         //{
