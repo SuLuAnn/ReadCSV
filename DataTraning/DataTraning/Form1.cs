@@ -27,16 +27,15 @@ namespace DataTraning
         private void ClickVoteDayAddButton(object sender, EventArgs e)
         {
             int.TryParse(Regex.Match(GetWebPage(Global.STOCK_VOTE), @"頁次：1/(?<lastPage>\d+)<td>").Groups["lastPage"].Value, out int page);
-            string stockVotePage = GetWebPage($"{Global.STOCK_VOTE_PAGE}188");
-            var datas = Regex.Matches( stockVotePage, @"<tr class=""Font_001"">(.*?)</tr>",RegexOptions.Singleline);
-            foreach (var data in datas)
-            {
-                TimeText.Text += data.ToString();
-            }
             for (int i = 1; i < page; i++)
             {
-                //string stockVotePage = GetWebPage($"{Global.STOCK_VOTE_PAGE}{i}");
-                //TimeText.Text = stockVotePage;
+                string stockVotePage = GetWebPage($"{Global.STOCK_VOTE_PAGE}{i}");
+                MatchCollection stockVoteDatas = Regex.Matches(stockVotePage, @"<tr class=""Font_001"">(.*?)</tr>", RegexOptions.Singleline);
+                foreach (Match data in stockVoteDatas)
+                {
+                    
+                }
+                TimeText.Text = stockVotePage;
             }
         }
 
