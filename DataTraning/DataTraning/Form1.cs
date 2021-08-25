@@ -16,38 +16,80 @@ namespace DataTraning
     {
         private StockDBEntities StockDB;
 
-        private HttpClient HttpGetter;
+        private StockVote StockVote;
+
+
         public Form1()
         {
             InitializeComponent();
             StockDB = new StockDBEntities();
-            HttpGetter = new HttpClient();
+            StockVote = new StockVote(StockDB);
         }
 
         private void ClickVoteDayAddButton(object sender, EventArgs e)
         {
-            int.TryParse(Regex.Match(GetWebPage(Global.STOCK_VOTE), @"頁次：1/(?<lastPage>\d+)<td>").Groups["lastPage"].Value, out int page);
-            for (int i = 1; i < page; i++)
-            {
-                string stockVotePage = GetWebPage($"{Global.STOCK_VOTE_PAGE}{i}");
-                MatchCollection stockVoteDatas = Regex.Matches(stockVotePage, @"<tr class=""Font_001"">(.*?)</tr>", RegexOptions.Singleline);
-                foreach (Match data in stockVoteDatas)
-                {
-                    
-                }
-                TimeText.Text = stockVotePage;
-            }
+            StockVote.AddReviseStockDetail();
         }
 
-        public string GetWebPage(string url)
+        private void ClickVoteDayDeleteButton(object sender, EventArgs e)
         {
-            var responseMessage = HttpGetter.GetAsync(url).Result;
-            if (responseMessage.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                string responseResult = responseMessage.Content.ReadAsStringAsync().Result;
-                return responseResult;
-            }
-            return null;
+            StockDB.股東會投票日明細_luann.RemoveRange(StockDB.股東會投票日明細_luann);
+            StockDB.SaveChanges();
+        }
+
+        private void ClickFundDetailAddButton(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ClickFundDetailDeleteButton(object sender, EventArgs e)
+        {
+            StockDB.基金非營業日明細_luann.RemoveRange(StockDB.基金非營業日明細_luann);
+            StockDB.SaveChanges();
+        }
+
+        private void ClickFuturesPriceAddButton(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ClickFuturesPriceDeleteButton(object sender, EventArgs e)
+        {
+            StockDB.日期貨盤後行情表_luann.RemoveRange(StockDB.日期貨盤後行情表_luann);
+            StockDB.SaveChanges();
+        }
+
+        private void ClickVoteDataAddButton(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ClickVoteDataDeleteButton(object sender, EventArgs e)
+        {
+            StockDB.股東會投票資料表_luann.RemoveRange(StockDB.股東會投票資料表_luann);
+            StockDB.SaveChanges();
+        }
+
+        private void ClickFundStatisticAddButton(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ClickFundStatisticDeleteButton(object sender, EventArgs e)
+        {
+            StockDB.基金非營業日統計_luann.RemoveRange(StockDB.基金非營業日統計_luann);
+            StockDB.SaveChanges();
+        }
+
+        private void ClickFuturesStatisticAddButton(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ClickFuturesStatisticDeleteButton(object sender, EventArgs e)
+        {
+            StockDB.日期貨盤後統計表_luann.RemoveRange(StockDB.日期貨盤後統計表_luann);
+            StockDB.SaveChanges();
         }
     }
 }
