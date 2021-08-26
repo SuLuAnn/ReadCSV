@@ -74,5 +74,66 @@ namespace DataTraning
             }
             StockDB.SaveChanges();
         }
+        public void AddReviseStockData()
+        {
+            int.TryParse(Regex.Match(Global.GetWebPage(Global.STOCK_VOTE), @"頁次：1/(?<lastPage>\d+)<td>").Groups["lastPage"].Value, out int page);
+            string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
+            string namePattern;
+            for (int i = 1; i <= page; i++)
+            {
+                string stockVotePage = Global.GetWebPage($"{Global.STOCK_VOTE_PAGE}{i}");
+                MatchCollection stockVoteDatas = Regex.Matches(stockVotePage, allPattern, RegexOptions.Singleline);
+                foreach (Match data in stockVoteDatas)
+                {
+                    if (Regex.IsMatch(data.Groups["data"].Value, @"td-link"))
+                    {
+                        namePattern = @"<a.*?""_blank"">(?<name>.*?)</a>";
+                    }
+                    else
+                    {
+                        namePattern = @"(?<name>\S*?)";
+                    }
+                    string pattern = $@"left"">(?<id>.*?){namePattern}[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td>";
+                    Match detail = Regex.Match(data.Groups["data"].Value, pattern, RegexOptions.Singleline);
+                    string[] names = Regex.Split(detail.Groups["name"].Value, @"\(");
+                    string id = detail.Groups["id"].Value.Trim();
+                    string name = names.First().Trim();
+                    string convener = names.Length > 1 ? names[1].Replace(@")", string.Empty).Trim() : null;
+                    string voteStartDay = Global.ChangeYear(detail.Groups["voteStartDay"].Value.Replace(@"/", string.Empty).Trim());
+                    string voteEndDay = Global.ChangeYear(detail.Groups["voteEndDay"].Value.Replace(@"/", string.Empty).Trim());
+                    string meetingDate = Global.ChangeYear(detail.Groups["meetingDate"].Value.Replace(@"/", string.Empty).Trim());
+                    string agency = detail.Groups["agency"].Value.Trim();
+                    string phone = detail.Groups["phone"].Value.Trim();
+                    股東會投票資料表_luann stockDataData = StockDB.股東會投票資料表_luann.SingleOrDefault(date =>  date.證券代號 == id && date.股東會日期 == meetingDate);
+                    if (stockDataData == null)
+                    {
+                        StockDB.股東會投票資料表_luann.Add(new 股東會投票資料表_luann
+                        {
+                            證券代號 = id,
+                            證券名稱 = name,
+                            召集人 = convener,
+                            投票起日 = voteStartDay,
+                            投票迄日 = voteEndDay,
+                            股東會日期 = meetingDate,
+                            發行代理機構 = agency,
+                            聯絡電話 = phone
+                        });
+                    }
+                    else
+                    {
+                        if (stockDataData.證券名稱 != name || stockDataData.召集人 != convener || stockDataData.投票起日 != voteStartDay || stockDataData.投票迄日 != voteEndDay || stockDataData.發行代理機構 != agency || stockDataData.聯絡電話 != phone)
+                        {
+                            stockDataData.MTIME = DateTimeOffset.Now.ToUnixTimeSeconds();
+                            stockDataData.證券名稱 = name;
+                            stockDataData.召集人 = convener;
+                            stockDataData.股東會日期 = meetingDate;
+                            stockDataData.發行代理機構 = agency;
+                            stockDataData.聯絡電話 = phone;
+                        }
+                    }
+                }
+            }
+            StockDB.SaveChanges();
+        }
     }
 }

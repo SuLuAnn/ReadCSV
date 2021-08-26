@@ -18,12 +18,15 @@ namespace DataTraning
 
         private StockVote StockVote;
 
+        private FundNoBusinessDay FundNoBusinessDay;
+
 
         public Form1()
         {
             InitializeComponent();
             StockDB = new StockDBEntities();
             StockVote = new StockVote(StockDB);
+            FundNoBusinessDay = new FundNoBusinessDay(StockDB, TimeText);
         }
 
         private void ClickVoteDayAddButton(object sender, EventArgs e)
@@ -37,9 +40,20 @@ namespace DataTraning
             StockDB.SaveChanges();
         }
 
+        private void ClickVoteDataAddButton(object sender, EventArgs e)
+        {
+            StockVote.AddReviseStockData();
+        }
+
+        private void ClickVoteDataDeleteButton(object sender, EventArgs e)
+        {
+            StockDB.股東會投票資料表_luann.RemoveRange(StockDB.股東會投票資料表_luann);
+            StockDB.SaveChanges();
+        }
+
         private void ClickFundDetailAddButton(object sender, EventArgs e)
         {
-
+            FundNoBusinessDay.AddReviseFundDetail();
         }
 
         private void ClickFundDetailDeleteButton(object sender, EventArgs e)
@@ -56,17 +70,6 @@ namespace DataTraning
         private void ClickFuturesPriceDeleteButton(object sender, EventArgs e)
         {
             StockDB.日期貨盤後行情表_luann.RemoveRange(StockDB.日期貨盤後行情表_luann);
-            StockDB.SaveChanges();
-        }
-
-        private void ClickVoteDataAddButton(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ClickVoteDataDeleteButton(object sender, EventArgs e)
-        {
-            StockDB.股東會投票資料表_luann.RemoveRange(StockDB.股東會投票資料表_luann);
             StockDB.SaveChanges();
         }
 
