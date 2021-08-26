@@ -27,6 +27,7 @@ namespace DataTraning
             StockDB = new StockDBEntities();
             StockVote = new StockVote(StockDB);
             FundNoBusinessDay = new FundNoBusinessDay(StockDB, TimeText);
+
         }
 
         private void ClickVoteDayAddButton(object sender, EventArgs e)

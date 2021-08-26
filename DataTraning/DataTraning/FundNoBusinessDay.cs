@@ -24,7 +24,7 @@ namespace DataTraning
             SpiltData();
         }
 
-        public IEnumerable<MultipartFormDataContent> GetHeader()
+        public IEnumerable<Dictionary<string, string>> GetHeader()
         {
             string web = Global.GetWebPage(Global.FUND_NO_BUSINESS_DAY);
             MatchCollection headers = Regex.Matches(web, @"id=""(?<id>__.*?)"" value=""(?<value>.*?)""");
@@ -32,19 +32,26 @@ namespace DataTraning
             
             foreach (Match year in years)
             {
-                var header = new MultipartFormDataContent();
+                var header = new Dictionary<string, string>();
+                header.Add("__EVENTTARGET", "");
+                header.Add("__EVENTARGUMENT", "");
+                header.Add("__LASTFOCUS", "");
                 foreach (Match keyPair in headers)
                 {
-                    header.Add(new StringContent(keyPair.Groups["value"].Value), keyPair.Groups["id"].Value);
+                    header.Add(keyPair.Groups["id"].Value, keyPair.Groups["value"].Value);
                 }
-                header.Add(new StringContent(year.Groups["year"].Value), "ctl00$ContentPlaceHolder1$ddlQ_Year");
+                header.Add("ctl00$ContentPlaceHolder1$ddlQ_Year", year.Groups["year"].Value);
+                header.Add("ctl00$ContentPlaceHolder1$ddlQ_Comid", "");
+                header.Add("ctl00$ContentPlaceHolder1$ddlQ_Fund", "");
+                header.Add("ctl00$ContentPlaceHolder1$ddlQ_PAGESIZE", "5");
+                header.Add("ctl00$ContentPlaceHolder1$BtnQuery", "查詢");
                 yield return header;
             }
         }
 
         public IEnumerable<string> GetYearData()
         {
-            foreach (MultipartFormDataContent header in GetHeader())
+            foreach (Dictionary<string, string> header in GetHeader())
             {
                 yield return Global.HtmlPost(Global.FUND_NO_BUSINESS_DAY, header).Result;
             }
@@ -52,7 +59,7 @@ namespace DataTraning
 
         public void SpiltData()
         {
-            text.Text = GetYearData().First();
+            text.Text = GetYearData().ToList().First();//Global.ToJson(GetHeader().First());
             //foreach (string data in GetYearData())
             //{
 
