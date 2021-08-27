@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -72,6 +74,46 @@ namespace DataTraning
                 content.Add(new StringContent(param.Value), param.Key);
             }
             return content;
+        }
+
+        public static DataTable ConvertEntity<T>(IEnumerable<T> entity)
+        {
+            DataTable table = CreatDataTable(typeof(T));
+            if (entity.Count() == 0)
+            {
+                return table;
+            }
+            PropertyInfo[] properties = typeof(T).GetProperties();
+            foreach (var data in entity)
+            {
+                DataRow row = table.NewRow();
+                foreach (var property in properties)
+                {
+                    row[property.Name] = property.GetValue(data, null);
+                }
+                table.Rows.Add(row);
+            }
+            return table;
+        }
+
+        private static DataTable CreatDataTable(Type type)
+        {
+            DataTable table = new DataTable();
+            //取得此類的所有屬性
+            PropertyInfo[] properties = type.GetProperties();
+            foreach (PropertyInfo property in properties)
+            {
+                //取得此屬性類型
+                Type columnType = property.PropertyType;
+                //假如這個屬性為泛型且代表此泛型類型的類型可為null
+                if (columnType.IsGenericType && columnType.GetGenericTypeDefinition() == typeof(Nullable<>)) 
+                {
+                    columnType = Nullable.GetUnderlyingType(columnType);
+                }
+                var column = new DataColumn(property.Name, columnType);
+                table.Columns.Add(column);
+            }
+            return table;
         }
     }
 }
