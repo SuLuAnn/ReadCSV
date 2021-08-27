@@ -1,38 +1,42 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    ".NETFramework,Version=v5.0": {},
+    ".NETFramework,Version=v5.0/win7-x86": {}
   },
   "libraries": {},
   "projectFileDependencyGroups": {
-    "net5.0": []
+    ".NETFramework,Version=v5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\a0920\\.nuget\\packages\\": {}
+    "C:\\Users\\user1\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\a0920\\source\\repos\\ReadCSV\\LinqObj\\LinqObj\\LinqObj.csproj",
+      "projectUniqueName": "C:\\Users\\user1\\source\\repos\\LinqObj\\LinqObj\\LinqObj.csproj",
       "projectName": "LinqObj",
-      "projectPath": "C:\\Users\\a0920\\source\\repos\\ReadCSV\\LinqObj\\LinqObj\\LinqObj.csproj",
-      "packagesPath": "C:\\Users\\a0920\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\a0920\\source\\repos\\ReadCSV\\LinqObj\\LinqObj\\obj\\",
+      "projectPath": "C:\\Users\\user1\\source\\repos\\LinqObj\\LinqObj\\LinqObj.csproj",
+      "packagesPath": "C:\\Users\\user1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\user1\\source\\repos\\LinqObj\\LinqObj\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\a0920\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\user1\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net5.0"
+        "net50"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net50": {
           "projectReferences": {}
         }
       },
@@ -43,24 +47,11 @@
       }
     },
     "frameworks": {
-      "net5.0": {
-        "targetAlias": "net5.0",
-        "imports": [
-          "net461",
-          "net462",
-          "net47",
-          "net471",
-          "net472",
-          "net48"
-        ],
-        "assetTargetFallback": true,
-        "warn": true,
-        "frameworkReferences": {
-          "Microsoft.NETCore.App": {
-            "privateAssets": "all"
-          }
-        },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+      "net50": {}
+    },
+    "runtimes": {
+      "win7-x86": {
+        "#import": []
       }
     }
   }

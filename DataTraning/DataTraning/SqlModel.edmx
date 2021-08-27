@@ -74,7 +74,7 @@
           <Property Name="非營業日" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="公司代號" Type="char" MaxLength="5" />
           <Property Name="基金統編" Type="varchar" MaxLength="9" Nullable="false" />
-          <Property Name="基金名稱" Type="nvarchar" MaxLength="40" />
+          <Property Name="基金名稱" Type="nvarchar" MaxLength="80" />
           <Property Name="排序" Type="tinyint" />
           <Property Name="CTIME" Type="datetime" StoreGeneratedPattern="Identity" />
           <Property Name="MTIME" Type="bigint" StoreGeneratedPattern="Computed" />
@@ -171,7 +171,7 @@
           <Property Name="非營業日" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="公司代號" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
           <Property Name="基金統編" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="基金名稱" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="基金名稱" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Name="排序" Type="Byte" />
           <Property Name="CTIME" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MTIME" Type="Int64" annotation:StoreGeneratedPattern="Computed" />
