@@ -13,7 +13,7 @@ namespace DataTraning
     {
         private TextBox text;
         private StockDBEntities StockDB;
-        public FundNoBusinessDay(StockDBEntities stockDB,TextBox text)
+        public FundNoBusinessDay(StockDBEntities stockDB, TextBox text)
         {
             StockDB = stockDB;
             this.text = text;
@@ -26,7 +26,7 @@ namespace DataTraning
                 基金非營業日明細_luann data = StockDB.基金非營業日明細_luann.SingleOrDefault(dataFund => dataFund.非營業日 == fund.非營業日 && dataFund.基金統編 == fund.基金統編);
                 if (data == null)
                 {
-                    StockDB.基金非營業日明細_luann.Add(data);
+                    StockDB.基金非營業日明細_luann.Add(fund);
                 }
                 else
                 {
@@ -74,11 +74,11 @@ namespace DataTraning
             }
         }
 
-        public IEnumerable<基金非營業日明細_luann> SpiltData()
+        public IEnumerable<基金非營業日明細_luann> SpiltDetailData()
         {
             foreach (string data in GetYearData())
             {
-                MatchCollection results = Regex.Matches(data, @"<tr class=""r_blue"">(?<result>.*?)</tr>",RegexOptions.Singleline);
+                MatchCollection results = Regex.Matches(data, @"<tr class=""r_blue"">(?<result>.*?)</tr>", RegexOptions.Singleline);
                 foreach (Match result in results)
                 {
                     MatchCollection items = Regex.Matches(result.Groups["result"].Value, @">(.*?)</td>");
@@ -94,14 +94,66 @@ namespace DataTraning
         }
         public IEnumerable<基金非營業日明細_luann> GetRank()
         {
-            return SpiltData().GroupBy(fund => fund.非營業日)
+            return SpiltDetailData().GroupBy(fund => fund.非營業日)
                                .SelectMany(funds => funds.GroupBy(fund => fund.基金名稱.Length)
                                                                                     .OrderByDescending(fund => fund.Key)
                                                                                     .SelectMany((fund, index) =>
                                                                                                                                         {
                                                                                                                                             fund.ToList().ForEach(item => item.排序 = (byte)(index + 1));
                                                                                                                                             return funds;
-                                                                                                                                            }));
+                                                                                                                                        }));
+        }
+        public IEnumerable<FundStatisticDto> SpiltStatisticData()
+        {
+            foreach (string data in GetYearData())
+            {
+                MatchCollection results = Regex.Matches(data, @"<tr class=""r_blue"">(?<result>.*?)</tr>", RegexOptions.Singleline);
+                foreach (Match result in results)
+                {
+                    MatchCollection items = Regex.Matches(result.Groups["result"].Value, @">(.*?)</td>");
+                    yield return new FundStatisticDto
+                    {
+                        非營業日 = items[(int)Global.Fund.NO_BUSINESS_DAY].Groups[1].Value,
+                        公司代號 = items[(int)Global.Fund.COMPANY_ID].Groups[1].Value,
+                        基金統編 = items[(int)Global.Fund.TAX_ID].Groups[1].Value,
+                    };
+                }
+            }
+        }
+        public IEnumerable<基金非營業日統計_luann> GetStatistic() 
+        {
+            return SpiltStatisticData().GroupBy(data => new  {
+                                                                                                            data.非營業日,
+                                                                                                            data.公司代號
+                                                                                                        },
+                                                                                                        (key, value) => new 基金非營業日統計_luann
+                                                                                                        {
+                                                                                                            公司代號 = key.公司代號,
+                                                                                                            非營業日 = key.非營業日,
+                                                                                                            基金總數 = (byte)value.Count()
+                                                                                                        });
+        }
+        public void AddReviseFundStatistic()
+        {
+            StockDB.基金非營業日統計_luann.AddRange(GetStatistic());
+            //foreach (var fund in GetStatistic())
+            //{
+                //StockDB.基金非營業日統計_luann.Add(fund);
+                //基金非營業日統計_luann data = StockDB.基金非營業日統計_luann.AsEnumerable().SingleOrDefault(dataFund => dataFund.非營業日 == fund.非營業日 && dataFund.公司代號 == fund.公司代號);
+                //if (data == null)
+                //{
+
+                //}
+                //else
+                //{
+                //    if (data.基金總數 != fund.基金總數)
+                //    {
+                //        data.基金總數 = fund.基金總數;
+                //        data.MTIME = DateTimeOffset.Now.ToUnixTimeSeconds();
+                //    }
+                //}
+            //}
+            StockDB.SaveChanges();
         }
     }
 }

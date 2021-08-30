@@ -71,6 +71,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="FundNoBusinessDay.cs" />
+    <Compile Include="FundStatisticDto.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

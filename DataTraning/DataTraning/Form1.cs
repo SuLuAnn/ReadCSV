@@ -63,25 +63,24 @@ namespace DataTraning
             StockDB.SaveChanges();
         }
 
-        private void ClickFuturesPriceAddButton(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ClickFuturesPriceDeleteButton(object sender, EventArgs e)
-        {
-            StockDB.日期貨盤後行情表_luann.RemoveRange(StockDB.日期貨盤後行情表_luann);
-            StockDB.SaveChanges();
-        }
-
         private void ClickFundStatisticAddButton(object sender, EventArgs e)
         {
-
+            FundNoBusinessDay.AddReviseFundStatistic();
         }
 
         private void ClickFundStatisticDeleteButton(object sender, EventArgs e)
         {
             StockDB.基金非營業日統計_luann.RemoveRange(StockDB.基金非營業日統計_luann);
+            StockDB.SaveChanges();
+        }
+        private void ClickFuturesPriceAddButton(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ClickFuturesPriceDeleteButton(object sender, EventArgs e)
+        {
+            StockDB.日期貨盤後行情表_luann.RemoveRange(StockDB.日期貨盤後行情表_luann);
             StockDB.SaveChanges();
         }
 
