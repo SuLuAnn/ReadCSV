@@ -20,6 +20,8 @@ namespace DataTraning
 
         private FundNoBusinessDay FundNoBusinessDay;
 
+        private Futures Futures;
+
 
         public Form1()
         {
@@ -27,6 +29,8 @@ namespace DataTraning
             StockDB = new StockDBEntities();
             StockVote = new StockVote(StockDB);
             FundNoBusinessDay = new FundNoBusinessDay(StockDB, TimeText);
+            Futures = new Futures(StockDB);
+
 
         }
 
@@ -75,7 +79,7 @@ namespace DataTraning
         }
         private void ClickFuturesPriceAddButton(object sender, EventArgs e)
         {
-            
+            Futures.AddReviseFutursDetail();
         }
 
         private void ClickFuturesPriceDeleteButton(object sender, EventArgs e)
@@ -86,7 +90,7 @@ namespace DataTraning
 
         private void ClickFuturesStatisticAddButton(object sender, EventArgs e)
         {
-
+            Futures.AddReviseFutursStatistic();
         }
 
         private void ClickFuturesStatisticDeleteButton(object sender, EventArgs e)

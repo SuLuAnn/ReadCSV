@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DataTraning
@@ -17,7 +18,9 @@ namespace DataTraning
         public const string STOCK_VOTE = "https://www.stockvote.com.tw/evote/login/index/meetingInfoMore.html";
         public const string STOCK_VOTE_PAGE = "https://www.stockvote.com.tw/evote/login/index/meetingInfoMore.html?stockName=&orderType=0&stockId=&searchType=0&meetingDate=&meetinfo=";
         public const string FUND_NO_BUSINESS_DAY = "https://www.sitca.org.tw/ROC/Industry/IN2107.aspx?pid=IN2213_03";
+        public const string DAY_FUTURES = "https://www.taifex.com.tw/cht/3/dlFutDataDown";
         private readonly static HttpClient HttpGetter = new HttpClient(new HttpClientHandler() { UseCookies = true });
+
 
         public enum Fund : int
         {
@@ -25,6 +28,18 @@ namespace DataTraning
             COMPANY_ID,
             TAX_ID,
             FUND_NAME
+        }
+
+        public enum Futures : int
+        {
+            TRANSACTION_DATE = 0,
+            CONTRACT = 1,
+            EXPIRY_MONTH = 2,
+            OPENING_PRICE = 3,
+            HIGHEST_PRICE = 4,
+            LOWEST_PRICE = 5,
+            CLOSING_PRICE = 6,
+            TRADING_HOURS = 17
         }
 
         public static string GetWebPage(string url)
@@ -46,7 +61,7 @@ namespace DataTraning
             }
             return year;
         }
-        public static  string HtmlPost(string requestUrl, Dictionary<string, string> postParams)
+        public static  string HtmlPost(string requestUrl, Dictionary<string, string> postParams, string encoded)
         {
             string responseBody = string.Empty;
             using (HttpClient httpClient = new HttpClient())
@@ -54,6 +69,7 @@ namespace DataTraning
                 HttpContent postContent = ToContent(postParams);
                 HttpResponseMessage response =httpClient.PostAsync(requestUrl, postContent).Result;
                 response.EnsureSuccessStatusCode();
+                response.Content.Headers.ContentType.CharSet = encoded;
                 responseBody =response.Content.ReadAsStringAsync().Result;
             }
             return responseBody;
@@ -114,6 +130,40 @@ namespace DataTraning
                 table.Columns.Add(column);
             }
             return table;
+        }
+
+        public static void SaveFile(string file, string fileName)
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", fileName);
+            using (FileStream fileHandle = new FileStream(path, FileMode.Create, FileAccess.Write))
+            {
+                StreamWriter writer = new StreamWriter(fileHandle, Encoding.UTF8);
+                writer.Write(file);
+                writer.Close();
+            }
+        }
+
+        public static string CreatDirectory(string fileName)
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", fileName);
+            if (!Directory.Exists(fileName))
+            {
+                Directory.CreateDirectory(path);
+            }
+            return fileName;
+        }
+
+        public static void SaveCsv<T>(List<T> items, string csvName)
+        {
+            int noNeedHeader = 2;//csv表頭不需要CTIME,MTIME
+            PropertyInfo[] propertiesOfObject = typeof(T).GetProperties();
+            IEnumerable<PropertyInfo> properties = propertiesOfObject.Take(propertiesOfObject.Count() - noNeedHeader);
+            string headers = string.Join(",", properties.Select(property => property.Name));
+            List<string> datas = items.Select(detail => string.Join(",", properties
+                                                                                                                 .Select(property => property.GetValue(detail))))
+                                           .ToList();
+            datas.Insert(0, headers);
+            Global.SaveFile(string.Join("\n", datas),csvName);
         }
     }
 }

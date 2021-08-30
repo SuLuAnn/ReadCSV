@@ -21,7 +21,9 @@ namespace DataTraning
 
         public void AddReviseFundDetail()
         {
-            foreach (var fund in GetRank())
+            List<基金非營業日明細_luann> funds = GetRank().ToList();
+            funds.GroupBy(fund => fund.非營業日.Substring(0, 4)).ToList().ForEach(fund => Global.SaveCsv<基金非營業日明細_luann>(fund.ToList(), $"{fund.Key}_基金非營業日明細.csv"));
+            foreach (var fund in funds)
             {
                 基金非營業日明細_luann data = StockDB.基金非營業日明細_luann.SingleOrDefault(dataFund => dataFund.非營業日 == fund.非營業日 && dataFund.基金統編 == fund.基金統編);
                 if (data == null)
@@ -70,7 +72,9 @@ namespace DataTraning
         {
             foreach (Dictionary<string, string> header in GetHeader())
             {
-                yield return Global.HtmlPost(Global.FUND_NO_BUSINESS_DAY, header);
+                string data = Global.HtmlPost(Global.FUND_NO_BUSINESS_DAY, header, "UTF-8");
+                Global.SaveFile(data, $"{header["ctl00$ContentPlaceHolder1$ddlQ_Year"]}.html");
+                yield return data;
             }
         }
 
@@ -135,7 +139,9 @@ namespace DataTraning
         }
         public void AddReviseFundStatistic()
         {
-            StockDB.基金非營業日統計_luann.AddRange(GetStatistic());
+            var funds = GetStatistic().ToList();
+            funds.GroupBy(fund => fund.非營業日.Substring(0, 4)).ToList().ForEach(fund => Global.SaveCsv<基金非營業日統計_luann>(fund.ToList(), $"{fund.Key}_基金非營業日統計.csv"));
+            StockDB.基金非營業日統計_luann.AddRange(funds);
             //foreach (var fund in GetStatistic())
             //{
                 //StockDB.基金非營業日統計_luann.Add(fund);

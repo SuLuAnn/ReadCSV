@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,75 +16,46 @@ namespace DataTraning
             StockDB = stockDB;
         }
 
-        public void AddReviseStockDetail()
+        public IEnumerable<int> GetPageNumber()
         {
-            int.TryParse(Regex.Match(Global.GetWebPage(Global.STOCK_VOTE), @"頁次：1/(?<lastPage>\d+)<td>").Groups["lastPage"].Value, out int page);
-            string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
-            string namePattern;
-            for (int i = 1; i <= page; i++)
+            string web = Global.GetWebPage(Global.STOCK_VOTE);
+            if (int.TryParse(Regex.Match(web, @"頁次：1/(?<lastPage>\d+)<td>").Groups["lastPage"].Value, out int page))
             {
-                string stockVotePage = Global.GetWebPage($"{Global.STOCK_VOTE_PAGE}{i}");
-                MatchCollection stockVoteDatas = Regex.Matches(stockVotePage, allPattern, RegexOptions.Singleline);
-                foreach (Match data in stockVoteDatas)
-                {
-                    if (Regex.IsMatch(data.Groups["data"].Value, @"td-link"))
-                    {
-                        namePattern = @"<a.*?""_blank"">(?<name>.*?)</a>";
-                    }
-                    else
-                    {
-                        namePattern = @"(?<name>\S*?)";
-                    }
-                    string pattern = $@"left"">(?<id>.*?){namePattern}[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td>";
-                    Match detail = Regex.Match(data.Groups["data"].Value, pattern, RegexOptions.Singleline);
-                    string[] names = Regex.Split(detail.Groups["name"].Value, @"\(");
-                    string id = detail.Groups["id"].Value.Trim();
-                    string name = names.First().Trim();
-                    string convener = names.Length > 1 ? names[1].Replace(@")", string.Empty).Trim() : null;
-                    string voteDate = Global.ChangeYear(detail.Groups["voteStartDay"].Value.Replace(@"/", string.Empty).Trim());
-                    string meetingDate = Global.ChangeYear(detail.Groups["meetingDate"].Value.Replace(@"/", string.Empty).Trim());
-                    string agency = detail.Groups["agency"].Value.Trim();
-                    string phone = detail.Groups["phone"].Value.Trim();
-                    股東會投票日明細_luann stockDataDetail =StockDB.股東會投票日明細_luann.SingleOrDefault(date => date.投票日期 == voteDate && date.證券代號 == id);
-                    if (stockDataDetail == null)
-                    {
-                        StockDB.股東會投票日明細_luann.Add(new 股東會投票日明細_luann
-                        {
-                            證券代號 = id,
-                            證券名稱 = name,
-                            召集人 = convener,
-                            投票日期 = voteDate,
-                            股東會日期 = meetingDate,
-                            發行代理機構 = agency,
-                            聯絡電話 = phone
-                        });
-                    }
-                    else
-                    {
-                        if (stockDataDetail.證券名稱 != name || stockDataDetail.召集人 != convener || stockDataDetail.股東會日期 != meetingDate || stockDataDetail.發行代理機構 != agency || stockDataDetail.聯絡電話 != phone)
-                        {
-                            stockDataDetail.MTIME = DateTimeOffset.Now.ToUnixTimeSeconds();
-                            stockDataDetail.證券名稱 = name;
-                            stockDataDetail.召集人 = convener;
-                            stockDataDetail.股東會日期 = meetingDate;
-                            stockDataDetail.發行代理機構 = agency;
-                            stockDataDetail.聯絡電話 = phone;
-                        }
-                    }
-                }
+                return Enumerable.Range(1, page);
             }
-            StockDB.SaveChanges();
+            return null;
         }
+
         public void AddReviseStockData()
         {
-            int.TryParse(Regex.Match(Global.GetWebPage(Global.STOCK_VOTE), @"頁次：1/(?<lastPage>\d+)<td>").Groups["lastPage"].Value, out int page);
-            string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
-            string namePattern;
-            for (int i = 1; i <= page; i++)
+            StockDB.股東會投票資料表_luann.AddRange(SpiltData().SelectMany(data => data));
+            StockDB.SaveChanges();
+        }
+        public void AddReviseStockDetail()
+        {
+            StockDB.股東會投票日明細_luann.AddRange(SpiltDetail().SelectMany(data => data));
+            StockDB.SaveChanges();
+        }
+        public IEnumerable<Tuple<int, MatchCollection>> GetData()
+        {
+            foreach (var page in GetPageNumber())
             {
-                string stockVotePage = Global.GetWebPage($"{Global.STOCK_VOTE_PAGE}{i}");
+                string stockVotePage = Global.GetWebPage($"{Global.STOCK_VOTE_PAGE}{page}");
+                string path = Path.Combine(Global.CreatDirectory(DateTime.Today.ToString("yyyyMMdd")), $"{page}.html");
+                Global.SaveFile(stockVotePage, path);
+                string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
                 MatchCollection stockVoteDatas = Regex.Matches(stockVotePage, allPattern, RegexOptions.Singleline);
-                foreach (Match data in stockVoteDatas)
+                yield return new Tuple<int, MatchCollection>(page, stockVoteDatas);
+            }
+        }
+
+        public IEnumerable<List<股東會投票日明細_luann>> SpiltDetail()
+        {
+            string namePattern;
+            foreach (Tuple<int, MatchCollection> datas in GetData())
+            {
+                List<股東會投票日明細_luann> voteDay = new List<股東會投票日明細_luann>();
+                foreach (Match data in datas.Item2)
                 {
                     if (Regex.IsMatch(data.Groups["data"].Value, @"td-link"))
                     {
@@ -96,44 +68,55 @@ namespace DataTraning
                     string pattern = $@"left"">(?<id>.*?){namePattern}[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td>";
                     Match detail = Regex.Match(data.Groups["data"].Value, pattern, RegexOptions.Singleline);
                     string[] names = Regex.Split(detail.Groups["name"].Value, @"\(");
-                    string id = detail.Groups["id"].Value.Trim();
-                    string name = names.First().Trim();
-                    string convener = names.Length > 1 ? names[1].Replace(@")", string.Empty).Trim() : null;
-                    string voteStartDay = Global.ChangeYear(detail.Groups["voteStartDay"].Value.Replace(@"/", string.Empty).Trim());
-                    string voteEndDay = Global.ChangeYear(detail.Groups["voteEndDay"].Value.Replace(@"/", string.Empty).Trim());
-                    string meetingDate = Global.ChangeYear(detail.Groups["meetingDate"].Value.Replace(@"/", string.Empty).Trim());
-                    string agency = detail.Groups["agency"].Value.Trim();
-                    string phone = detail.Groups["phone"].Value.Trim();
-                    股東會投票資料表_luann stockDataData = StockDB.股東會投票資料表_luann.SingleOrDefault(date =>  date.證券代號 == id && date.股東會日期 == meetingDate);
-                    if (stockDataData == null)
+                    voteDay.Add(new 股東會投票日明細_luann
                     {
-                        StockDB.股東會投票資料表_luann.Add(new 股東會投票資料表_luann
-                        {
-                            證券代號 = id,
-                            證券名稱 = name,
-                            召集人 = convener,
-                            投票起日 = voteStartDay,
-                            投票迄日 = voteEndDay,
-                            股東會日期 = meetingDate,
-                            發行代理機構 = agency,
-                            聯絡電話 = phone
-                        });
+                        證券代號 = detail.Groups["id"].Value.Trim(),
+                        證券名稱 = names.First().Trim(),
+                        召集人 = names.Length > 1 ? names[1].Replace(@")", string.Empty).Trim() : null,
+                        投票日期 = Global.ChangeYear(detail.Groups["voteStartDay"].Value.Replace(@"/", string.Empty).Trim()),
+                        股東會日期 = Global.ChangeYear(detail.Groups["meetingDate"].Value.Replace(@"/", string.Empty).Trim()),
+                        發行代理機構 = detail.Groups["agency"].Value.Trim(),
+                        聯絡電話 = detail.Groups["phone"].Value.Trim()
+                    });
+                }
+                Global.SaveCsv<股東會投票日明細_luann>(voteDay, Path.Combine(DateTime.Today.ToString("yyyyMMdd"),$"{datas.Item1}_股東會投票日明細.csv"));
+                yield return voteDay;
+            }
+        }
+        public IEnumerable<List<股東會投票資料表_luann>> SpiltData()
+        {
+            string namePattern;
+            foreach (Tuple<int, MatchCollection> datas in GetData())
+            {
+                List<股東會投票資料表_luann> voteDay = new List<股東會投票資料表_luann>();
+                foreach (Match data in datas.Item2)
+                {
+                    if (Regex.IsMatch(data.Groups["data"].Value, @"td-link"))
+                    {
+                        namePattern = @"<a.*?""_blank"">(?<name>.*?)</a>";
                     }
                     else
                     {
-                        if (stockDataData.證券名稱 != name || stockDataData.召集人 != convener || stockDataData.投票起日 != voteStartDay || stockDataData.投票迄日 != voteEndDay || stockDataData.發行代理機構 != agency || stockDataData.聯絡電話 != phone)
-                        {
-                            stockDataData.MTIME = DateTimeOffset.Now.ToUnixTimeSeconds();
-                            stockDataData.證券名稱 = name;
-                            stockDataData.召集人 = convener;
-                            stockDataData.股東會日期 = meetingDate;
-                            stockDataData.發行代理機構 = agency;
-                            stockDataData.聯絡電話 = phone;
-                        }
+                        namePattern = @"(?<name>\S*?)";
                     }
+                    string pattern = $@"left"">(?<id>.*?){namePattern}[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td>";
+                    Match detail = Regex.Match(data.Groups["data"].Value, pattern, RegexOptions.Singleline);
+                    string[] names = Regex.Split(detail.Groups["name"].Value, @"\(");
+                    voteDay.Add(new 股東會投票資料表_luann
+                    {
+                        證券代號 = detail.Groups["id"].Value.Trim(),
+                        證券名稱 = names.First().Trim(),
+                        召集人 = names.Length > 1 ? names[1].Replace(@")", string.Empty).Trim() : null,
+                        投票起日 = Global.ChangeYear(detail.Groups["voteStartDay"].Value.Replace(@"/", string.Empty).Trim()),
+                        投票迄日 = Global.ChangeYear(detail.Groups["voteEndDay"].Value.Replace(@"/", string.Empty).Trim()),
+                        股東會日期 = Global.ChangeYear(detail.Groups["meetingDate"].Value.Replace(@"/", string.Empty).Trim()),
+                        發行代理機構 = detail.Groups["agency"].Value.Trim(),
+                        聯絡電話 = detail.Groups["phone"].Value.Trim()
+                    });
                 }
+                Global.SaveCsv<股東會投票資料表_luann>(voteDay, Path.Combine(DateTime.Today.ToString("yyyyMMdd"), $"{datas.Item1}_股東會投票資料表.csv"));
+                yield return voteDay;
             }
-            StockDB.SaveChanges();
         }
     }
 }
