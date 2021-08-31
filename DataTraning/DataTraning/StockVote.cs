@@ -18,8 +18,8 @@ namespace DataTraning
 
         public IEnumerable<int> GetPageNumber()
         {
-            string web = Global.GetWebPage(Global.STOCK_VOTE);
-            if (int.TryParse(Regex.Match(web, @"頁次：1/(?<lastPage>\d+)<td>").Groups["lastPage"].Value, out int page))
+            string web = Global.GetWebPage(Constants.STOCK_VOTE);
+            if (int.TryParse(Regex.Match(web, @"頁次：1/(?<lastPage>\d+?)<td>").Groups["lastPage"].Value, out int page))
             {
                 return Enumerable.Range(1, page);
             }
@@ -36,26 +36,30 @@ namespace DataTraning
             StockDB.股東會投票日明細_luann.AddRange(SpiltDetail().SelectMany(data => data));
             StockDB.SaveChanges();
         }
-        public IEnumerable<Tuple<int, MatchCollection>> GetData()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<StockVotePageDto> GetData()
         {
-            foreach (var page in GetPageNumber())
+            string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
+            foreach (int page in GetPageNumber())
             {
-                string stockVotePage = Global.GetWebPage($"{Global.STOCK_VOTE_PAGE}{page}");
+                string stockVotePage = Global.GetWebPage($"{Constants.STOCK_VOTE_PAGE}{page}");
                 string path = Path.Combine(Global.CreatDirectory(DateTime.Today.ToString("yyyyMMdd")), $"{page}.html");
                 Global.SaveFile(stockVotePage, path);
-                string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
                 MatchCollection stockVoteDatas = Regex.Matches(stockVotePage, allPattern, RegexOptions.Singleline);
-                yield return new Tuple<int, MatchCollection>(page, stockVoteDatas);
+                yield return new StockVotePageDto(page, stockVoteDatas);
             }
         }
 
         public IEnumerable<List<股東會投票日明細_luann>> SpiltDetail()
         {
             string namePattern;
-            foreach (Tuple<int, MatchCollection> datas in GetData())
+            foreach (StockVotePageDto datas in GetData())
             {
                 List<股東會投票日明細_luann> voteDay = new List<股東會投票日明細_luann>();
-                foreach (Match data in datas.Item2)
+                foreach (Match data in datas.OnePageVoteData)
                 {
                     if (Regex.IsMatch(data.Groups["data"].Value, @"td-link"))
                     {
@@ -79,17 +83,17 @@ namespace DataTraning
                         聯絡電話 = detail.Groups["phone"].Value.Trim()
                     });
                 }
-                Global.SaveCsv<股東會投票日明細_luann>(voteDay, Path.Combine(DateTime.Today.ToString("yyyyMMdd"),$"{datas.Item1}_股東會投票日明細.csv"));
+                Global.SaveCsv(voteDay, Path.Combine(DateTime.Today.ToString("yyyyMMdd"), $"{datas.PageNumber}_股東會投票日明細.csv"));
                 yield return voteDay;
             }
         }
         public IEnumerable<List<股東會投票資料表_luann>> SpiltData()
         {
             string namePattern;
-            foreach (Tuple<int, MatchCollection> datas in GetData())
+            foreach (StockVotePageDto datas in GetData())
             {
                 List<股東會投票資料表_luann> voteDay = new List<股東會投票資料表_luann>();
-                foreach (Match data in datas.Item2)
+                foreach (Match data in datas.OnePageVoteData)
                 {
                     if (Regex.IsMatch(data.Groups["data"].Value, @"td-link"))
                     {
@@ -114,7 +118,7 @@ namespace DataTraning
                         聯絡電話 = detail.Groups["phone"].Value.Trim()
                     });
                 }
-                Global.SaveCsv<股東會投票資料表_luann>(voteDay, Path.Combine(DateTime.Today.ToString("yyyyMMdd"), $"{datas.Item1}_股東會投票資料表.csv"));
+                Global.SaveCsv(voteDay, Path.Combine(DateTime.Today.ToString("yyyyMMdd"), $"{datas.PageNumber}_股東會投票資料表.csv"));
                 yield return voteDay;
             }
         }

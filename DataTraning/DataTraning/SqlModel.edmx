@@ -43,7 +43,7 @@
           <Property Name="投票日期" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="證券代號" Type="varchar" MaxLength="6" Nullable="false" />
           <Property Name="證券名稱" Type="nvarchar" MaxLength="16" />
-          <Property Name="召集人" Type="nvarchar" MaxLength="9" />
+          <Property Name="召集人" Type="nvarchar" MaxLength="20" />
           <Property Name="股東會日期" Type="char" MaxLength="8" />
           <Property Name="發行代理機構" Type="nvarchar" MaxLength="11" />
           <Property Name="聯絡電話" Type="char" MaxLength="12" />
@@ -57,7 +57,7 @@
           </Key>
           <Property Name="證券代號" Type="varchar" MaxLength="6" Nullable="false" />
           <Property Name="證券名稱" Type="nvarchar" MaxLength="16" />
-          <Property Name="召集人" Type="nvarchar" MaxLength="9" />
+          <Property Name="召集人" Type="nvarchar" MaxLength="20" />
           <Property Name="股東會日期" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="投票起日" Type="char" MaxLength="8" />
           <Property Name="投票迄日" Type="char" MaxLength="8" />
@@ -140,7 +140,7 @@
           <Property Name="投票日期" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="證券代號" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="證券名稱" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
-          <Property Name="召集人" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="召集人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="股東會日期" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
           <Property Name="發行代理機構" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
           <Property Name="聯絡電話" Type="String" MaxLength="12" FixedLength="true" Unicode="false" />
@@ -154,7 +154,7 @@
           </Key>
           <Property Name="證券代號" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="證券名稱" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
-          <Property Name="召集人" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="召集人" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="股東會日期" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="投票起日" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
           <Property Name="投票迄日" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />

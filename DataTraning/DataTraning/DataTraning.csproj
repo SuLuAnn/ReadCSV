@@ -64,6 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +94,7 @@
       <DependentUpon>SqlModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="StockVote.cs" />
+    <Compile Include="StockVotePageDto.cs" />
     <Compile Include="基金非營業日明細_luann.cs">
       <DependentUpon>SqlModel.tt</DependentUpon>
     </Compile>
