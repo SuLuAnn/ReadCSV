@@ -115,11 +115,11 @@ namespace DataTraning
             return fileName;
         }
 
-        public static void SaveCsv<T>(List<T> items, string csvName)
+        public static void SaveCsv<T>(List<T> processedData, string csvName)
         {
             IEnumerable<PropertyInfo> properties = typeof(T).GetProperties().Where(property => property.Name != "CTIME" && property.Name != "MTIME");
             string headers = string.Join(",", properties.Select(property => property.Name));
-            List<string> datas = items.Select(detail => string.Join(",", properties.Select(property => property.GetValue(detail))))
+            List<string> datas = processedData.Select(detail => string.Join(",", properties.Select(property => property.GetValue(detail))))
                                                              .ToList();
             datas.Insert(0, headers);
             SaveFile(string.Join(Environment.NewLine, datas), csvName);

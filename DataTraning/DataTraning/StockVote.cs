@@ -55,28 +55,18 @@ namespace DataTraning
 
         public IEnumerable<List<股東會投票日明細_luann>> SpiltDetail()
         {
-            string namePattern;
             foreach (StockVotePageDto datas in GetData())
             {
                 List<股東會投票日明細_luann> voteDay = new List<股東會投票日明細_luann>();
                 foreach (Match data in datas.OnePageVoteData)
                 {
-                    if (Regex.IsMatch(data.Groups["data"].Value, @"td-link"))
-                    {
-                        namePattern = @"<a.*?""_blank"">(?<name>.*?)</a>";
-                    }
-                    else
-                    {
-                        namePattern = @"(?<name>\S*?)";
-                    }
-                    string pattern = $@"left"">(?<id>.*?){namePattern}[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td>";
+                    string pattern = $@"left"">(?<id>.*?)(<a.*?""_blank"">[\s]*?(?<nameLink>[^(]*)\(?(?<convenerLink>[\S]*?)\)?[\s]*?</a>|(?<name>[^(\s]*)\(?(?<convener>[\S]*?)\)?)[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td>";
                     Match detail = Regex.Match(data.Groups["data"].Value, pattern, RegexOptions.Singleline);
-                    string[] names = Regex.Split(detail.Groups["name"].Value, @"\(");
                     voteDay.Add(new 股東會投票日明細_luann
                     {
                         證券代號 = detail.Groups["id"].Value.Trim(),
-                        證券名稱 = names.First().Trim(),
-                        召集人 = names.Length > 1 ? names[1].Replace(@")", string.Empty).Trim() : null,
+                        證券名稱 = $"{detail.Groups["nameLink"].Value}{detail.Groups["name"].Value}".Trim(),
+                        召集人 = $"{detail.Groups["convenerLink"].Value}{detail.Groups["convener"].Value}".Trim(),
                         投票日期 = Global.ChangeYear(detail.Groups["voteStartDay"].Value.Replace(@"/", string.Empty).Trim()),
                         股東會日期 = Global.ChangeYear(detail.Groups["meetingDate"].Value.Replace(@"/", string.Empty).Trim()),
                         發行代理機構 = detail.Groups["agency"].Value.Trim(),
@@ -89,28 +79,18 @@ namespace DataTraning
         }
         public IEnumerable<List<股東會投票資料表_luann>> SpiltData()
         {
-            string namePattern;
             foreach (StockVotePageDto datas in GetData())
             {
                 List<股東會投票資料表_luann> voteDay = new List<股東會投票資料表_luann>();
                 foreach (Match data in datas.OnePageVoteData)
                 {
-                    if (Regex.IsMatch(data.Groups["data"].Value, @"td-link"))
-                    {
-                        namePattern = @"<a.*?""_blank"">(?<name>.*?)</a>";
-                    }
-                    else
-                    {
-                        namePattern = @"(?<name>\S*?)";
-                    }
-                    string pattern = $@"left"">(?<id>.*?){namePattern}[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td>";
+                    string pattern = $@"left"">(?<id>.*?)(<a.*?""_blank"">[\s]*?(?<nameLink>[^(]*)\(?(?<convenerLink>[\S]*?)\)?[\s]*?</a>|(?<name>[^(\s]*)\(?(?<convener>[\S]*?)\)?)[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td>";
                     Match detail = Regex.Match(data.Groups["data"].Value, pattern, RegexOptions.Singleline);
-                    string[] names = Regex.Split(detail.Groups["name"].Value, @"\(");
                     voteDay.Add(new 股東會投票資料表_luann
                     {
                         證券代號 = detail.Groups["id"].Value.Trim(),
-                        證券名稱 = names.First().Trim(),
-                        召集人 = names.Length > 1 ? names[1].Replace(@")", string.Empty).Trim() : null,
+                        證券名稱 = $"{detail.Groups["nameLink"].Value}{detail.Groups["name"].Value}".Trim(),
+                        召集人 = $"{detail.Groups["convenerLink"].Value}{detail.Groups["convener"].Value}".Trim(),
                         投票起日 = Global.ChangeYear(detail.Groups["voteStartDay"].Value.Replace(@"/", string.Empty).Trim()),
                         投票迄日 = Global.ChangeYear(detail.Groups["voteEndDay"].Value.Replace(@"/", string.Empty).Trim()),
                         股東會日期 = Global.ChangeYear(detail.Groups["meetingDate"].Value.Replace(@"/", string.Empty).Trim()),

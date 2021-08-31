@@ -20,7 +20,7 @@ namespace DataTraning
 
         public void AddReviseFundDetail()
         {
-            List<基金非營業日明細_luann> funds = GetRank().ToList();
+            List<基金非營業日明細_luann> funds = SpiltDetailData();
             funds.GroupBy(fund => fund.非營業日.Substring(0, 4)).ToList().ForEach(fund => Global.SaveCsv<基金非營業日明細_luann>(fund.ToList(), $"{fund.Key}_基金非營業日明細.csv"));
             StockDB.基金非營業日明細_luann.AddRange(funds);
             //foreach (var fund in funds)
@@ -87,51 +87,52 @@ namespace DataTraning
             }
         }
 
-        public IEnumerable<基金非營業日明細_luann> SpiltDetailData()
+        public List<基金非營業日明細_luann> SpiltDetailData()
         {
+            List<基金非營業日明細_luann> fundDetail = new List<基金非營業日明細_luann>();
             foreach (string data in GetYearData())
             {
                 MatchCollection results = Regex.Matches(data, @"<tr class=""r_blue"">(?<result>.*?)</tr>", RegexOptions.Singleline);
                 foreach (Match result in results)
                 {
-                    MatchCollection items = Regex.Matches(result.Groups["result"].Value, @">(.*?)</td>");
-                    yield return new 基金非營業日明細_luann
+                    MatchCollection fund = Regex.Matches(result.Groups["result"].Value, @">(?<detail>.*?)</td>");
+                    fundDetail.Add( new 基金非營業日明細_luann
                     {
-                        非營業日 = items[(int)Enums.Fund.NO_BUSINESS_DAY].Groups[1].Value,
-                        公司代號 = items[(int)Enums.Fund.COMPANY_ID].Groups[1].Value,
-                        基金統編 = items[(int)Enums.Fund.TAX_ID].Groups[1].Value,
-                        基金名稱 = items[(int)Enums.Fund.FUND_NAME].Groups[1].Value
-                    };
+                        非營業日 = fund[(int)Enums.Fund.NO_BUSINESS_DAY].Groups["detail"].Value,
+                        公司代號 = fund[(int)Enums.Fund.COMPANY_ID].Groups["detail"].Value,
+                        基金統編 = fund[(int)Enums.Fund.TAX_ID].Groups["detail"].Value,
+                        基金名稱 = fund[(int)Enums.Fund.FUND_NAME].Groups["detail"].Value
+                    });
                 }
             }
+            return fundDetail.GroupBy(fund => fund.非營業日)
+                                                .SelectMany(funds => funds.GroupBy(fund => fund.基金名稱.Length)
+                                                                                                     .OrderByDescending(fund => fund.Key)
+                                                                                                     .SelectMany((fund, index) =>
+                                                                                                     {
+                                                                                                         fund.ToList().ForEach(data => data.排序 = (byte)(index + 1));
+                                                                                                         return funds;
+                                                                                                     })).ToList();
         }
-        public IEnumerable<基金非營業日明細_luann> GetRank()
+
+        public List<FundStatisticDto> SpiltStatisticData()
         {
-            return SpiltDetailData().GroupBy(fund => fund.非營業日)
-                               .SelectMany(funds => funds.GroupBy(fund => fund.基金名稱.Length)
-                                                                                    .OrderByDescending(fund => fund.Key)
-                                                                                    .SelectMany((fund, index) =>
-                                                                                                                                        {
-                                                                                                                                            fund.ToList().ForEach(item => item.排序 = (byte)(index + 1));
-                                                                                                                                            return funds;
-                                                                                                                                        }));
-        }
-        public IEnumerable<FundStatisticDto> SpiltStatisticData()
-        {
+            List<FundStatisticDto> fund = new List<FundStatisticDto>();
             foreach (string data in GetYearData())
             {
                 MatchCollection results = Regex.Matches(data, @"<tr class=""r_blue"">(?<result>.*?)</tr>", RegexOptions.Singleline);
                 foreach (Match result in results)
                 {
-                    MatchCollection items = Regex.Matches(result.Groups["result"].Value, @">(.*?)</td>");
-                    yield return new FundStatisticDto
+                    MatchCollection fundData = Regex.Matches(result.Groups["result"].Value, @">(?<detail>.*?)</td>");
+                    fund.Add( new FundStatisticDto
                     {
-                        非營業日 = items[(int)Enums.Fund.NO_BUSINESS_DAY].Groups[1].Value,
-                        公司代號 = items[(int)Enums.Fund.COMPANY_ID].Groups[1].Value,
-                        基金統編 = items[(int)Enums.Fund.TAX_ID].Groups[1].Value,
-                    };
+                        非營業日 = fundData[(int)Enums.Fund.NO_BUSINESS_DAY].Groups["detail"].Value,
+                        公司代號 = fundData[(int)Enums.Fund.COMPANY_ID].Groups["detail"].Value,
+                        基金統編 = fundData[(int)Enums.Fund.TAX_ID].Groups["detail"].Value,
+                    });
                 }
             }
+            return fund;
         }
         public IEnumerable<基金非營業日統計_luann> GetStatistic() 
         {
@@ -149,7 +150,7 @@ namespace DataTraning
         public void AddReviseFundStatistic()
         {
             List<基金非營業日統計_luann> funds = GetStatistic().ToList();
-            funds.GroupBy(fund => fund.非營業日.Substring(0, 4)).ToList().ForEach(fund => Global.SaveCsv<基金非營業日統計_luann>(fund.ToList(), $"{fund.Key}_基金非營業日統計.csv"));
+            funds.GroupBy(fund => fund.非營業日.Substring(0, 4)).ToList().ForEach(fund => Global.SaveCsv(fund.ToList(), $"{fund.Key}_基金非營業日統計.csv"));
             StockDB.基金非營業日統計_luann.AddRange(funds);
             //foreach (var fund in GetStatistic())
             //{
