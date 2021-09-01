@@ -117,4 +117,51 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="sqlConnection1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="sqlSelectCommand1.DesignTimeVisible" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="sqlSelectCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="sqlInsertCommand1.DesignTimeVisible" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="sqlInsertCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="sqlInsertCommand1.CommandText" xml:space="preserve">
+    <value>INSERT INTO [dbo].[基金非營業日明細_luann] ([非營業日], [公司代號], [基金統編], [基金名稱], [排序], [CTIME], [MTIME]) VALUES (@非營業日, @公司代號, @基金統編, @基金名稱, @排序, @CTIME, @MTIME);
+SELECT 非營業日, 公司代號, 基金統編, 基金名稱, 排序, CTIME, MTIME FROM 基金非營業日明細_luann WHERE (基金統編 = @基金統編) AND (非營業日 = @非營業日)</value>
+  </data>
+  <metadata name="sqlUpdateCommand1.DesignTimeVisible" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="sqlUpdateCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="sqlUpdateCommand1.CommandText" xml:space="preserve">
+    <value>UPDATE [dbo].[基金非營業日明細_luann] SET [非營業日] = @非營業日, [公司代號] = @公司代號, [基金統編] = @基金統編, [基金名稱] = @基金名稱, [排序] = @排序, [CTIME] = @CTIME, [MTIME] = @MTIME WHERE (([非營業日] = @Original_非營業日) AND ((@IsNull_公司代號 = 1 AND [公司代號] IS NULL) OR ([公司代號] = @Original_公司代號)) AND ([基金統編] = @Original_基金統編) AND ((@IsNull_基金名稱 = 1 AND [基金名稱] IS NULL) OR ([基金名稱] = @Original_基金名稱)) AND ((@IsNull_排序 = 1 AND [排序] IS NULL) OR ([排序] = @Original_排序)) AND ((@IsNull_CTIME = 1 AND [CTIME] IS NULL) OR ([CTIME] = @Original_CTIME)) AND ((@IsNull_MTIME = 1 AND [MTIME] IS NULL) OR ([MTIME] = @Original_MTIME)));
+SELECT 非營業日, 公司代號, 基金統編, 基金名稱, 排序, CTIME, MTIME FROM 基金非營業日明細_luann WHERE (基金統編 = @基金統編) AND (非營業日 = @非營業日)</value>
+  </data>
+  <metadata name="sqlDeleteCommand1.DesignTimeVisible" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="sqlDeleteCommand1.CommandDesignTimeVisible" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="sqlDeleteCommand1.CommandText" xml:space="preserve">
+    <value>DELETE FROM [dbo].[基金非營業日明細_luann] WHERE (([非營業日] = @Original_非營業日) AND ((@IsNull_公司代號 = 1 AND [公司代號] IS NULL) OR ([公司代號] = @Original_公司代號)) AND ([基金統編] = @Original_基金統編) AND ((@IsNull_基金名稱 = 1 AND [基金名稱] IS NULL) OR ([基金名稱] = @Original_基金名稱)) AND ((@IsNull_排序 = 1 AND [排序] IS NULL) OR ([排序] = @Original_排序)) AND ((@IsNull_CTIME = 1 AND [CTIME] IS NULL) OR ([CTIME] = @Original_CTIME)) AND ((@IsNull_MTIME = 1 AND [MTIME] IS NULL) OR ([MTIME] = @Original_MTIME)))</value>
+  </data>
+  <metadata name="sqlDataAdapter1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>160, 17</value>
+  </metadata>
+  <metadata name="dataSet11.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>310, 17</value>
+  </metadata>
+  <metadata name="bindingSource1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>420, 17</value>
+  </metadata>
 </root>

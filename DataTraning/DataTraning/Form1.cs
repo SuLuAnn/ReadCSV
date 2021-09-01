@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -48,10 +49,14 @@ namespace DataTraning
 
         private void ClickVoteDayDeleteButton(object sender, EventArgs e)
         {
-            Stopwatch.Restart();
-            StockDB.股東會投票日明細_luann.RemoveRange(StockDB.股東會投票日明細_luann);
-            StockDB.SaveChanges();
-            TimeText.Text = $"時間：{ShowTime()}";
+            SQLConnection.Open();
+            SqlCommand command = new SqlCommand(@"TRUNCATE TABLE 股東會投票日明細_luann", SQLConnection);
+            command.ExecuteReader();
+            SQLConnection.Close();
+            //Stopwatch.Restart();
+            //StockDB.股東會投票日明細_luann.RemoveRange(StockDB.股東會投票日明細_luann);
+            //StockDB.SaveChanges();
+            //TimeText.Text = $"時間：{ShowTime()}";
         }
 
         private void ClickVoteDataAddButton(object sender, EventArgs e)

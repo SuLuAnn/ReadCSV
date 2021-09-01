@@ -21,7 +21,7 @@ namespace DataTraning
         public void AddReviseFundDetail()
         {
             List<基金非營業日明細_luann> funds = SpiltDetailData();
-            funds.GroupBy(fund => fund.非營業日.Substring(0, 4)).ToList().ForEach(fund => Global.SaveCsv<基金非營業日明細_luann>(fund.ToList(), $"{fund.Key}_基金非營業日明細.csv"));
+            funds.GroupBy(fund => fund.非營業日.Substring(0, 4)).ToList().ForEach(fund => Global.SaveCsv(fund.ToList(), $"{fund.Key}_基金非營業日明細.csv"));
             StockDB.基金非營業日明細_luann.AddRange(funds);
             //foreach (var fund in funds)
             //{
@@ -106,13 +106,19 @@ namespace DataTraning
                 }
             }
             return fundDetail.GroupBy(fund => fund.非營業日)
-                                                .SelectMany(funds => funds.GroupBy(fund => fund.基金名稱.Length)
-                                                                                                     .OrderByDescending(fund => fund.Key)
-                                                                                                     .SelectMany((fund, index) =>
-                                                                                                     {
-                                                                                                         fund.ToList().ForEach(data => data.排序 = (byte)(index + 1));
-                                                                                                         return funds;
-                                                                                                     })).ToList();
+                                                .SelectMany(funds =>{
+                                                    int maxLength = 0;
+                                                    byte rank = 0;
+                                                    funds.OrderByDescending(fund => fund.基金名稱.Length).ToList().ForEach(fund => {
+                                                        if (fund.基金名稱.Length != maxLength)
+                                                        {
+                                                            maxLength = fund.基金名稱.Length;
+                                                            rank++;
+                                                        }
+                                                        fund.排序 = rank;
+                                                    });
+                                                    return funds;
+                                                }).ToList();
         }
 
         public List<FundStatisticDto> SpiltStatisticData()
@@ -154,20 +160,20 @@ namespace DataTraning
             StockDB.基金非營業日統計_luann.AddRange(funds);
             //foreach (var fund in GetStatistic())
             //{
-                //StockDB.基金非營業日統計_luann.Add(fund);
-                //基金非營業日統計_luann data = StockDB.基金非營業日統計_luann.AsEnumerable().SingleOrDefault(dataFund => dataFund.非營業日 == fund.非營業日 && dataFund.公司代號 == fund.公司代號);
-                //if (data == null)
-                //{
+            //StockDB.基金非營業日統計_luann.Add(fund);
+            //基金非營業日統計_luann data = StockDB.基金非營業日統計_luann.AsEnumerable().SingleOrDefault(dataFund => dataFund.非營業日 == fund.非營業日 && dataFund.公司代號 == fund.公司代號);
+            //if (data == null)
+            //{
 
-                //}
-                //else
-                //{
-                //    if (data.基金總數 != fund.基金總數)
-                //    {
-                //        data.基金總數 = fund.基金總數;
-                //        data.MTIME = DateTimeOffset.Now.ToUnixTimeSeconds();
-                //    }
-                //}
+            //}
+            //else
+            //{
+            //    if (data.基金總數 != fund.基金總數)
+            //    {
+            //        data.基金總數 = fund.基金總數;
+            //        data.MTIME = DateTimeOffset.Now.ToUnixTimeSeconds();
+            //    }
+            //}
             //}
             StockDB.SaveChanges();
         }

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="DataSet1" msprop:Generator_DataSetName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="基金非營業日明細_luann" msprop:Generator_TableClassName="基金非營業日明細_luannDataTable" msprop:Generator_TableVarName="table基金非營業日明細_luann" msprop:Generator_TablePropName="基金非營業日明細_luann" msprop:Generator_RowDeletingName="基金非營業日明細_luannRowDeleting" msprop:Generator_RowChangingName="基金非營業日明細_luannRowChanging" msprop:Generator_RowEvHandlerName="基金非營業日明細_luannRowChangeEventHandler" msprop:Generator_RowDeletedName="基金非營業日明細_luannRowDeleted" msprop:Generator_UserTableName="基金非營業日明細_luann" msprop:Generator_RowChangedName="基金非營業日明細_luannRowChanged" msprop:Generator_RowEvArgName="基金非營業日明細_luannRowChangeEvent" msprop:Generator_RowClassName="基金非營業日明細_luannRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="非營業日" msprop:Generator_ColumnVarNameInTable="column非營業日" msprop:Generator_ColumnPropNameInRow="非營業日" msprop:Generator_ColumnPropNameInTable="非營業日Column" msprop:Generator_UserColumnName="非營業日">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="公司代號" msprop:Generator_ColumnVarNameInTable="column公司代號" msprop:Generator_ColumnPropNameInRow="公司代號" msprop:Generator_ColumnPropNameInTable="公司代號Column" msprop:Generator_UserColumnName="公司代號" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="基金統編" msprop:Generator_ColumnVarNameInTable="column基金統編" msprop:Generator_ColumnPropNameInRow="基金統編" msprop:Generator_ColumnPropNameInTable="基金統編Column" msprop:Generator_UserColumnName="基金統編">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="9" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="基金名稱" msprop:Generator_ColumnVarNameInTable="column基金名稱" msprop:Generator_ColumnPropNameInRow="基金名稱" msprop:Generator_ColumnPropNameInTable="基金名稱Column" msprop:Generator_UserColumnName="基金名稱" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="排序" msprop:Generator_ColumnVarNameInTable="column排序" msprop:Generator_ColumnPropNameInRow="排序" msprop:Generator_ColumnPropNameInTable="排序Column" msprop:Generator_UserColumnName="排序" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="CTIME" msprop:Generator_ColumnVarNameInTable="columnCTIME" msprop:Generator_ColumnPropNameInRow="CTIME" msprop:Generator_ColumnPropNameInTable="CTIMEColumn" msprop:Generator_UserColumnName="CTIME" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="MTIME" msprop:Generator_ColumnVarNameInTable="columnMTIME" msprop:Generator_ColumnPropNameInRow="MTIME" msprop:Generator_ColumnPropNameInTable="MTIMEColumn" msprop:Generator_UserColumnName="MTIME" type="xs:long" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:基金非營業日明細_luann" />
+      <xs:field xpath="mstns:非營業日" />
+      <xs:field xpath="mstns:基金統編" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
