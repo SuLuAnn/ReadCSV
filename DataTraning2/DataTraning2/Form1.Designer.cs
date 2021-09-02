@@ -32,6 +32,9 @@
             this.AddReviseButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
             this.DropDownMenu = new System.Windows.Forms.ComboBox();
+            this.SQLConnection = new System.Data.SqlClient.SqlConnection();
+            this.DeleteWorker = new System.ComponentModel.BackgroundWorker();
+            this.AddReviseWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // TimeText
@@ -39,6 +42,7 @@
             this.TimeText.Location = new System.Drawing.Point(286, 80);
             this.TimeText.Multiline = true;
             this.TimeText.Name = "TimeText";
+            this.TimeText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.TimeText.Size = new System.Drawing.Size(263, 101);
             this.TimeText.TabIndex = 0;
             // 
@@ -50,6 +54,7 @@
             this.AddReviseButton.TabIndex = 1;
             this.AddReviseButton.Text = "新增、修改";
             this.AddReviseButton.UseVisualStyleBackColor = true;
+            this.AddReviseButton.Click += new System.EventHandler(this.ClickAddReviseButton);
             // 
             // DeleteButton
             // 
@@ -59,6 +64,7 @@
             this.DeleteButton.TabIndex = 2;
             this.DeleteButton.Text = "刪除";
             this.DeleteButton.UseVisualStyleBackColor = true;
+            this.DeleteButton.Click += new System.EventHandler(this.ClickDeleteButton);
             // 
             // DropDownMenu
             // 
@@ -67,6 +73,22 @@
             this.DropDownMenu.Name = "DropDownMenu";
             this.DropDownMenu.Size = new System.Drawing.Size(273, 20);
             this.DropDownMenu.TabIndex = 3;
+            this.DropDownMenu.SelectedIndexChanged += new System.EventHandler(this.ChangedDropDownMenu);
+            // 
+            // SQLConnection
+            // 
+            this.SQLConnection.ConnectionString = "Data Source=192.168.10.180;Initial Catalog=StockDB;User ID=test;Password=test";
+            this.SQLConnection.FireInfoMessageEventOnUserErrors = false;
+            // 
+            // DeleteWorker
+            // 
+            this.DeleteWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.WorkDelete);
+            this.DeleteWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.Completed);
+            // 
+            // AddReviseWorker
+            // 
+            this.AddReviseWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.WorkAddRevise);
+            this.AddReviseWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.Completed);
             // 
             // Form1
             // 
@@ -90,6 +112,9 @@
         private System.Windows.Forms.Button AddReviseButton;
         private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.ComboBox DropDownMenu;
+        private System.Data.SqlClient.SqlConnection SQLConnection;
+        private System.ComponentModel.BackgroundWorker DeleteWorker;
+        private System.ComponentModel.BackgroundWorker AddReviseWorker;
     }
 }
 
