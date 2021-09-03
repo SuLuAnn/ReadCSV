@@ -11,7 +11,6 @@ namespace DataTraning
 {
     public class FundNoBusinessDay
     {
-        private TextBox text;
         private StockDBEntities StockDB;
         public FundNoBusinessDay(StockDBEntities stockDB)
         {
@@ -56,9 +55,6 @@ namespace DataTraning
             foreach (Match year in years)
             {
                 Dictionary<string, string> header = new Dictionary<string, string>();
-                header.Add("__EVENTTARGET", "");
-                header.Add("__EVENTARGUMENT", "");
-                header.Add("__LASTFOCUS", "");
                 foreach (Match keyPair in headers)
                 {
                     header.Add(keyPair.Groups["id"].Value.Trim(), keyPair.Groups["value"].Value.Trim());
@@ -92,16 +88,15 @@ namespace DataTraning
             List<基金非營業日明細_luann> fundDetail = new List<基金非營業日明細_luann>();
             foreach (string data in GetYearData())
             {
-                MatchCollection results = Regex.Matches(data, @"<tr class=""r_blue"">(?<result>.*?)</tr>", RegexOptions.Singleline);
+                MatchCollection results = Regex.Matches(data, @"<tr class=""r_blue"">[\s]*?<td.*?>(?<date>[\d]{8})</td><td.*?>(?<company>[\w]{5})</td><td.*?>(?<taxID>[\w]*?)</td><td.*?>(?<name>[\S]*?)</td>.*?</tr>", RegexOptions.Singleline);
                 foreach (Match result in results)
                 {
-                    MatchCollection fund = Regex.Matches(result.Groups["result"].Value, @">(?<detail>.*?)</td>");
                     fundDetail.Add( new 基金非營業日明細_luann
                     {
-                        非營業日 = fund[(int)Enums.Fund.NO_BUSINESS_DAY].Groups["detail"].Value,
-                        公司代號 = fund[(int)Enums.Fund.COMPANY_ID].Groups["detail"].Value,
-                        基金統編 = fund[(int)Enums.Fund.TAX_ID].Groups["detail"].Value,
-                        基金名稱 = fund[(int)Enums.Fund.FUND_NAME].Groups["detail"].Value
+                        非營業日 = result.Groups["date"].Value,
+                        公司代號 = result.Groups["company"].Value,
+                        基金統編 = result.Groups["taxID"].Value,
+                        基金名稱 = result.Groups["name"].Value
                     });
                 }
             }

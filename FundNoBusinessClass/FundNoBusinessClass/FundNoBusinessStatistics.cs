@@ -11,15 +11,15 @@ namespace FundNoBusinessClass
 {
     [ExportMetadata("TableName", "基金非營業日統計")]
     [Export(typeof(IDataSheet))]
-    public class FundNoBusinessStatistics : DataBaseTable
+    public class FundNoBusinessStatistics : FundNoBusiness
     {
         public FundNoBusinessStatistics() : base("基金非營業日統計_luann")
         {
         }
 
-        public override List<OriginalWeb> GetWebs()
+        public override void GetXML()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

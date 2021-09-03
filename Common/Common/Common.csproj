@@ -42,10 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBaseTable.cs" />
-    <Compile Include="Global.cs" />
     <Compile Include="IDataSheet.cs" />
     <Compile Include="IDataSheetNews.cs" />
-    <Compile Include="OriginalWeb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

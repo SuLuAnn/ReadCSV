@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FundDto.cs" />
     <Compile Include="FundNoBusiness.cs" />
     <Compile Include="FundNoBusinessDetail.cs" />
     <Compile Include="FundNoBusinessStatistics.cs" />

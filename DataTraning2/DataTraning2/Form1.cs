@@ -33,6 +33,7 @@ namespace DataTraning2
             Compose();
             Stopwatch = new Stopwatch();
             DropDownMenu.DataSource = DataSheets.Select(sheet => sheet.Metadata.TableName).ToList();
+            Text = string.Empty;
         }
         private void Compose()
         {
@@ -50,7 +51,6 @@ namespace DataTraning2
         private void ClickDeleteButton(object sender, EventArgs e)
         {
             Stopwatch.Restart();
-            var a = DropDownMenu.Text;
             DeleteWorker.RunWorkerAsync(DropDownMenu.Text);
         }
 
@@ -91,8 +91,22 @@ namespace DataTraning2
 
         private void WorkAddRevise(object sender, DoWorkEventArgs e)
         {
+            Stopwatch.Restart();
+            DataSheet.GetWebs();
+            string[] report = new string[] { $"{(string)e.Argument}的原始資料已取得", "成功" };
+            AddReviseWorker.ReportProgress(0, report);
+            Stopwatch.Restart();
+            DataSheet.GetXML();
+            report[0] =  $"{(string)e.Argument}的Xml已取得";
+            AddReviseWorker.ReportProgress(0, report);
+        }
 
-            e.Result = new string[] { $"{(string)e.Argument}的資料已更新", "成功" };
+        private void Report(object sender, ProgressChangedEventArgs e)
+        {
+            int step = 0;
+            int result = 1;
+            string[] logWords = (string[])e.UserState;
+            Log(logWords[step], logWords[result]);
         }
     }
 }

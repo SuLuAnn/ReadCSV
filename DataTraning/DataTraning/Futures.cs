@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DataTraning
 {
@@ -34,7 +35,8 @@ namespace DataTraning
             List<日期貨盤後行情表_luann> futures = new List<日期貨盤後行情表_luann>();
             foreach (string data in datas)
             {
-                string[] fields = data.Split(',');
+                string[] fields = data.Replace(" ",string.Empty).Split(',');
+                XDocument document = new XDocument(fields);
                 if (fields[(int)Enums.Futures.TRADING_HOURS] == "盤後")
                 {
                     futures.Add(new 日期貨盤後行情表_luann

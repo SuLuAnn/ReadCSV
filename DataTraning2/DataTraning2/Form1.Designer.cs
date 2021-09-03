@@ -1,4 +1,7 @@
-﻿namespace DataTraning2
+﻿using System;
+using System.ComponentModel;
+
+namespace DataTraning2
 {
     partial class Form1
     {
@@ -88,7 +91,8 @@
             // AddReviseWorker
             // 
             this.AddReviseWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.WorkAddRevise);
-            this.AddReviseWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.Completed);
+            this.AddReviseWorker.WorkerReportsProgress = true;
+            this.AddReviseWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Report);
             // 
             // Form1
             // 

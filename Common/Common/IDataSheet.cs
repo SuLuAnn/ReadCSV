@@ -9,6 +9,7 @@ namespace Common
     public interface IDataSheet
     {
         string GetDataTableName();
-        List<OriginalWeb> GetWebs();
+        void GetWebs();
+        void GetXML();
     }
 }
