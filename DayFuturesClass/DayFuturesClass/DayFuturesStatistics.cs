@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,8 +17,10 @@ namespace DayFuturesClass
     [Export(typeof(IDataSheet))]
     public class DayFuturesStatistics : DayFutures
     {
+        private XDocument TotalDocument;
         public DayFuturesStatistics() : base("日期貨盤後統計表_luann")
         {
+            TotalDocument = new XDocument();
         }
 
         public override void GetXML()
@@ -42,7 +46,7 @@ namespace DayFuturesClass
                 最低價 = value.Min(data => data.最低價),
                 收盤價 = value.Max(data => data.收盤價)
             });
-            XDocument document = new XDocument(new XElement("Root",
+            TotalDocument = new XDocument(new XElement("Root",
             datas.Select(data =>
             new XElement("Data",
                 new XElement("交易日期", data.交易日期),
@@ -54,7 +58,24 @@ namespace DayFuturesClass
                 )
             )));
             string fileName = Path.Combine(CreatDirectory(DateTime.Now.Year.ToString()), "日期貨盤後統計表.xml");
-            SaveXml(document, fileName);
+            SaveXml(TotalDocument, fileName);
+        }
+
+        public override void WriteDatabase(SqlConnection SQLConnection)
+        {
+            DataSet dataSet = new DataSet();
+            dataSet.ReadXml(TotalDocument.CreateReader());
+            SqlBulkCopy bulkCopy = new SqlBulkCopy(SQLConnection);
+            bulkCopy.DestinationTableName = "日期貨盤後統計表_luann";
+            bulkCopy.ColumnMappings.Add("交易日期", "交易日期");
+            bulkCopy.ColumnMappings.Add("契約", "契約");
+            bulkCopy.ColumnMappings.Add("開盤價", "開盤價");
+            bulkCopy.ColumnMappings.Add("最高價", "最高價");
+            bulkCopy.ColumnMappings.Add("最低價", "最低價");
+            bulkCopy.ColumnMappings.Add("收盤價", "收盤價");
+            SQLConnection.Open();
+            bulkCopy.WriteToServer(dataSet.Tables[0]);
+            SQLConnection.Close();
         }
     }
 }

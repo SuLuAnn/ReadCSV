@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -45,6 +46,11 @@ namespace StockVoteClass
                 string fileName = Path.Combine(CreatDirectory(DateTime.Today.ToString("yyyyMMdd/股東會投票日明細")), $"{web.Key}.xml");
                 SaveXml(document, fileName);
             }
+        }
+
+        public override void WriteDatabase(SqlConnection SQLConnection)
+        {
+            throw new NotImplementedException();
         }
     }
 }

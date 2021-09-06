@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ namespace StockVoteClass
     [Export(typeof(IDataSheet))]
     public class StockVoteData : StockVote
     {
+        
         public StockVoteData() : base("股東會投票資料表_luann")
         {
         }
@@ -46,6 +48,11 @@ namespace StockVoteClass
                 string fileName = Path.Combine(CreatDirectory(DateTime.Today.ToString("yyyyMMdd/股東會投票資料表")), $"{web.Key}.xml");
                 SaveXml(document, fileName);
             }
+        }
+
+        public override void WriteDatabase(SqlConnection SQLConnection)
+        {
+            throw new NotImplementedException();
         }
     }
 }

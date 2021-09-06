@@ -99,6 +99,9 @@ namespace DataTraning2
             DataSheet.GetXML();
             report[0] =  $"{(string)e.Argument}的Xml已取得";
             AddReviseWorker.ReportProgress(0, report);
+            DataSheet.WriteDatabase(SQLConnection);
+            report[0] = $"{(string)e.Argument}已更新並寫入資料庫";
+            AddReviseWorker.ReportProgress(0, report);
         }
 
         private void Report(object sender, ProgressChangedEventArgs e)

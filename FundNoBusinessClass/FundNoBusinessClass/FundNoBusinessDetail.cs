@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -35,7 +37,7 @@ namespace FundNoBusinessClass
                         基金名稱 = result.Groups["name"].Value
                     });
                 }
-                var fundResult = fundDetail.GroupBy(fund => fund.非營業日)
+                List<FundDto> fundResult = fundDetail.GroupBy(fund => fund.非營業日)
                                                 .SelectMany(funds => {
                                                     int maxLength = 0;
                                                     byte rank = 0;
@@ -49,8 +51,22 @@ namespace FundNoBusinessClass
                                                     });
                                                     return funds;
                                                 }).ToList();
-                XDocument document = new XDocument(new XElement("Root", fundResult));//做到這邊
+                IEnumerable<XElement> fundXml = fundResult.Select(fund => new XElement("Data",
+                    new XElement("非營業日", fund.非營業日),
+                    new XElement("公司代號", fund.公司代號),
+                    new XElement("基金統編", fund.基金統編),
+                    new XElement("基金名稱", fund.基金名稱),
+                    new XElement("排序", fund.排序)
+                    ));
+                XDocument document = new XDocument(new XElement("Root", fundXml));
+                string fileName = Path.Combine(CreatDirectory(DateTime.Now.Year.ToString()), "基金非營業日明細.xml");
+                SaveXml(document, fileName);
             }
+        }
+
+        public override void WriteDatabase(SqlConnection SQLConnection)
+        {
+            throw new NotImplementedException();
         }
     }
 }
