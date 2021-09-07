@@ -19,21 +19,36 @@ using System.IO;
 
 namespace DataTraning2
 {
+    /// <summary>
+    /// 主程式
+    /// </summary>
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// 乘載dll裡實作功能的介面
+        /// </summary>
         public IDataSheet DataSheet { get; set; }
 
+        /// <summary>
+        /// 計時器
+        /// </summary>
         private Stopwatch Stopwatch;
 
+        /// <summary>
+        /// 使用者所選的表單所代表的物件
+        /// </summary>
         [ImportMany(typeof(IDataSheet))]
         public IEnumerable<Lazy<IDataSheet, IDataSheetNews>> DataSheets { get; set; }
+        /// <summary>
+        /// 建構子
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
             Compose();
             Stopwatch = new Stopwatch();
+            //取得下拉選單的內容
             DropDownMenu.DataSource = DataSheets.Select(sheet => sheet.Metadata.TableName).ToList();
-            Text = string.Empty;
         }
         private void Compose()
         {
@@ -99,6 +114,7 @@ namespace DataTraning2
             DataSheet.GetXML();
             report[0] =  $"{(string)e.Argument}的Xml已取得";
             AddReviseWorker.ReportProgress(0, report);
+            Stopwatch.Restart();
             DataSheet.WriteDatabase(SQLConnection);
             report[0] = $"{(string)e.Argument}已更新並寫入資料庫";
             AddReviseWorker.ReportProgress(0, report);

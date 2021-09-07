@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace StockVoteClass
 {
@@ -13,14 +14,17 @@ namespace StockVoteClass
     {
         public const string STOCK_VOTE = "https://www.stockvote.com.tw/evote/login/index/meetingInfoMore.html";
         public const string STOCK_VOTE_PAGE = "https://www.stockvote.com.tw/evote/login/index/meetingInfoMore.html?stockName=&orderType=0&stockId=&searchType=0&meetingDate=&meetinfo=";
+        public XDocument TotalDocument { get; set; }
         public Dictionary<int, string> OriginalWeb { get; set; }
         public StockVote(string dataTableName) : base(dataTableName)
         {
             OriginalWeb = new Dictionary<int, string>();
+            TotalDocument = new XDocument(new XElement("Root"));
         }
 
         public override void GetWebs()
         {
+            OriginalWeb.Clear();
             int page = GetPageNumber();
             for (int i = 1; i <= page; i++)
             {

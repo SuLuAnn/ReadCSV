@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FundNoBusinessClass
 {
@@ -13,6 +14,7 @@ namespace FundNoBusinessClass
     {
         public const string FUND_NO_BUSINESS_DAY = "https://www.sitca.org.tw/ROC/Industry/IN2107.aspx?pid=IN2213_03";
         public Dictionary<string, string> OriginalWeb { get; set; }
+        public XDocument TotalDocument { get; set; }
         public enum Fund : int
         {
             NO_BUSINESS_DAY,
@@ -23,10 +25,12 @@ namespace FundNoBusinessClass
         public FundNoBusiness(string dataTableName) : base(dataTableName)
         {
             OriginalWeb = new Dictionary<string, string>();
+            TotalDocument = new XDocument(new XElement("Root"));
         }
 
         public override void GetWebs()
         {
+            OriginalWeb.Clear();
             string web = GetWebPage(FUND_NO_BUSINESS_DAY);
             MatchCollection headers = Regex.Matches(web, @"id=""(?<id>__.*?)"" value=""(?<value>.*?)""");
             MatchCollection years = Regex.Matches(web, @"value=""(?<year>\d{4})"">");

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DayFuturesClass
 {
@@ -13,6 +14,7 @@ namespace DayFuturesClass
     {
         public const string DAY_FUTURES = "https://www.taifex.com.tw/cht/3/dlFutDataDown";
         public List<string> OriginalWeb { get; set; }
+        public XDocument TotalDocument { get; set; }
 
         public enum Futures : int
         {
@@ -28,6 +30,7 @@ namespace DayFuturesClass
         public DayFutures(string dataTableName) : base(dataTableName)
         {
             OriginalWeb = new List<string>();
+            TotalDocument = new XDocument();
         }
 
         public override void GetWebs()

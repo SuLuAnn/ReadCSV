@@ -24,6 +24,7 @@ namespace StockVoteClass
         public override void GetXML()
         {
             string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
+            TotalDocument.Root.RemoveNodes();
             foreach (var web in OriginalWeb)
             {
                 MatchCollection stockVoteDatas = Regex.Matches(web.Value, allPattern, RegexOptions.Singleline);
@@ -45,12 +46,45 @@ namespace StockVoteClass
                 XDocument document = new XDocument(new XElement("Root", voteDay));
                 string fileName = Path.Combine(CreatDirectory(DateTime.Today.ToString("yyyyMMdd/股東會投票日明細")), $"{web.Key}.xml");
                 SaveXml(document, fileName);
+                TotalDocument.Root.Add(voteDay);
             }
         }
 
         public override void WriteDatabase(SqlConnection SQLConnection)
         {
-            throw new NotImplementedException();
+            SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 股東會投票日明細_luann", SQLConnection);
+            DataTable table = new DataTable();
+            DataSet dataSet = new DataSet();
+            dataSet.ReadXml(TotalDocument.CreateReader());
+            sql.InsertCommand = new SqlCommand("INSERT INTO[dbo].[股東會投票日明細_luann] ([證券代號],[證券名稱],[召集人],[股東會日期],[投票日期],[發行代理機構],[聯絡電話])VALUES(@證券代號, @證券名稱, @召集人, @股東會日期, @投票日期, @發行代理機構, @聯絡電話)", SQLConnection);
+            sql.InsertCommand.Parameters.Add("@證券代號", SqlDbType.VarChar, 6, "證券代號");
+            sql.InsertCommand.Parameters.Add("@證券名稱", SqlDbType.NVarChar, 16, "證券名稱");
+            sql.InsertCommand.Parameters.Add("@召集人", SqlDbType.NVarChar, 20, "召集人");
+            sql.InsertCommand.Parameters.Add("@股東會日期", SqlDbType.Char, 8, "股東會日期");
+            sql.InsertCommand.Parameters.Add("@投票日期", SqlDbType.Char, 8, "投票日期");
+            sql.InsertCommand.Parameters.Add("@發行代理機構", SqlDbType.NVarChar, 11, "發行代理機構");
+            sql.InsertCommand.Parameters.Add("@聯絡電話", SqlDbType.Char, 12, "聯絡電話");
+            sql.UpdateCommand = new SqlCommand("UPDATE [dbo].[股東會投票日明細_luann] SET [證券名稱] = @證券名稱,[召集人] = @召集人,[股東會日期] = @股東會日期,[發行代理機構] = @發行代理機構,[聯絡電話] = @聯絡電話 WHERE [證券代號] = @證券代號 AND [投票日期] = @投票日期", SQLConnection);
+            sql.UpdateCommand.Parameters.Add("@證券代號", SqlDbType.VarChar, 6, "證券代號");
+            sql.UpdateCommand.Parameters.Add("@證券名稱", SqlDbType.NVarChar, 16, "證券名稱");
+            sql.UpdateCommand.Parameters.Add("@召集人", SqlDbType.NVarChar, 20, "召集人");
+            sql.UpdateCommand.Parameters.Add("@股東會日期", SqlDbType.Char, 8, "股東會日期");
+            sql.UpdateCommand.Parameters.Add("@投票日期", SqlDbType.Char, 8, "投票日期");
+            sql.UpdateCommand.Parameters.Add("@發行代理機構", SqlDbType.NVarChar, 11, "發行代理機構");
+            sql.UpdateCommand.Parameters.Add("@聯絡電話", SqlDbType.Char, 12, "聯絡電話");
+            sql.UpdateCommand.Parameters.Add("@MTIME", SqlDbType.BigInt).Value = DateTimeOffset.Now.ToUnixTimeSeconds();
+            sql.UpdateCommand.UpdatedRowSource = UpdateRowSource.None;
+            sql.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
+            sql.UpdateBatchSize = 0;
+            SQLConnection.Open();
+            sql.Fill(table);
+            //dataSet.Tables[0].Rows[0]["證券代號"] = "Annie";
+            //dataSet.Tables[0].Rows[1]["召集人"] = "Annie";
+            table.PrimaryKey = new DataColumn[] { table.Columns["證券代號"], table.Columns["投票日期"] };
+            dataSet.Tables[0].PrimaryKey = new DataColumn[] { dataSet.Tables[0].Columns["證券代號"], dataSet.Tables[0].Columns["投票日期"] };
+            table.Merge(dataSet.Tables[0], false, MissingSchemaAction.Ignore);
+            sql.Update(table);
+            SQLConnection.Close();
         }
     }
 }

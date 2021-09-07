@@ -17,10 +17,8 @@ namespace DayFuturesClass
     [Export(typeof(IDataSheet))]
     public class DayFuturesStatistics : DayFutures
     {
-        private XDocument TotalDocument;
         public DayFuturesStatistics() : base("日期貨盤後統計表_luann")
         {
-            TotalDocument = new XDocument();
         }
 
         public override void GetXML()
@@ -82,6 +80,9 @@ namespace DayFuturesClass
             sql.UpdateCommand.Parameters.Add("@最低價", SqlDbType.Decimal, 9, "最低價");
             sql.UpdateCommand.Parameters.Add("@收盤價", SqlDbType.Decimal, 9, "收盤價");
             sql.UpdateCommand.Parameters.Add("@MTIME", SqlDbType.BigInt).Value = DateTimeOffset.Now.ToUnixTimeSeconds();
+            sql.UpdateCommand.UpdatedRowSource = UpdateRowSource.None;
+            sql.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
+            sql.UpdateBatchSize = 0;
             SQLConnection.Open();
             sql.Fill(table);
             //dataSet.Tables[0].Rows[0]["交易日期"] = "000001010";

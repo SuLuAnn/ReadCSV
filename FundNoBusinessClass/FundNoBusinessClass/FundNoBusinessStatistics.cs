@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace FundNoBusinessClass
 
         public override void GetXML()
         {
+            TotalDocument.Root.RemoveNodes();
             string pattern = @"<tr class=""r_blue"">[\s]*?<td.*?>(?<date>[\d]{8})</td><td.*?>(?<company>[\w]{5})</td><td.*?>(?<taxID>[\w]*?)</td><td.*?>(?<name>[\S]*?)</td>.*?</tr>";
             foreach (var data in OriginalWeb)
             {
@@ -54,12 +56,36 @@ namespace FundNoBusinessClass
                 XDocument document = new XDocument(new XElement("Root", fundXml));
                 string fileName = Path.Combine(CreatDirectory(DateTime.Now.Year.ToString()), "基金非營業日統計.xml");
                 SaveXml(document, fileName);
+                TotalDocument.Root.Add(fundXml);
             }
         }
 
         public override void WriteDatabase(SqlConnection SQLConnection)
         {
-            throw new NotImplementedException();
+            SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 基金非營業日統計_luann", SQLConnection);
+            DataTable table = new DataTable();
+            DataSet dataSet = new DataSet();
+            dataSet.ReadXml(TotalDocument.CreateReader());
+            sql.InsertCommand = new SqlCommand("INSERT INTO [dbo].[基金非營業日統計_luann] ([非營業日],[公司代號],[基金總數]) VALUES(@非營業日,@公司代號,@基金總數)", SQLConnection);
+            sql.InsertCommand.Parameters.Add("@非營業日", SqlDbType.Char, 8, "非營業日");
+            sql.InsertCommand.Parameters.Add("@公司代號", SqlDbType.Char, 5, "公司代號");
+            sql.InsertCommand.Parameters.Add("@基金總數", SqlDbType.TinyInt, 8, "基金總數");
+            sql.UpdateCommand = new SqlCommand("UPDATE [dbo].[基金非營業日統計_luann] SET [基金總數] = @基金總數,[MTIME] = @MTIME WHERE [非營業日] = @非營業日 AND [公司代號] = @公司代號", SQLConnection);
+            sql.UpdateCommand.Parameters.Add("@非營業日", SqlDbType.Char, 8, "非營業日");
+            sql.UpdateCommand.Parameters.Add("@公司代號", SqlDbType.Char, 5, "公司代號");
+            sql.UpdateCommand.Parameters.Add("@基金總數", SqlDbType.TinyInt, 8, "基金總數");
+            sql.UpdateCommand.Parameters.Add("@MTIME", SqlDbType.BigInt).Value = DateTimeOffset.Now.ToUnixTimeSeconds();
+            sql.UpdateCommand.UpdatedRowSource = UpdateRowSource.None;
+            sql.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
+            sql.UpdateBatchSize = 0;
+            //dataSet.Tables[0].Rows[0]["基金總數"] = 0;
+            SQLConnection.Open();
+            sql.Fill(table);
+            table.PrimaryKey = new DataColumn[] { table.Columns["非營業日"], table.Columns["公司代號"] };
+            dataSet.Tables[0].PrimaryKey = new DataColumn[] { dataSet.Tables[0].Columns["非營業日"], dataSet.Tables[0].Columns["公司代號"] };
+            table.Merge(dataSet.Tables[0], false, MissingSchemaAction.Ignore);
+            sql.Update(table);
+            SQLConnection.Close();
         }
     }
 }
