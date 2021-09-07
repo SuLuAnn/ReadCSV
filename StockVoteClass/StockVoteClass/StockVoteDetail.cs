@@ -13,20 +13,30 @@ using System.Xml.Linq;
 
 namespace StockVoteClass
 {
+    /// <summary>
+    /// 產出股東會投票日明細的類別
+    /// </summary>
     [ExportMetadata("TableName", "股東會投票日明細")]
     [Export(typeof(IDataSheet))]
     public class StockVoteDetail : StockVote
     {
+        /// <summary>
+        /// 建構子
+        /// </summary>
         public StockVoteDetail() : base("股東會投票日明細_luann")
         {
         }
 
+        /// <summary>
+        /// 取得xml中介資料
+        /// </summary>
         public override void GetXML()
         {
             string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
             TotalDocument.Root.RemoveNodes();
             foreach (var web in OriginalWeb)
             {
+                //存一頁的資料之後要弄成xml
                 MatchCollection stockVoteDatas = Regex.Matches(web.Value, allPattern, RegexOptions.Singleline);
                 List<XElement> voteDay = new List<XElement>();
                 foreach (Match data in stockVoteDatas)
@@ -50,10 +60,17 @@ namespace StockVoteClass
             }
         }
 
+        /// <summary>
+        /// 用xml中介資料更新資料庫
+        /// </summary>
+        /// <param name="SQLConnection">資料庫連線字串</param>
         public override void WriteDatabase(SqlConnection SQLConnection)
         {
+            //放資料庫目前的資料
             SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 股東會投票日明細_luann", SQLConnection);
+            //放xml做好的最新資料
             DataTable table = new DataTable();
+            //讀取xml
             DataSet dataSet = new DataSet();
             dataSet.ReadXml(TotalDocument.CreateReader());
             sql.InsertCommand = new SqlCommand("INSERT INTO[dbo].[股東會投票日明細_luann] ([證券代號],[證券名稱],[召集人],[股東會日期],[投票日期],[發行代理機構],[聯絡電話])VALUES(@證券代號, @證券名稱, @召集人, @股東會日期, @投票日期, @發行代理機構, @聯絡電話)", SQLConnection);
@@ -72,17 +89,23 @@ namespace StockVoteClass
             sql.UpdateCommand.Parameters.Add("@投票日期", SqlDbType.Char, 8, "投票日期");
             sql.UpdateCommand.Parameters.Add("@發行代理機構", SqlDbType.NVarChar, 11, "發行代理機構");
             sql.UpdateCommand.Parameters.Add("@聯絡電話", SqlDbType.Char, 12, "聯絡電話");
+            //每次更新MTIME都要一起變
             sql.UpdateCommand.Parameters.Add("@MTIME", SqlDbType.BigInt).Value = DateTimeOffset.Now.ToUnixTimeSeconds();
+            //做批次處理
             sql.UpdateCommand.UpdatedRowSource = UpdateRowSource.None;
             sql.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
             sql.UpdateBatchSize = 0;
             SQLConnection.Open();
+            //將資料庫資料填入table
             sql.Fill(table);
-            //dataSet.Tables[0].Rows[0]["證券代號"] = "Annie";
-            //dataSet.Tables[0].Rows[1]["召集人"] = "Annie";
+            //dataSet.Tables[0].Rows[0]["證券代號"] = "Annie";//測試用
+            //dataSet.Tables[0].Rows[1]["召集人"] = "Annie";//測試用
+            //設定主鍵
             table.PrimaryKey = new DataColumn[] { table.Columns["證券代號"], table.Columns["投票日期"] };
             dataSet.Tables[0].PrimaryKey = new DataColumn[] { dataSet.Tables[0].Columns["證券代號"], dataSet.Tables[0].Columns["投票日期"] };
+            //將兩張表合併，false意思是當組件相同時已dataSet.Tables[0]為主，Ignoreg是因為兩邊資料型態不同
             table.Merge(dataSet.Tables[0], false, MissingSchemaAction.Ignore);
+            //對變動的行做新增和更新
             sql.Update(table);
             SQLConnection.Close();
         }

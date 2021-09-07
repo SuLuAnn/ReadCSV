@@ -13,17 +13,27 @@ using System.Xml.Linq;
 
 namespace DayFuturesClass
 {
+    /// <summary>
+    /// 用來產生日期貨盤後統計表的物件
+    /// </summary>
     [ExportMetadata("TableName", "日期貨盤後統計表")]
     [Export(typeof(IDataSheet))]
     public class DayFuturesStatistics : DayFutures
     {
+        /// <summary>
+        /// 建構子
+        /// </summary>
         public DayFuturesStatistics() : base("日期貨盤後統計表_luann")
         {
         }
 
+        /// <summary>
+        /// 取得xml中介資料
+        /// </summary>
         public override void GetXML()
         {
-            var datas = OriginalWeb.First().Trim().Split('\n').Skip(1).Select(data => data.Split(',')).Where(fields => fields[(int)Futures.TRADING_HOURS] == "盤後").Select(fields => new
+            //只要盤後的資料
+            var datas = OriginalWeb.Trim().Split('\n').Skip(1).Select(data => data.Split(',')).Where(fields => fields[(int)Futures.TRADING_HOURS] == "盤後").Select(fields => new
             {
                 交易日期 = fields[(int)Futures.TRANSACTION_DATE].Replace("/", string.Empty),
                 契約 = fields[(int)Futures.CONTRACT],
@@ -55,15 +65,23 @@ namespace DayFuturesClass
                 data.收盤價 != null ? new XElement("收盤價", data.收盤價) : null
                 )
             )));
+            //創建名稱為今年的資料夾，並將組好的xml放入
             string fileName = Path.Combine(CreatDirectory(DateTime.Now.Year.ToString()), "日期貨盤後統計表.xml");
             SaveXml(TotalDocument, fileName);
         }
 
+        /// <summary>
+        /// 將xml更新進資料庫
+        /// </summary>
+        /// <param name="SQLConnection">資料庫連線物件</param>
         public override void WriteDatabase(SqlConnection SQLConnection)
         {
             SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 日期貨盤後統計表_luann", SQLConnection);
+            //放資料庫目前的資料
             DataTable table = new DataTable();
+            //放xml做好的最新資料
             DataSet dataSet = new DataSet();
+            //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());
             sql.InsertCommand = new SqlCommand("INSERT INTO [dbo].[日期貨盤後統計表_luann]([交易日期],[契約],[開盤價],[最高價],[最低價],[收盤價])VALUES(@交易日期, @契約,@開盤價,@最高價,@最低價,@收盤價)", SQLConnection);
             sql.InsertCommand.Parameters.Add("@交易日期", SqlDbType.Char, 8, "交易日期");
@@ -79,17 +97,23 @@ namespace DayFuturesClass
             sql.UpdateCommand.Parameters.Add("@最高價", SqlDbType.Decimal, 9, "最高價");
             sql.UpdateCommand.Parameters.Add("@最低價", SqlDbType.Decimal, 9, "最低價");
             sql.UpdateCommand.Parameters.Add("@收盤價", SqlDbType.Decimal, 9, "收盤價");
+            //每次更新MTIME都要一起變
             sql.UpdateCommand.Parameters.Add("@MTIME", SqlDbType.BigInt).Value = DateTimeOffset.Now.ToUnixTimeSeconds();
+            //做批次處理
             sql.UpdateCommand.UpdatedRowSource = UpdateRowSource.None;
             sql.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
             sql.UpdateBatchSize = 0;
             SQLConnection.Open();
+            //將資料庫資料填入table
             sql.Fill(table);
-            //dataSet.Tables[0].Rows[0]["交易日期"] = "000001010";
-            //dataSet.Tables[0].Rows[1]["收盤價"] = 0;
+            //dataSet.Tables[0].Rows[0]["交易日期"] = "000001010";//測試用
+            //dataSet.Tables[0].Rows[1]["收盤價"] = 0;//測試用
+            //設定主鍵
             table.PrimaryKey = new DataColumn[] { table.Columns["交易日期"], table.Columns["契約"]};
             dataSet.Tables[0].PrimaryKey = new DataColumn[] { dataSet.Tables[0].Columns["交易日期"], dataSet.Tables[0].Columns["契約"] };
+            //將兩張表合併，false意思是當組件相同時已dataSet.Tables[0]為主，Ignoreg是因為兩邊資料型態不同
             table.Merge(dataSet.Tables[0], false, MissingSchemaAction.Ignore);
+            //對變動的行做新增和更新
             sql.Update(table);
             SQLConnection.Close();
         }
