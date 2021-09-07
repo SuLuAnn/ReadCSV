@@ -69,10 +69,9 @@ namespace DataTraning2
             DeleteWorker.RunWorkerAsync(DropDownMenu.Text);
         }
 
-        public void Log(string step, string result)
+        public void Log(string step, string result, string time)
         {
-            Stopwatch.Stop();
-            string log = $"Log時間：{DateTime.Now.ToString()}, 步驟：{step}, 執行時間：{Stopwatch.ElapsedMilliseconds}, 結果：{result}{Environment.NewLine}";
+            string log = $"Log時間：{DateTime.Now.ToString()}, 步驟：{step}, 執行時間：{time}, 結果：{result}{Environment.NewLine}";
             TimeText.Text += log;
             TimeText.SelectionStart = TimeText.Text.Length;
             TimeText.ScrollToCaret();
@@ -94,29 +93,34 @@ namespace DataTraning2
             SQLConnection.Open();
             query.ExecuteNonQuery();
             SQLConnection.Close();
-            e.Result = new string[] { $"清空{(string)e.Argument}的資料", "成功" };
+            Stopwatch.Stop();
+            e.Result = new string[] { $"清空{(string)e.Argument}的資料", "成功" , Stopwatch.ElapsedMilliseconds.ToString()};
         }
         private void Completed(object sender, RunWorkerCompletedEventArgs runWorker)
         {
             int step = 0;
             int result = 1;
+            int time = 2;
             string[] logWords =(string[])runWorker.Result;
-            Log(logWords[step], logWords[result]);
+            Log(logWords[step], logWords[result], logWords[time]);
         }
 
         private void WorkAddRevise(object sender, DoWorkEventArgs e)
         {
             Stopwatch.Restart();
             DataSheet.GetWebs();
-            string[] report = new string[] { $"{(string)e.Argument}的原始資料已取得", "成功" };
+            Stopwatch.Stop();
+            string[] report = new string[] { $"{(string)e.Argument}的原始資料已取得", "成功", Stopwatch.ElapsedMilliseconds.ToString() };
             AddReviseWorker.ReportProgress(0, report);
             Stopwatch.Restart();
             DataSheet.GetXML();
-            report[0] =  $"{(string)e.Argument}的Xml已取得";
+            Stopwatch.Stop();
+            report = new string[] { $"{(string)e.Argument}的Xml已取得", "成功", Stopwatch.ElapsedMilliseconds.ToString() };
             AddReviseWorker.ReportProgress(0, report);
             Stopwatch.Restart();
             DataSheet.WriteDatabase(SQLConnection);
-            report[0] = $"{(string)e.Argument}已更新並寫入資料庫";
+            Stopwatch.Stop();
+            report = new string[] { $"{(string)e.Argument}已更新並寫入資料庫", "成功", Stopwatch.ElapsedMilliseconds.ToString() };
             AddReviseWorker.ReportProgress(0, report);
         }
 
@@ -124,8 +128,9 @@ namespace DataTraning2
         {
             int step = 0;
             int result = 1;
+            int time = 2;
             string[] logWords = (string[])e.UserState;
-            Log(logWords[step], logWords[result]);
+            Log(logWords[step], logWords[result], logWords[time]);
         }
     }
 }
