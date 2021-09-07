@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common">
-      <HintPath>..\..\Common\Common\bin\Debug\Common.dll</HintPath>
+      <HintPath>..\..\Common\Common\obj\Debug\Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -52,6 +52,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FundNoBusinessClass\FundNoBusinessClass\FundNoBusinessClass.csproj">
+      <Project>{271fad59-a5a2-4dcc-85db-5415d24e3b46}</Project>
+      <Name>FundNoBusinessClass</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\StockVoteClass\StockVoteClass\StockVoteClass.csproj">
+      <Project>{dabd97d1-0d48-49c9-8b5b-5338cc9eb193}</Project>
+      <Name>StockVoteClass</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

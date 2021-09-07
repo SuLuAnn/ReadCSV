@@ -51,10 +51,10 @@ namespace DayFuturesClass
             new XElement("Data",
                 new XElement("交易日期", data.交易日期),
                 new XElement("契約", data.契約),
-                new XElement("開盤價", data.開盤價),
-                new XElement("最高價", data.最高價),
-                new XElement("最低價", data.最低價),
-                new XElement("收盤價", data.收盤價)
+                data.開盤價 != null ? new XElement("開盤價", data.開盤價) : null,
+                data.最高價 != null ? new XElement("最高價", data.最高價) : null,
+                data.最低價 != null ? new XElement("最低價", data.最低價) : null,
+                data.收盤價 != null ? new XElement("收盤價", data.收盤價) : null
                 )
             )));
             string fileName = Path.Combine(CreatDirectory(DateTime.Now.Year.ToString()), "日期貨盤後統計表.xml");
@@ -63,18 +63,33 @@ namespace DayFuturesClass
 
         public override void WriteDatabase(SqlConnection SQLConnection)
         {
+            SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 日期貨盤後統計表_luann", SQLConnection);
+            DataTable table = new DataTable();
             DataSet dataSet = new DataSet();
             dataSet.ReadXml(TotalDocument.CreateReader());
-            SqlBulkCopy bulkCopy = new SqlBulkCopy(SQLConnection);
-            bulkCopy.DestinationTableName = "日期貨盤後統計表_luann";
-            bulkCopy.ColumnMappings.Add("交易日期", "交易日期");
-            bulkCopy.ColumnMappings.Add("契約", "契約");
-            bulkCopy.ColumnMappings.Add("開盤價", "開盤價");
-            bulkCopy.ColumnMappings.Add("最高價", "最高價");
-            bulkCopy.ColumnMappings.Add("最低價", "最低價");
-            bulkCopy.ColumnMappings.Add("收盤價", "收盤價");
+            sql.InsertCommand = new SqlCommand("INSERT INTO [dbo].[日期貨盤後統計表_luann]([交易日期],[契約],[開盤價],[最高價],[最低價],[收盤價])VALUES(@交易日期, @契約,@開盤價,@最高價,@最低價,@收盤價)", SQLConnection);
+            sql.InsertCommand.Parameters.Add("@交易日期", SqlDbType.Char, 8, "交易日期");
+            sql.InsertCommand.Parameters.Add("@契約", SqlDbType.VarChar, 3, "契約");
+            sql.InsertCommand.Parameters.Add("@開盤價", SqlDbType.Decimal, 9, "開盤價");
+            sql.InsertCommand.Parameters.Add("@最高價", SqlDbType.Decimal, 9, "最高價");
+            sql.InsertCommand.Parameters.Add("@最低價", SqlDbType.Decimal, 9, "最低價");
+            sql.InsertCommand.Parameters.Add("@收盤價", SqlDbType.Decimal, 9, "收盤價");
+            sql.UpdateCommand = new SqlCommand("UPDATE [dbo].[日期貨盤後統計表_luann] SET  [開盤價] = @開盤價,[最高價] = @最高價,[最低價] = @最低價,[收盤價] = @收盤價,[MTIME] = @MTIME WHERE [交易日期] = @交易日期 AND [契約] = @契約", SQLConnection);
+            sql.UpdateCommand.Parameters.Add("@交易日期", SqlDbType.Char, 8, "交易日期");
+            sql.UpdateCommand.Parameters.Add("@契約", SqlDbType.VarChar, 3, "契約");
+            sql.UpdateCommand.Parameters.Add("@開盤價", SqlDbType.Decimal, 9, "開盤價");
+            sql.UpdateCommand.Parameters.Add("@最高價", SqlDbType.Decimal, 9, "最高價");
+            sql.UpdateCommand.Parameters.Add("@最低價", SqlDbType.Decimal, 9, "最低價");
+            sql.UpdateCommand.Parameters.Add("@收盤價", SqlDbType.Decimal, 9, "收盤價");
+            sql.UpdateCommand.Parameters.Add("@MTIME", SqlDbType.BigInt).Value = DateTimeOffset.Now.ToUnixTimeSeconds();
             SQLConnection.Open();
-            bulkCopy.WriteToServer(dataSet.Tables[0]);
+            sql.Fill(table);
+            //dataSet.Tables[0].Rows[0]["交易日期"] = "000001010";
+            //dataSet.Tables[0].Rows[1]["收盤價"] = 0;
+            table.PrimaryKey = new DataColumn[] { table.Columns["交易日期"], table.Columns["契約"]};
+            dataSet.Tables[0].PrimaryKey = new DataColumn[] { dataSet.Tables[0].Columns["交易日期"], dataSet.Tables[0].Columns["契約"] };
+            table.Merge(dataSet.Tables[0], false, MissingSchemaAction.Ignore);
+            sql.Update(table);
             SQLConnection.Close();
         }
     }
