@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1525
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31402.337
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper", "Dapper\Dapper.csproj", "{5BA5CE23-8D46-47EC-81B3-DA76A0BE8814}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper1", "Dapper\Dapper1.csproj", "{5BA5CE23-8D46-47EC-81B3-DA76A0BE8814}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Dapper1
+namespace DapperTest
 {
     static class Program
     {

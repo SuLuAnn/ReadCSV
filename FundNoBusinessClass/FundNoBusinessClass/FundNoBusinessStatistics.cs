@@ -34,7 +34,7 @@ namespace FundNoBusinessClass
         {
             TotalDocument.Root.RemoveNodes();
             string pattern = @"<tr class=""r_blue"">[\s]*?<td.*?>(?<date>[\d]{8})</td><td.*?>(?<company>[\w]{5})</td><td.*?>(?<taxID>[\w]*?)</td><td.*?>(?<name>[\S]*?)</td>.*?</tr>";
-            foreach (var data in OriginalWeb)
+            foreach (KeyValuePair<string, string> data in OriginalWeb)
             {
                 //存一年的資料之後要弄成xml
                 List<FundDto> fundStatistics = new List<FundDto>();
@@ -66,7 +66,7 @@ namespace FundNoBusinessClass
                     new XElement("基金總數", fund.基金總數)
                     ));
                 XDocument document = new XDocument(new XElement("Root", fundXml));
-                string fileName = Path.Combine(CreatDirectory(DateTime.Now.Year.ToString()), "基金非營業日統計.xml");
+                string fileName = Path.Combine(CreatDirectory(data.Key), "基金非營業日統計.xml");
                 SaveXml(document, fileName);
                 //所有xml存成一個，之後要匯入資料庫
                 TotalDocument.Root.Add(fundXml);
