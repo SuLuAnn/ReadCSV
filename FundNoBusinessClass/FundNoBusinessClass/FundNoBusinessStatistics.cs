@@ -77,7 +77,7 @@ namespace FundNoBusinessClass
         /// 用xml中介資料更新資料庫
         /// </summary>
         /// <param name="SQLConnection">資料庫連線字串</param>
-        public override void WriteDatabase(SqlConnection SQLConnection)
+        public override void WriteDatabase()
         {
             SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 基金非營業日統計_luann", SQLConnection);
             //放資料庫目前的資料

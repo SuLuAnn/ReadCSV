@@ -27,6 +27,8 @@ namespace Common
         /// </summary>
         public string DataTableName { get; set; }
 
+        public SqlConnection SQLConnection { get; set; }
+
         /// <summary>
         /// 建構子
         /// </summary>
@@ -35,6 +37,10 @@ namespace Common
         {
             DataTableName = dataTableName;
             HttpGetter = new HttpClient();
+            SQLConnection = new SqlConnection();
+            SQLConnection.ConnectionString = @"Data Source=192.168.10.180;Initial Catalog=StockDB;User ID=test;Password=test; Connection Timeout=180";
+            SQLConnection.FireInfoMessageEventOnUserErrors = false;
+            SQLConnection.Close();
             //創建BackupFile資料夾
             CreatDirectory(string.Empty);
         }
@@ -133,7 +139,6 @@ namespace Common
         /// <summary>
         /// 將中介資料寫入資料庫
         /// </summary>
-        /// <param name="SQLConnection">資料庫連線物件</param>
-        public abstract void WriteDatabase(SqlConnection SQLConnection);
+        public abstract void WriteDatabase();
     }
 }

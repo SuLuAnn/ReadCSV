@@ -54,7 +54,29 @@ namespace DayFuturesClass
         /// 將xml更新進資料庫
         /// </summary>
         /// <param name="SQLConnection">資料庫連線物件</param>
-        public override void WriteDatabase(SqlConnection SQLConnection)
+        public override void WriteDatabase()
+        {
+            DataSet dataSet = new DataSet();
+            //讀取xml
+            dataSet.ReadXml(TotalDocument.CreateReader());
+            dataSet.Tables[0].Columns["到期月份_週別"].ColumnName = "到期月份(週別)";
+            var a = dataSet.Tables[0];
+            SqlCommand command = new SqlCommand("MERGE [dbo].[日期貨盤後行情表_luann] AS A USING @sourceTable AS B ON A.[交易日期] = B.[交易日期] AND A.[契約] = B.[契約] AND A.[到期月份(週別)] = B.[到期月份(週別)] WHEN MATCHED THEN UPDATE SET[開盤價] = @開盤價,[最高價] = @最高價,[最低價] = @最低價,[收盤價] = @收盤價,[MTIME] = (datediff(second, '1970-01-01', getutcdate())) WHEN NOT MATCHED BY TARGET THEN INSERT([交易日期],[契約],[到期月份(週別)],[開盤價],[最高價],[最低價],[收盤價])VALUES(@交易日期, @契約, @到期月份, @開盤價, @最高價, @最低價, @收盤價) WHEN NOT MATCHED BY SOURCE THEN DELETE; ", SQLConnection);
+            command.Parameters.Add("@交易日期", SqlDbType.Char, 8, "交易日期");
+            command.Parameters.Add("@契約", SqlDbType.VarChar, 3, "契約");
+            command.Parameters.Add("@到期月份", SqlDbType.VarChar, 17, "到期月份(週別)");
+            command.Parameters.Add("@開盤價", SqlDbType.Decimal, 9, "開盤價");
+            command.Parameters.Add("@最高價", SqlDbType.Decimal, 9, "最高價");
+            command.Parameters.Add("@最低價", SqlDbType.Decimal, 9, "最低價");
+            command.Parameters.Add("@收盤價", SqlDbType.Decimal, 9, "收盤價");
+            SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
+            tableParameter.SqlDbType = SqlDbType.Structured;
+            tableParameter.TypeName = "日期貨盤後行情表TableType";
+            SQLConnection.Open();
+            command.ExecuteNonQuery();
+            SQLConnection.Close();
+        }
+        public void WriteDatabase1()
         {
             SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 日期貨盤後行情表_luann", SQLConnection);
             //放資料庫目前的資料

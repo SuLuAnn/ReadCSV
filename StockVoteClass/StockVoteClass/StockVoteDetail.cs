@@ -64,7 +64,7 @@ namespace StockVoteClass
         /// 用xml中介資料更新資料庫
         /// </summary>
         /// <param name="SQLConnection">資料庫連線字串</param>
-        public override void WriteDatabase(SqlConnection SQLConnection)
+        public override void WriteDatabase()
         {
             //放資料庫目前的資料
             SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 股東會投票日明細_luann", SQLConnection);

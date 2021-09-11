@@ -74,7 +74,7 @@ namespace DayFuturesClass
         /// 將xml更新進資料庫
         /// </summary>
         /// <param name="SQLConnection">資料庫連線物件</param>
-        public override void WriteDatabase(SqlConnection SQLConnection)
+        public override void WriteDatabase()
         {
             SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 日期貨盤後統計表_luann", SQLConnection);
             //放資料庫目前的資料

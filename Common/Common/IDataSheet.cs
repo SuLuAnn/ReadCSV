@@ -31,7 +31,6 @@ namespace Common
         /// <summary>
         /// 將中介資料寫入資料庫
         /// </summary>
-        /// <param name="SQLConnection">資料庫連線物件</param>
-        void WriteDatabase(SqlConnection SQLConnection);
+        void WriteDatabase();
     }
 }

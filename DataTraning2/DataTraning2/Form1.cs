@@ -35,27 +35,6 @@ namespace DataTraning2
         private Stopwatch Stopwatch;
 
         /// <summary>
-        /// 用於傳送LOG字串陣列時每個字串對應的內容
-        /// </summary>
-        private enum LogMessage : int
-        {
-            /// <summary>
-            /// 步驟
-            /// </summary>
-            STEP,
-
-            /// <summary>
-            /// 成功與否
-            /// </summary>
-            RESULT,
-
-            /// <summary>
-            /// 執行時間
-            /// </summary>
-            TIME
-        }
-
-        /// <summary>
         /// 匯入所有有實作IDataSheet的物件， IDataSheetNews為物件所對應的資料表名
         /// </summary>
         [ImportMany(typeof(IDataSheet))]
@@ -119,16 +98,25 @@ namespace DataTraning2
         /// <param name="time">執行時間</param>
         public void Log(string step, string result, string time)
         {
-            string log = $"Log時間：{DateTime.Now.ToString()}, 步驟：{step}, 執行時間：{time}, 結果：{result}{Environment.NewLine}";
-            TimeText.Text += log;
-            //讓scroll跟著新訊息捲動
-            TimeText.SelectionStart = TimeText.Text.Length;
-            TimeText.ScrollToCaret();
-            //寫入log
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "log.txt");
-            using (StreamWriter writer = new StreamWriter(path, true, Encoding.UTF8))
+            if (this.InvokeRequired)
             {
-                writer.WriteLine(log);
+                //這段在避免跨執行緒錯誤
+                Action<string, string, string> action = new Action<string, string, string>(Log);
+                this.Invoke(action, step, result, time);
+            }
+            else 
+            {
+                string log = $"Log時間：{DateTime.Now}, 步驟：{step}, 執行時間：{time}, 結果：{result}{Environment.NewLine}";
+                TimeText.Text += log;
+                //讓scroll跟著新訊息捲動
+                TimeText.SelectionStart = TimeText.Text.Length;
+                TimeText.ScrollToCaret();
+                //寫入log
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "log.txt");
+                using (StreamWriter writer = new StreamWriter(path, true, Encoding.UTF8))
+                {
+                    writer.WriteLine(log);
+                }
             }
         }
 
@@ -149,23 +137,7 @@ namespace DataTraning2
         /// <param name="e">觸發事件</param>
         private void WorkDelete(object sender, DoWorkEventArgs e)
         {
-            SqlCommand query = new SqlCommand($"TRUNCATE TABLE {DataSheet.GetDataTableName()}", SQLConnection);
-            SQLConnection.Open();
-            query.ExecuteNonQuery();
-            SQLConnection.Close();
-            Stopwatch.Stop();
-            e.Result = new string[] { $"清空{(string)e.Argument}的資料", "成功", Stopwatch.ElapsedMilliseconds.ToString() };
-        }
-
-        /// <summary>
-        /// 刪除物件後做log
-        /// </summary>
-        /// <param name="sender">多執行緒物件</param>
-        /// <param name="runWorker">事件</param>
-        private void Completed(object sender, RunWorkerCompletedEventArgs runWorker)
-        {
-            string[] logWords = (string[])runWorker.Result;
-            Log(logWords[(int)LogMessage.STEP], logWords[(int)LogMessage.RESULT], logWords[(int)LogMessage.TIME]);
+            RepeatExecution($"清空{(string)e.Argument}的資料", Delete);
         }
 
         /// <summary>
@@ -175,36 +147,45 @@ namespace DataTraning2
         /// <param name="e">觸發事件</param>
         private void WorkAddRevise(object sender, DoWorkEventArgs e)
         {
-            Stopwatch.Restart();
             //取得網站原始資料
-            DataSheet.GetWebs();
-            Stopwatch.Stop();
-            string[] report = new string[] { $"{(string)e.Argument}的原始資料已取得", "成功", Stopwatch.ElapsedMilliseconds.ToString() };
-            AddReviseWorker.ReportProgress(0, report);
-            Stopwatch.Restart();
+            RepeatExecution($"{(string)e.Argument}的原始資料已取得", DataSheet.GetWebs);
             //將原始資料轉為中介資料XML檔
-            DataSheet.GetXML();
-            Stopwatch.Stop();
-            report = new string[] { $"{(string)e.Argument}的Xml已取得", "成功", Stopwatch.ElapsedMilliseconds.ToString() };
-            AddReviseWorker.ReportProgress(0, report);
-            Stopwatch.Restart();
+            RepeatExecution($"{(string)e.Argument}的Xml已取得", DataSheet.GetXML);
             //將中介資料轉入資料庫做新增修改
-            DataSheet.WriteDatabase(SQLConnection);
-            Stopwatch.Stop();
-            report = new string[] { $"{(string)e.Argument}已更新並寫入資料庫", "成功", Stopwatch.ElapsedMilliseconds.ToString() };
-            AddReviseWorker.ReportProgress(0, report);
+            RepeatExecution($"{(string)e.Argument}已更新並寫入資料庫", DataSheet.WriteDatabase);
         }
 
-        /// <summary>
-        /// 再新增修改期間每執行一步做一次log紀錄
-        /// </summary>
-        /// <param name="sender">多執行緒物件</param>
-        /// <param name="e">觸發事件</param>
-        private void Report(object sender, ProgressChangedEventArgs e)
+        private void Delete() 
         {
-            //傳入步驟，執行時間，成功與否字串陣列
-            string[] logWords = (string[])e.UserState;
-            Log(logWords[(int)LogMessage.STEP], logWords[(int)LogMessage.RESULT], logWords[(int)LogMessage.TIME]);
+            SqlCommand query = new SqlCommand($"TRUNCATE TABLE {DataSheet.GetDataTableName()}", SQLConnection);
+            SQLConnection.Open();
+            query.ExecuteNonQuery();
+            SQLConnection.Close();
+        }
+
+        private void RepeatExecution(string step, Action action)
+        {
+            string result = string.Empty;
+            while (true)
+            {
+                Stopwatch.Restart();
+                try
+                {
+                    action();
+                    result = "成功";
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                    result = $"失敗，因為{ex.Message}";
+                }
+                finally 
+                {
+                    Stopwatch.Stop();
+                    Log(step, result, Stopwatch.ElapsedMilliseconds.ToString());
+                }
+            }
         }
     }
 }

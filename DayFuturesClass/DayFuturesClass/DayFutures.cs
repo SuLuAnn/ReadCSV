@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -18,8 +19,7 @@ namespace DayFuturesClass
         /// <summary>
         /// 日期貨盤後交易行情的網址
         /// </summary>
-        public const string DAY_FUTURES = "https://www.taifex.com.tw/cht/3/dlFutDataDown";
-
+        public const string DAY_FUTURES = "https://www.taifex.com.tw/cht/3/dlFutDataDown"; 
         /// <summary>
         /// 取回的html原始資料
         /// </summary>
