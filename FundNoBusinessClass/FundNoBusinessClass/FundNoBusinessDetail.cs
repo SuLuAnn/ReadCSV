@@ -85,41 +85,22 @@ namespace FundNoBusinessClass
         /// </summary>
         public override void WriteDatabase()
         {
-            SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 基金非營業日明細_luann", SQLConnection);
-            //放資料庫目前的資料
-            DataTable table = new DataTable();
-            //放xml做好的最新資料
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());
-            sql.InsertCommand = new SqlCommand("INSERT INTO [dbo].[基金非營業日明細_luann] ([非營業日],[公司代號],[基金統編],[基金名稱],[排序]) VALUES(@非營業日,@公司代號,@基金統編,@基金名稱,@排序)", SQLConnection);
-            sql.InsertCommand.Parameters.Add("@非營業日", SqlDbType.Char, 8, "非營業日");
-            sql.InsertCommand.Parameters.Add("@公司代號", SqlDbType.Char, 5, "公司代號");
-            sql.InsertCommand.Parameters.Add("@基金統編", SqlDbType.VarChar, 9, "基金統編");
-            sql.InsertCommand.Parameters.Add("@基金名稱", SqlDbType.NVarChar, 80, "基金名稱");
-            sql.InsertCommand.Parameters.Add("@排序", SqlDbType.TinyInt, 8, "排序");
-            sql.UpdateCommand = new SqlCommand("UPDATE [dbo].[基金非營業日明細_luann] SET [公司代號] = @公司代號,[基金名稱] = @基金名稱,[排序] = @排序,[MTIME] = @MTIME WHERE [非營業日] = @非營業日 AND [基金統編] = @基金統編", SQLConnection);
-            sql.UpdateCommand.Parameters.Add("@非營業日", SqlDbType.Char, 8, "非營業日");
-            sql.UpdateCommand.Parameters.Add("@公司代號", SqlDbType.Char, 5, "公司代號");
-            sql.UpdateCommand.Parameters.Add("@基金統編", SqlDbType.VarChar, 9, "基金統編");
-            sql.UpdateCommand.Parameters.Add("@基金名稱", SqlDbType.NVarChar, 80, "基金名稱");
-            sql.UpdateCommand.Parameters.Add("@排序", SqlDbType.TinyInt, 8, "排序");
-            //每次更新MTIME都要一起變
-            sql.UpdateCommand.Parameters.Add("@MTIME", SqlDbType.BigInt).Value = DateTimeOffset.Now.ToUnixTimeSeconds();
-            //做批次處理
-            sql.UpdateCommand.UpdatedRowSource = UpdateRowSource.None;
-            sql.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
-            sql.UpdateBatchSize = 0;
+            //dataSet.Tables[0].Rows[1]["基金名稱"] = "AAAAAAA";//測試用
+            string sqlCommand = @"MERGE [dbo].[基金非營業日明細_luann] AS A USING @sourceTable AS B ON A.[非營業日] = B.[非營業日] 
+                                                           AND A.[基金統編] = B.[基金統編] WHEN MATCHED AND (A.[公司代號] <> B.公司代號 OR A.[基金名稱] <> 
+                                                           B.基金名稱 OR A.[排序] <> B.排序) THEN UPDATE SET [公司代號] = B.公司代號,[基金名稱] = B.基金名稱,[排序] 
+                                                           = B.排序,[MTIME] = (datediff(second, '1970-01-01', getutcdate())) WHEN NOT MATCHED BY TARGET 
+                                                           THEN INSERT([非營業日],[公司代號],[基金統編],[基金名稱],[排序]) VALUES(B.非營業日,B.公司代號, B.基金統編,
+                                                           B.基金名稱,B.排序) WHEN NOT MATCHED BY SOURCE THEN DELETE;";
+            SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
+            SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
+            tableParameter.SqlDbType = SqlDbType.Structured;
+            tableParameter.TypeName = "基金非營業日明細TableType";
             SQLConnection.Open();
-            //將資料庫資料填入table
-            sql.Fill(table);
-            //設定主鍵
-            table.PrimaryKey = new DataColumn[] { table.Columns["非營業日"], table.Columns["基金統編"] };
-            dataSet.Tables[0].PrimaryKey = new DataColumn[] { dataSet.Tables[0].Columns["非營業日"], dataSet.Tables[0].Columns["基金統編"] };
-            //將兩張表合併，false意思是當組件相同時已dataSet.Tables[0]為主，Ignoreg是因為兩邊資料型態不同
-            table.Merge(dataSet.Tables[0], false, MissingSchemaAction.Ignore);
-            //對變動的行做新增和更新
-            sql.Update(table);
+            command.ExecuteNonQuery();
             SQLConnection.Close();
         }
     }

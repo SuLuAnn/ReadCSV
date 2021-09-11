@@ -67,49 +67,25 @@ namespace StockVoteClass
         /// <param name="SQLConnection">資料庫連線字串</param>
         public override void WriteDatabase()
         {
-            //放資料庫目前的資料
-            SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 股東會投票資料表_luann", SQLConnection);
-            //放xml做好的最新資料
-            DataTable table = new DataTable();
-            //讀取xml
             DataSet dataSet = new DataSet();
+            //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());
-            sql.InsertCommand = new SqlCommand("INSERT INTO[dbo].[股東會投票資料表_luann] ([證券代號],[證券名稱],[召集人],[股東會日期],[投票起日],[投票迄日],[發行代理機構],[聯絡電話])VALUES(@證券代號, @證券名稱, @召集人, @股東會日期, @投票起日, @投票迄日, @發行代理機構, @聯絡電話)", SQLConnection);
-            sql.InsertCommand.Parameters.Add("@證券代號", SqlDbType.VarChar, 6, "證券代號");
-            sql.InsertCommand.Parameters.Add("@證券名稱", SqlDbType.NVarChar, 16, "證券名稱");
-            sql.InsertCommand.Parameters.Add("@召集人", SqlDbType.NVarChar, 20, "召集人");
-            sql.InsertCommand.Parameters.Add("@股東會日期", SqlDbType.Char, 8, "股東會日期");
-            sql.InsertCommand.Parameters.Add("@投票起日", SqlDbType.Char, 8, "投票起日");
-            sql.InsertCommand.Parameters.Add("@投票迄日", SqlDbType.Char, 8, "投票迄日");
-            sql.InsertCommand.Parameters.Add("@發行代理機構", SqlDbType.NVarChar, 11, "發行代理機構");
-            sql.InsertCommand.Parameters.Add("@聯絡電話", SqlDbType.Char, 12, "聯絡電話");
-            sql.UpdateCommand = new SqlCommand("UPDATE [dbo].[股東會投票資料表_luann] SET [證券名稱] = @證券名稱,[召集人] = @召集人,[投票起日] = @投票起日,[投票迄日] = @投票迄日,[發行代理機構] = @發行代理機構,[聯絡電話] = @聯絡電話 WHERE [證券代號] = @證券代號 AND [股東會日期] = @股東會日期", SQLConnection);
-            sql.UpdateCommand.Parameters.Add("@證券代號", SqlDbType.VarChar, 6, "證券代號");
-            sql.UpdateCommand.Parameters.Add("@證券名稱", SqlDbType.NVarChar, 16, "證券名稱");
-            sql.UpdateCommand.Parameters.Add("@召集人", SqlDbType.NVarChar, 20, "召集人");
-            sql.UpdateCommand.Parameters.Add("@股東會日期", SqlDbType.Char, 8, "股東會日期");
-            sql.UpdateCommand.Parameters.Add("@投票起日", SqlDbType.Char, 8, "投票起日");
-            sql.UpdateCommand.Parameters.Add("@投票迄日", SqlDbType.Char, 8, "投票迄日");
-            sql.UpdateCommand.Parameters.Add("@發行代理機構", SqlDbType.NVarChar, 11, "發行代理機構");
-            sql.UpdateCommand.Parameters.Add("@聯絡電話", SqlDbType.Char, 12, "聯絡電話");
-            //每次更新MTIME都要一起變
-            sql.UpdateCommand.Parameters.Add("@MTIME", SqlDbType.BigInt).Value = DateTimeOffset.Now.ToUnixTimeSeconds();
-            //做批次處理
-            sql.UpdateBatchSize = 0;
-            sql.UpdateCommand.UpdatedRowSource = UpdateRowSource.None;
-            sql.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
+            //dataSet.Tables[0].Rows[1]["證券名稱"] = "AAAAAAAAAAAAA";//測試用
+            string sqlCommand = @"MERGE [dbo].[股東會投票資料表_luann] AS A USING @sourceTable AS B ON A.[股東會日期] = B.[股東會日期]
+                                                           AND A.[證券代號] = B.[證券代號] WHEN MATCHED AND (A.[證券名稱] <> B.證券名稱 OR A.[召集人] <> 
+                                                           B.召集人 OR A.[投票起日] <> B.投票起日 OR A.[投票迄日] <> B.投票迄日 OR A.[發行代理機構] <> 
+                                                           B.發行代理機構 OR A.[聯絡電話] <> B.聯絡電話) THEN UPDATE SET [證券名稱] = B.證券名稱,[召集人] = 
+                                                           B.召集人,[投票起日] = B.投票起日,[投票迄日] = B.投票迄日,[發行代理機構] = B.發行代理機構,[聯絡電話] = 
+                                                           B.聯絡電話 ,[MTIME] = (datediff(second, '1970-01-01', getutcdate())) WHEN NOT MATCHED BY TARGET 
+                                                           THEN INSERT([證券代號],[證券名稱],[召集人],[股東會日期],[投票起日],[投票迄日],[發行代理機構],[聯絡電話])
+                                                           VALUES(B.證券代號,B.證券名稱,B.召集人,B.股東會日期,B.投票起日,B.投票迄日,B.發行代理機構,B.聯絡電話)
+														   WHEN NOT MATCHED BY SOURCE THEN DELETE;";
+            SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
+            SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
+            tableParameter.SqlDbType = SqlDbType.Structured;
+            tableParameter.TypeName = "股東會投票資料表TableType";
             SQLConnection.Open();
-            //將資料庫資料填入table
-            sql.Fill(table);
-            //dataSet.Tables[0].Rows[0]["證券代號"] = "Annie";//測試用
-            //dataSet.Tables[0].Rows[1]["召集人"] = "Annie";//測試用
-            //設定主鍵
-            table.PrimaryKey = new DataColumn[] { table.Columns["證券代號"], table.Columns["股東會日期"]};
-            dataSet.Tables[0].PrimaryKey = new DataColumn[] { dataSet.Tables[0].Columns["證券代號"], dataSet.Tables[0].Columns["股東會日期"] };
-            //將兩張表合併，false意思是當組件相同時已dataSet.Tables[0]為主，Ignoreg是因為兩邊資料型態不同
-            table.Merge(dataSet.Tables[0], false, MissingSchemaAction.Ignore);
-            //對變動的行做新增和更新
-            sql.Update(table);
+            command.ExecuteNonQuery();
             SQLConnection.Close();
         }
     }

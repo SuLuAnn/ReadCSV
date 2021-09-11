@@ -53,73 +53,30 @@ namespace DayFuturesClass
         /// <summary>
         /// 將xml更新進資料庫
         /// </summary>
-        /// <param name="SQLConnection">資料庫連線物件</param>
         public override void WriteDatabase()
         {
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());
             dataSet.Tables[0].Columns["到期月份_週別"].ColumnName = "到期月份(週別)";
-            var a = dataSet.Tables[0];
-            SqlCommand command = new SqlCommand("MERGE [dbo].[日期貨盤後行情表_luann] AS A USING @sourceTable AS B ON A.[交易日期] = B.[交易日期] AND A.[契約] = B.[契約] AND A.[到期月份(週別)] = B.[到期月份(週別)] WHEN MATCHED THEN UPDATE SET[開盤價] = @開盤價,[最高價] = @最高價,[最低價] = @最低價,[收盤價] = @收盤價,[MTIME] = (datediff(second, '1970-01-01', getutcdate())) WHEN NOT MATCHED BY TARGET THEN INSERT([交易日期],[契約],[到期月份(週別)],[開盤價],[最高價],[最低價],[收盤價])VALUES(@交易日期, @契約, @到期月份, @開盤價, @最高價, @最低價, @收盤價) WHEN NOT MATCHED BY SOURCE THEN DELETE; ", SQLConnection);
-            command.Parameters.Add("@交易日期", SqlDbType.Char, 8, "交易日期");
-            command.Parameters.Add("@契約", SqlDbType.VarChar, 3, "契約");
-            command.Parameters.Add("@到期月份", SqlDbType.VarChar, 17, "到期月份(週別)");
-            command.Parameters.Add("@開盤價", SqlDbType.Decimal, 9, "開盤價");
-            command.Parameters.Add("@最高價", SqlDbType.Decimal, 9, "最高價");
-            command.Parameters.Add("@最低價", SqlDbType.Decimal, 9, "最低價");
-            command.Parameters.Add("@收盤價", SqlDbType.Decimal, 9, "收盤價");
+            //dataSet.Tables[0].Rows[1]["收盤價"] = 0;//測試用
+            string sqlCommand = @"MERGE [dbo].[日期貨盤後行情表_luann] AS A USING @sourceTable AS B ON A.[交易日期] = B.[交易日期] 
+                                                           AND A.[契約] = B.[契約] AND A.[到期月份(週別)] = B.[到期月份(週別)] WHEN MATCHED AND 
+                                                           (A.[開盤價] <> B.開盤價 OR (A.[開盤價] IS NULL AND B.開盤價 IS NOT NULL) OR (A.[開盤價] IS NOT NULL AND
+                                                           B.開盤價 IS NULL) OR A.[最高價] <> B.最高價 OR (A.[最高價] IS NULL AND B.最高價 IS NOT NULL) OR (A.[最高價] IS NOT NULL AND
+                                                           B.最高價 IS NULL) OR A.[最低價] <> B.最低價 OR (A.[最低價] IS NULL AND B.最低價 IS NOT NULL) OR (A.[最低價] IS NOT NULL AND
+                                                           B.最低價 IS NULL) OR A.[收盤價] <> B.收盤價 OR (A.[收盤價] IS NULL AND B.收盤價 IS NOT NULL) OR (A.[收盤價] IS NOT NULL AND
+                                                           B.收盤價 IS NULL)) THEN UPDATE SET[開盤價] = B.開盤價,[最高價] = B.最高價,[最低價] = B.最低價,[收盤價] 
+                                                           = B.收盤價,[MTIME] = (datediff(second, '1970-01-01', getutcdate())) WHEN NOT MATCHED BY TARGET 
+                                                           THEN INSERT([交易日期],[契約],[到期月份(週別)],[開盤價],[最高價],[最低價],[收盤價]) VALUES(B.交易日期, 
+                                                            B.契約, B.[到期月份(週別)], B.開盤價, B.最高價, B.最低價, B.收盤價) WHEN NOT MATCHED BY SOURCE 
+                                                            THEN DELETE; ";
+            SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
             SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
             tableParameter.SqlDbType = SqlDbType.Structured;
             tableParameter.TypeName = "日期貨盤後行情表TableType";
             SQLConnection.Open();
             command.ExecuteNonQuery();
-            SQLConnection.Close();
-        }
-        public void WriteDatabase1()
-        {
-            SqlDataAdapter sql = new SqlDataAdapter("SELECT * FROM 日期貨盤後行情表_luann", SQLConnection);
-            //放資料庫目前的資料
-            DataTable table = new DataTable();
-            //放xml做好的最新資料
-            DataSet dataSet = new DataSet();
-            //讀取xml
-            dataSet.ReadXml(TotalDocument.CreateReader());
-            dataSet.Tables[0].Columns["到期月份_週別"].ColumnName = "到期月份(週別)";
-            sql.InsertCommand = new SqlCommand("INSERT INTO [dbo].[日期貨盤後行情表_luann]([交易日期],[契約],[到期月份(週別)],[開盤價],[最高價],[最低價],[收盤價])VALUES(@交易日期, @契約, @到期月份,@開盤價,@最高價,@最低價,@收盤價)", SQLConnection);
-            sql.InsertCommand.Parameters.Add("@交易日期", SqlDbType.Char, 8, "交易日期");
-            sql.InsertCommand.Parameters.Add("@契約", SqlDbType.VarChar, 3, "契約");
-            sql.InsertCommand.Parameters.Add("@到期月份", SqlDbType.VarChar, 17, "到期月份(週別)");
-            sql.InsertCommand.Parameters.Add("@開盤價", SqlDbType.Decimal, 9, "開盤價");
-            sql.InsertCommand.Parameters.Add("@最高價", SqlDbType.Decimal, 9, "最高價");
-            sql.InsertCommand.Parameters.Add("@最低價", SqlDbType.Decimal, 9, "最低價");
-            sql.InsertCommand.Parameters.Add("@收盤價", SqlDbType.Decimal, 9, "收盤價");
-            sql.UpdateCommand = new SqlCommand("UPDATE [dbo].[日期貨盤後行情表_luann] SET  [開盤價] = @開盤價,[最高價] = @最高價,[最低價] = @最低價,[收盤價] = @收盤價,[MTIME] = @MTIME WHERE [交易日期] = @交易日期 AND [契約] = @契約 AND [到期月份(週別)] = @到期月份", SQLConnection);
-            sql.UpdateCommand.Parameters.Add("@交易日期", SqlDbType.Char, 8, "交易日期");
-            sql.UpdateCommand.Parameters.Add("@契約", SqlDbType.VarChar, 3, "契約");
-            sql.UpdateCommand.Parameters.Add("@到期月份", SqlDbType.VarChar, 17, "到期月份(週別)");
-            sql.UpdateCommand.Parameters.Add("@開盤價", SqlDbType.Decimal, 9, "開盤價");
-            sql.UpdateCommand.Parameters.Add("@最高價", SqlDbType.Decimal, 9, "最高價");
-            sql.UpdateCommand.Parameters.Add("@最低價", SqlDbType.Decimal, 9, "最低價");
-            sql.UpdateCommand.Parameters.Add("@收盤價", SqlDbType.Decimal, 9, "收盤價");
-            //每次更新MTIME都要一起變
-            sql.UpdateCommand.Parameters.Add("@MTIME", SqlDbType.BigInt).Value = DateTimeOffset.Now.ToUnixTimeSeconds();
-            //做批次處理
-            sql.UpdateCommand.UpdatedRowSource = UpdateRowSource.None;
-            sql.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
-            sql.UpdateBatchSize = 0;
-            SQLConnection.Open();
-            //將資料庫資料填入table
-            sql.Fill(table);
-            //dataSet.Tables[0].Rows[0]["交易日期"] = "000001010";//測試用
-            //dataSet.Tables[0].Rows[1]["收盤價"] = 0;//測試用
-            //設定主鍵
-            table.PrimaryKey = new DataColumn[] { table.Columns["交易日期"], table.Columns["契約"], table.Columns["到期月份(週別)"] };
-            dataSet.Tables[0].PrimaryKey = new DataColumn[] { dataSet.Tables[0].Columns["交易日期"], dataSet.Tables[0].Columns["契約"], dataSet.Tables[0].Columns["到期月份(週別)"] };
-            //將兩張表合併，false意思是當組件相同時已dataSet.Tables[0]為主，Ignoreg是因為兩邊資料型態不同
-            table.Merge(dataSet.Tables[0], false, MissingSchemaAction.Ignore);
-            //對變動的行做新增和更新
-            sql.Update(table);
             SQLConnection.Close();
         }
     }
