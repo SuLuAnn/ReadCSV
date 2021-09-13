@@ -31,9 +31,10 @@ namespace DayFuturesClass
         /// </summary>
         public override void GetXML()
         {
+            string OriginalWeb = ReadFile($"{DateTime.Now.Year}.csv");
             //只要盤後的資料
             IEnumerable<string[]> datas = OriginalWeb.Trim().Split('\n').Skip(1).Select(data => data.Split(',')).Where(fields => fields[(int)Futures.TRADING_HOURS] == "盤後");
-            TotalDocument = new XDocument(new XElement("Root",
+            XDocument TotalDocument = new XDocument(new XElement("Root",
             datas.Select(data =>
             new XElement("Data",
                 new XElement("交易日期", data[(int)Futures.TRANSACTION_DATE].Replace("/", string.Empty)),
@@ -55,6 +56,7 @@ namespace DayFuturesClass
         /// </summary>
         public override void WriteDatabase()
         {
+            XDocument TotalDocument = GetTotalXml("日期貨盤後行情表");
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());

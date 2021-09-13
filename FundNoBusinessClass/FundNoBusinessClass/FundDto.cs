@@ -34,6 +34,6 @@ namespace FundNoBusinessClass
         /// <summary>
         /// 排序
         /// </summary>
-        public Nullable<byte> 排序 { get; set; }
+        public byte 排序 { get; set; }
     }
 }

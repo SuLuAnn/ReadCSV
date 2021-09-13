@@ -33,11 +33,13 @@ namespace StockVoteClass
         public override void GetXML()
         {
             string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
-            TotalDocument.Root.RemoveNodes();
-            foreach (var web in OriginalWeb)
+            int page = GetPageNumber();
+            for (int i = 1; i <= page; i++)
             {
+                string path = Path.Combine(DateTime.Today.ToString("yyyyMMdd"), $"{i}.html");
+                string web = ReadFile(path);
                 //存一頁的資料之後要弄成xml
-                MatchCollection stockVoteDatas = Regex.Matches(web.Value, allPattern, RegexOptions.Singleline);
+                MatchCollection stockVoteDatas = Regex.Matches(web, allPattern, RegexOptions.Singleline);
                 List<XElement> voteDay = new List<XElement>();
                 foreach (Match data in stockVoteDatas)
                 {
@@ -54,25 +56,27 @@ namespace StockVoteClass
                     ));
                 }
                 XDocument document = new XDocument(new XElement("Root", voteDay));
-                string fileName = Path.Combine(CreatDirectory(DateTime.Today.ToString("yyyyMMdd/股東會投票日明細")), $"{web.Key}.xml");
+                string fileName = Path.Combine(CreatDirectory(DateTime.Today.ToString("yyyyMMdd/股東會投票日明細")), $"{i}.xml");
                 SaveXml(document, fileName);
-                TotalDocument.Root.Add(voteDay);
             }
         }
 
         /// <summary>
         /// 用xml中介資料更新資料庫
         /// </summary>
-        /// <param name="SQLConnection">資料庫連線字串</param>
         public override void WriteDatabase()
         {
+            XDocument TotalDocument = GetTotalXml("股東會投票日明細");
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());
             //dataSet.Tables[0].Rows[1]["證券名稱"] = "AAAAAAAAAAAAA";//測試用
-            string sqlCommand = @"MERGE [dbo].[股東會投票日明細_luann] AS A USING @sourceTable AS B ON A.[投票日期] = B.[投票日期] 
-                                                           AND A.[證券代號] = B.[證券代號] WHEN MATCHED AND (A.[證券名稱] <> B.證券名稱 OR A.[召集人] <> 
-                                                           B.召集人 OR A.[股東會日期] <> B.股東會日期 OR A.[發行代理機構] <> B.發行代理機構 OR A.[聯絡電話] <> 
+            string sqlCommand = @"MERGE [dbo].[股東會投票日明細_luann] AS A USING @sourceTable AS B 
+                                                            ON A.[投票日期] = B.[投票日期] 
+                                                           AND A.[證券代號] = B.[證券代號] 
+                                                           WHEN MATCHED AND (A.[證券名稱] <> B.證券名稱 
+                                                                                                  OR A.[召集人] <>B.召集人
+                                                                                                 OR A.[股東會日期] <> B.股東會日期 OR A.[發行代理機構] <> B.發行代理機構 OR A.[聯絡電話] <> 
                                                            B.聯絡電話) THEN UPDATE SET [證券名稱] = B.證券名稱,[召集人] = B.召集人,[股東會日期] = B.股東會日期,
                                                            [發行代理機構] = B.發行代理機構,[聯絡電話] = B.聯絡電話 ,[MTIME] = (datediff(second, '1970-01-01', 
                                                            getutcdate())) WHEN NOT MATCHED BY TARGET THEN INSERT([投票日期],[證券代號],[證券名稱],[召集人],

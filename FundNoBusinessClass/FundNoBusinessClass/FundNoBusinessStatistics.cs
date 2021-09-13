@@ -32,13 +32,16 @@ namespace FundNoBusinessClass
         /// </summary>
         public override void GetXML()
         {
-            TotalDocument.Root.RemoveNodes();
             string pattern = @"<tr class=""r_blue"">[\s]*?<td.*?>(?<date>[\d]{8})</td><td.*?>(?<company>[\w]{5})</td><td.*?>(?<taxID>[\w]*?)</td><td.*?>(?<name>[\S]*?)</td>.*?</tr>";
-            foreach (KeyValuePair<string, string> data in OriginalWeb)
+            string web = GetWebPage(FUND_NO_BUSINESS_DAY);
+            MatchCollection years = Regex.Matches(web, @"value=""(?<year>\d{4})"">");
+            foreach (Match year in years)
             {
+                string yearWord = year.Groups["year"].Value.Trim();
+                string data = ReadFile($"{yearWord}.html");
                 //存一年的資料之後要弄成xml
                 List<FundDto> fundStatistics = new List<FundDto>();
-                MatchCollection results = Regex.Matches(data.Value, pattern, RegexOptions.Singleline);
+                MatchCollection results = Regex.Matches(data, pattern, RegexOptions.Singleline);
                 foreach (Match result in results)
                 {
                     fundStatistics.Add(new FundDto
@@ -66,10 +69,9 @@ namespace FundNoBusinessClass
                     new XElement("基金總數", fund.基金總數)
                     ));
                 XDocument document = new XDocument(new XElement("Root", fundXml));
-                string fileName = Path.Combine(CreatDirectory(data.Key), "基金非營業日統計.xml");
+                string fileName = Path.Combine(CreatDirectory(yearWord), "基金非營業日統計.xml");
                 SaveXml(document, fileName);
                 //所有xml存成一個，之後要匯入資料庫
-                TotalDocument.Root.Add(fundXml);
             }
         }
 
@@ -78,6 +80,7 @@ namespace FundNoBusinessClass
         /// </summary>
         public override void WriteDatabase()
         {
+            XDocument TotalDocument = GetTotalXml("基金非營業日統計");
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());

@@ -33,11 +33,13 @@ namespace StockVoteClass
         public override void GetXML()
         {
             string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
-            TotalDocument.Root.RemoveNodes();
-            foreach (var web in OriginalWeb)
+            int page = GetPageNumber();
+            for (int i = 1; i <= page; i++)
             {
+                string path = Path.Combine(DateTime.Today.ToString("yyyyMMdd"), $"{i}.html");
+                string web = ReadFile(path);
                 //存一頁的資料之後要弄成xml
-                MatchCollection stockVoteDatas = Regex.Matches(web.Value, allPattern, RegexOptions.Singleline);
+                MatchCollection stockVoteDatas = Regex.Matches(web, allPattern, RegexOptions.Singleline);
                 List<XElement> voteDay = new List<XElement>();
                 foreach (Match data in stockVoteDatas)
                 {
@@ -55,18 +57,17 @@ namespace StockVoteClass
                     ));
                 }
                 XDocument document = new XDocument(new XElement("Root", voteDay));
-                string fileName = Path.Combine(CreatDirectory(DateTime.Today.ToString("yyyyMMdd/股東會投票資料表")), $"{web.Key}.xml");
+                string fileName = Path.Combine(CreatDirectory(DateTime.Today.ToString("yyyyMMdd/股東會投票資料表")), $"{i}.xml");
                 SaveXml(document, fileName);
-                TotalDocument.Root.Add(voteDay);
             }
         }
 
         /// <summary>
         /// 用xml中介資料更新資料庫
         /// </summary>
-        /// <param name="SQLConnection">資料庫連線字串</param>
         public override void WriteDatabase()
         {
+            XDocument TotalDocument = GetTotalXml("股東會投票資料表");
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());

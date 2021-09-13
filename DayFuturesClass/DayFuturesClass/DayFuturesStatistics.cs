@@ -32,6 +32,7 @@ namespace DayFuturesClass
         /// </summary>
         public override void GetXML()
         {
+            string OriginalWeb = ReadFile($"{DateTime.Now.Year}.csv");
             //只要盤後的資料
             var datas = OriginalWeb.Trim().Split('\n').Skip(1).Select(data => data.Split(',')).Where(fields => fields[(int)Futures.TRADING_HOURS] == "盤後").Select(fields => new
             {
@@ -54,7 +55,7 @@ namespace DayFuturesClass
                 最低價 = value.Min(data => data.最低價),
                 收盤價 = value.Max(data => data.收盤價)
             });
-            TotalDocument = new XDocument(new XElement("Root",
+            XDocument TotalDocument = new XDocument(new XElement("Root",
             datas.Select(data =>
             new XElement("Data",
                 new XElement("交易日期", data.交易日期),
@@ -70,8 +71,12 @@ namespace DayFuturesClass
             SaveXml(TotalDocument, fileName);
         }
 
+        /// <summary>
+        /// 將資料寫入資料庫
+        /// </summary>
         public override void WriteDatabase()
         {
+            XDocument TotalDocument = GetTotalXml("日期貨盤後統計表");
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());

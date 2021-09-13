@@ -32,13 +32,17 @@ namespace FundNoBusinessClass
         /// </summary>
         public override void GetXML()
         {
-            TotalDocument.Root.RemoveNodes();
             string pattern = @"<tr class=""r_blue"">[\s]*?<td.*?>(?<date>[\d]{8})</td><td.*?>(?<company>[\w]{5})</td><td.*?>(?<taxID>[\w]*?)</td><td.*?>(?<name>.*?)</td>.*?</tr>";
-            foreach (KeyValuePair<string, string> data in OriginalWeb)
+            string web = GetWebPage(FUND_NO_BUSINESS_DAY);
+            MatchCollection years = Regex.Matches(web, @"value=""(?<year>\d{4})"">");
+            foreach (Match year in years)
             {
+                string yearWord = year.Groups["year"].Value.Trim();
+                string data = ReadFile($"{yearWord}.html");
                 //存一年的資料之後要弄成xml
                 List<FundDto> fundDetail = new List<FundDto>();
-                MatchCollection results = Regex.Matches(data.Value, pattern, RegexOptions.Singleline);
+                MatchCollection results = Regex.Matches(data, pattern, RegexOptions.Singleline);
+
                 foreach (Match result in results)
                 {
                     fundDetail.Add(new FundDto
@@ -74,9 +78,8 @@ namespace FundNoBusinessClass
                     new XElement("排序", fund.排序)
                     ));
                 XDocument document = new XDocument(new XElement("Root", fundXml));
-                string fileName = Path.Combine(CreatDirectory(data.Key), "基金非營業日明細.xml");
+                string fileName = Path.Combine(CreatDirectory(yearWord), "基金非營業日明細.xml");
                 SaveXml(document, fileName);
-                TotalDocument.Root.Add(fundXml); //所有xml存成一個，之後要匯入資料庫
             }
         }
 
@@ -85,6 +88,7 @@ namespace FundNoBusinessClass
         /// </summary>
         public override void WriteDatabase()
         {
+            XDocument TotalDocument = GetTotalXml("基金非營業日明細");
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());

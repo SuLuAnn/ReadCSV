@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -20,15 +21,6 @@ namespace DayFuturesClass
         /// 日期貨盤後交易行情的網址
         /// </summary>
         public const string DAY_FUTURES = "https://www.taifex.com.tw/cht/3/dlFutDataDown"; 
-        /// <summary>
-        /// 取回的html原始資料
-        /// </summary>
-        public string OriginalWeb { get; set; }
-
-        /// <summary>
-        /// 原始資料產生的xml中介資料
-        /// </summary>
-        public XDocument TotalDocument { get; set; }
 
         /// <summary>
         /// 原始資料切割後的陣列與陣列內容的對應
@@ -51,7 +43,6 @@ namespace DayFuturesClass
         /// <param name="dataTableName">物件所產生的資料表名</param>
         public DayFutures(string dataTableName) : base(dataTableName)
         {
-            TotalDocument = new XDocument();
         }
 
         /// <summary>
@@ -66,7 +57,13 @@ namespace DayFuturesClass
             headers.Add(new StringContent(DateTime.Now.ToString("yyyy/MM/dd")), "queryEndDate");
             string web = HtmlPost(DAY_FUTURES, headers, "BIG5");
             SaveFile(web, $"{DateTime.Now.Year}.csv");
-            OriginalWeb = web;
+        }
+
+        public override XDocument GetTotalXml(string tableName)
+        {
+            string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", DateTime.Now.Year.ToString(), $"{tableName}.xml");
+            XDocument TotalDocument = XDocument.Load(path);
+            return TotalDocument;
         }
     }
 }

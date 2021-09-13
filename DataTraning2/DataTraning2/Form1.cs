@@ -73,7 +73,6 @@ namespace DataTraning2
         /// <param name="e">觸發事件</param>
         private void ClickAddReviseButton(object sender, EventArgs e)
         {
-            Stopwatch.Restart();
             //以多執行緒開始執行新增修改方法，並傳入使用者所選表名
             AddReviseWorker.RunWorkerAsync(DropDownMenu.Text);
         }
@@ -85,7 +84,6 @@ namespace DataTraning2
         /// <param name="e">觸發事件</param>
         private void ClickDeleteButton(object sender, EventArgs e)
         {
-            Stopwatch.Restart();
             //以多執行緒開始執行刪除方法，並傳入使用者所選表名
             DeleteWorker.RunWorkerAsync(DropDownMenu.Text);
         }
@@ -155,6 +153,9 @@ namespace DataTraning2
             RepeatExecution($"{(string)e.Argument}已更新並寫入資料庫", DataSheet.WriteDatabase);
         }
 
+        /// <summary>
+        /// 清空資料表的方法
+        /// </summary>
         private void Delete() 
         {
             SqlCommand query = new SqlCommand($"TRUNCATE TABLE {DataSheet.GetDataTableName()}", SQLConnection);
@@ -163,28 +164,31 @@ namespace DataTraning2
             SQLConnection.Close();
         }
 
+        /// <summary>
+        /// 做當報錯時方法會重複執行這件事
+        /// </summary>
+        /// <param name="step">步驟名稱</param>
+        /// <param name="action">要執行的方法</param>
         private void RepeatExecution(string step, Action action)
         {
             string result = string.Empty;
-            while (true)
+            int frequency = 3;//最多執行次數
+            while (frequency > 0)
             {
                 Stopwatch.Restart();
                 try
                 {
                     action();
                     result = "成功";
-                    return;
+                    frequency = 0;
                 }
                 catch (Exception ex)
                 {
-                    throw;
                     result = $"失敗，因為{ex.Message}";
+                    frequency --;
                 }
-                finally 
-                {
-                    Stopwatch.Stop();
-                    Log(step, result, Stopwatch.ElapsedMilliseconds.ToString());
-                }
+                Stopwatch.Stop();
+                Log(step, result, Stopwatch.ElapsedMilliseconds.ToString());
             }
         }
     }

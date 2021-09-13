@@ -27,6 +27,9 @@ namespace Common
         /// </summary>
         public string DataTableName { get; set; }
 
+        /// <summary>
+        /// 連線字串
+        /// </summary>
         public SqlConnection SQLConnection { get; set; }
 
         /// <summary>
@@ -40,7 +43,6 @@ namespace Common
             SQLConnection = new SqlConnection();
             SQLConnection.ConnectionString = @"Data Source=192.168.10.180;Initial Catalog=StockDB;User ID=test;Password=test; Connection Timeout=180";
             SQLConnection.FireInfoMessageEventOnUserErrors = false;
-            SQLConnection.Close();
             //創建BackupFile資料夾
             CreatDirectory(string.Empty);
         }
@@ -116,6 +118,16 @@ namespace Common
             }
         }
 
+        public string ReadFile(string fileName)
+        {
+            //組檔案路徑
+            string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", fileName);
+            using (StreamReader reader = new StreamReader(path, Encoding.UTF8))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
         /// <summary>
         /// 將xml檔存到本機
         /// </summary>
@@ -140,5 +152,7 @@ namespace Common
         /// 將中介資料寫入資料庫
         /// </summary>
         public abstract void WriteDatabase();
+
+        public abstract XDocument GetTotalXml(string tableName);
     }
 }

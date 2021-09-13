@@ -28,23 +28,11 @@ namespace StockVoteClass
         public const string STOCK_VOTE_PAGE = "https://www.stockvote.com.tw/evote/login/index/meetingInfoMore.html?stockName=&orderType=0&stockId=&searchType=0&meetingDate=&meetinfo=";
 
         /// <summary>
-        /// 所有html組成的xml檔
-        /// </summary>
-        public XDocument TotalDocument { get; set; }
-
-        /// <summary>
-        /// key為頁數，value為html原始資料
-        /// </summary>
-        public Dictionary<int, string> OriginalWeb { get; set; }
-
-        /// <summary>
         /// 建構子
         /// </summary>
         /// <param name="dataTableName">該類別要產出的資料表名</param>
         public StockVote(string dataTableName) : base(dataTableName)
         {
-            OriginalWeb = new Dictionary<int, string>();
-            TotalDocument = new XDocument(new XElement("Root"));
         }
 
         /// <summary>
@@ -52,7 +40,6 @@ namespace StockVoteClass
         /// </summary>
         public override void GetWebs()
         {
-            OriginalWeb.Clear();
             //取得總共有幾頁
             int page = GetPageNumber();
             for (int i = 1; i <= page; i++)
@@ -61,7 +48,6 @@ namespace StockVoteClass
                 string stockVotePage = GetWebPage($"{STOCK_VOTE_PAGE}{i}");
                 string path = Path.Combine(CreatDirectory(DateTime.Today.ToString("yyyyMMdd")), $"{i}.html");
                 SaveFile(stockVotePage, path);
-                OriginalWeb.Add(i, stockVotePage);
             }
         }
 
@@ -88,6 +74,18 @@ namespace StockVoteClass
                 year = (result + 19110000).ToString();
             }
             return year;
+        }
+
+        public override XDocument GetTotalXml(string tableName)
+        {
+            XDocument TotalDocument = new XDocument(new XElement("Root"));
+            int page = GetPageNumber();
+            for (int i = 1; i <= page; i++)
+            {
+                string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", DateTime.Today.ToString($"yyyyMMdd/{tableName}"), $"{i}.xml");
+                TotalDocument.Add(XElement.Load(path).Elements("Data"));
+            }
+            return TotalDocument;
         }
     }
 }
