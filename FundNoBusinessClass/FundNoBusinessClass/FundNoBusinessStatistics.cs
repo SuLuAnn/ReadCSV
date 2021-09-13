@@ -33,11 +33,11 @@ namespace FundNoBusinessClass
         public override void GetXML()
         {
             string pattern = @"<tr class=""r_blue"">[\s]*?<td.*?>(?<date>[\d]{8})</td><td.*?>(?<company>[\w]{5})</td><td.*?>(?<taxID>[\w]*?)</td><td.*?>(?<name>[\S]*?)</td>.*?</tr>";
-            string web = GetWebPage(FUND_NO_BUSINESS_DAY);
+            string web = GetWebPage(GlobalConst.FUND_NO_BUSINESS_DAY);
             MatchCollection years = Regex.Matches(web, @"value=""(?<year>\d{4})"">");
             foreach (Match year in years)
             {
-                string yearWord = year.Groups["year"].Value.Trim();
+                string yearWord = year.Groups[GlobalConst.YEAR].Value.Trim();
                 string data = ReadFile($"{yearWord}.html");
                 //存一年的資料之後要弄成xml
                 List<FundDto> fundStatistics = new List<FundDto>();
@@ -46,9 +46,9 @@ namespace FundNoBusinessClass
                 {
                     fundStatistics.Add(new FundDto
                     {
-                        非營業日 = result.Groups["date"].Value,
-                        公司代號 = result.Groups["company"].Value,
-                        基金統編 = result.Groups["taxID"].Value,
+                        非營業日 = result.Groups[GlobalConst.DATE].Value,
+                        公司代號 = result.Groups[GlobalConst.COMPANY].Value,
+                        基金統編 = result.Groups[GlobalConst.TAX_ID].Value,
                     });
                 }
                 //取得同非營業日同公司代號基金總數
@@ -63,13 +63,13 @@ namespace FundNoBusinessClass
                                                                                                             非營業日 = key.非營業日,
                                                                                                             基金總數 = (byte)value.Count()
                                                                                                         });
-                IEnumerable<XElement> fundXml = fundResult.Select(fund => new XElement("Data",
-                    new XElement("非營業日", fund.非營業日),
-                    new XElement("公司代號", fund.公司代號),
-                    new XElement("基金總數", fund.基金總數)
+                IEnumerable<XElement> fundXml = fundResult.Select(fund => new XElement(GlobalConst.XML_NODE_NAME,
+                    new XElement(GlobalConst.NO_BUSINESS, fund.非營業日),
+                    new XElement(GlobalConst.COMPANY_CODE, fund.公司代號),
+                    new XElement(GlobalConst.FUND_TOTAL, fund.基金總數)
                     ));
-                XDocument document = new XDocument(new XElement("Root", fundXml));
-                string fileName = Path.Combine(CreatDirectory(yearWord), "基金非營業日統計.xml");
+                XDocument document = new XDocument(new XElement(GlobalConst.XML_ROOT, fundXml));
+                string fileName = Path.Combine(CreatDirectory(yearWord), GlobalConst.FUND_NO_BUSINESS_STATISTICS);
                 SaveXml(document, fileName);
                 //所有xml存成一個，之後要匯入資料庫
             }

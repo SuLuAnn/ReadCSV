@@ -71,7 +71,7 @@ namespace DayFuturesClass
                                                            B.收盤價 IS NULL)) THEN UPDATE SET[開盤價] = B.開盤價,[最高價] = B.最高價,[最低價] = B.最低價,[收盤價] 
                                                            = B.收盤價,[MTIME] = (datediff(second, '1970-01-01', getutcdate())) WHEN NOT MATCHED BY TARGET 
                                                            THEN INSERT([交易日期],[契約],[到期月份(週別)],[開盤價],[最高價],[最低價],[收盤價]) VALUES(B.交易日期, 
-                                                            B.契約, B.[到期月份(週別)], B.開盤價, B.最高價, B.最低價, B.收盤價) WHEN NOT MATCHED BY SOURCE 
+                                                            B.契約, B.[到期月份(週別)], B.開盤價, B.最高價, B.最低價, B.收盤價) WHEN NOT MATCHED BY SOURCE
                                                             THEN DELETE; ";
             SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
             SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);

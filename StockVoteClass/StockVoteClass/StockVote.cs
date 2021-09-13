@@ -17,15 +17,7 @@ namespace StockVoteClass
     /// </summary>
     public abstract class StockVote : DataBaseTable
     {
-        /// <summary>
-        /// stockvote電子投票首頁
-        /// </summary>
-        public const string STOCK_VOTE = "https://www.stockvote.com.tw/evote/login/index/meetingInfoMore.html";
 
-        /// <summary>
-        /// stockvote電子投票取得每頁內容的網址
-        /// </summary>
-        public const string STOCK_VOTE_PAGE = "https://www.stockvote.com.tw/evote/login/index/meetingInfoMore.html?stockName=&orderType=0&stockId=&searchType=0&meetingDate=&meetinfo=";
 
         /// <summary>
         /// 建構子
@@ -45,7 +37,7 @@ namespace StockVoteClass
             for (int i = 1; i <= page; i++)
             {
                 //取每頁html內容
-                string stockVotePage = GetWebPage($"{STOCK_VOTE_PAGE}{i}");
+                string stockVotePage = GetWebPage($"{GlobalConst.STOCK_VOTE_PAGE}{i}");
                 string path = Path.Combine(CreatDirectory(DateTime.Today.ToString("yyyyMMdd")), $"{i}.html");
                 SaveFile(stockVotePage, path);
             }
@@ -57,8 +49,8 @@ namespace StockVoteClass
         /// <returns>頁數</returns>
         public int GetPageNumber()
         {
-            string web = GetWebPage(STOCK_VOTE);
-            int.TryParse(Regex.Match(web, @"頁次：1/(?<lastPage>\d+?)<td>").Groups["lastPage"].Value, out int page);
+            string web = GetWebPage(GlobalConst.STOCK_VOTE);
+            int.TryParse(Regex.Match(web, @"頁次：\d*?/(?<lastPage>\d+?)<").Groups["lastPage"].Value, out int page);
             return page;
         }
 
@@ -78,12 +70,12 @@ namespace StockVoteClass
 
         public override XDocument GetTotalXml(string tableName)
         {
-            XDocument TotalDocument = new XDocument(new XElement("Root"));
+            XDocument TotalDocument = new XDocument(new XElement(GlobalConst.XML_ROOT));
             int page = GetPageNumber();
             for (int i = 1; i <= page; i++)
             {
-                string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", DateTime.Today.ToString($"yyyyMMdd/{tableName}"), $"{i}.xml");
-                TotalDocument.Add(XElement.Load(path).Elements("Data"));
+                string path = Path.Combine(Environment.CurrentDirectory, GlobalConst.FOLDER_NAME, DateTime.Today.ToString($"yyyyMMdd/{tableName}"), $"{i}.xml");
+                TotalDocument.Root.Add(XElement.Load(path).Elements(GlobalConst.XML_NODE_NAME));
             }
             return TotalDocument;
         }

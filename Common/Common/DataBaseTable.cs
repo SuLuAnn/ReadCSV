@@ -32,6 +32,8 @@ namespace Common
         /// </summary>
         public SqlConnection SQLConnection { get; set; }
 
+
+
         /// <summary>
         /// 建構子
         /// </summary>
@@ -80,7 +82,7 @@ namespace Common
         public string CreatDirectory(string fileName)
         {
             //組資料夾路徑，所有資料夾都會在BackupFile這個資料夾下面
-            string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", fileName);
+            string path = Path.Combine(Environment.CurrentDirectory, GlobalConst.FOLDER_NAME, fileName);
             if (!Directory.Exists(fileName))
             {
                 Directory.CreateDirectory(path);
@@ -111,7 +113,7 @@ namespace Common
         public void SaveFile(string file, string fileName)
         {
             //組檔案路徑
-            string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", fileName);
+            string path = Path.Combine(Environment.CurrentDirectory, GlobalConst.FOLDER_NAME, fileName);
             using (StreamWriter writer = new StreamWriter(path, false, Encoding.UTF8))
             {
                 writer.Write(file);
@@ -121,7 +123,7 @@ namespace Common
         public string ReadFile(string fileName)
         {
             //組檔案路徑
-            string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", fileName);
+            string path = Path.Combine(Environment.CurrentDirectory, GlobalConst.FOLDER_NAME, fileName);
             using (StreamReader reader = new StreamReader(path, Encoding.UTF8))
             {
                 return reader.ReadToEnd();
@@ -136,7 +138,7 @@ namespace Common
         public void SaveXml(XDocument document, string xmlName)
         {
             //組檔案路徑
-            string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", xmlName);
+            string path = Path.Combine(Environment.CurrentDirectory, GlobalConst.FOLDER_NAME, xmlName);
             using (XmlWriter writer = XmlWriter.Create(path))
             {
                 document.Save(writer);

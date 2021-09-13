@@ -20,6 +20,9 @@ namespace FundNoBusinessClass
     [Export(typeof(IDataSheet))]
     public class FundNoBusinessDetail : FundNoBusiness
     {
+        
+
+
         /// <summary>
         /// 建構子
         /// </summary>
@@ -33,11 +36,11 @@ namespace FundNoBusinessClass
         public override void GetXML()
         {
             string pattern = @"<tr class=""r_blue"">[\s]*?<td.*?>(?<date>[\d]{8})</td><td.*?>(?<company>[\w]{5})</td><td.*?>(?<taxID>[\w]*?)</td><td.*?>(?<name>.*?)</td>.*?</tr>";
-            string web = GetWebPage(FUND_NO_BUSINESS_DAY);
+            string web = GetWebPage(GlobalConst.FUND_NO_BUSINESS_DAY);
             MatchCollection years = Regex.Matches(web, @"value=""(?<year>\d{4})"">");
             foreach (Match year in years)
             {
-                string yearWord = year.Groups["year"].Value.Trim();
+                string yearWord = year.Groups[GlobalConst.YEAR].Value.Trim();
                 string data = ReadFile($"{yearWord}.html");
                 //存一年的資料之後要弄成xml
                 List<FundDto> fundDetail = new List<FundDto>();
@@ -47,10 +50,10 @@ namespace FundNoBusinessClass
                 {
                     fundDetail.Add(new FundDto
                     {
-                        非營業日 = result.Groups["date"].Value,
-                        公司代號 = result.Groups["company"].Value,
-                        基金統編 = result.Groups["taxID"].Value,
-                        基金名稱 = result.Groups["name"].Value
+                        非營業日 = result.Groups[GlobalConst.DATE].Value,
+                        公司代號 = result.Groups[GlobalConst.COMPANY].Value,
+                        基金統編 = result.Groups[GlobalConst.TAX_ID].Value,
+                        基金名稱 = result.Groups[GlobalConst.NAME].Value
                     });
                 }
                 //依基金名稱遞減排名，相同字數要同名次
@@ -70,15 +73,15 @@ namespace FundNoBusinessClass
                                                     });
                                                     return funds;
                                                 }).ToList();
-                IEnumerable<XElement> fundXml = fundResult.Select(fund => new XElement("Data", //做成xml檔
-                    new XElement("非營業日", fund.非營業日),
-                    new XElement("公司代號", fund.公司代號),
-                    new XElement("基金統編", fund.基金統編),
-                    new XElement("基金名稱", fund.基金名稱),
-                    new XElement("排序", fund.排序)
+                IEnumerable<XElement> fundXml = fundResult.Select(fund => new XElement(GlobalConst.XML_NODE_NAME, //做成xml檔
+                    new XElement(GlobalConst.NO_BUSINESS, fund.非營業日),
+                    new XElement(GlobalConst.COMPANY_CODE, fund.公司代號),
+                    new XElement(GlobalConst.CHINESS_TAX_ID, fund.基金統編),
+                    new XElement(GlobalConst.FUND_NAME, fund.基金名稱),
+                    new XElement(GlobalConst.SORT, fund.排序)
                     ));
-                XDocument document = new XDocument(new XElement("Root", fundXml));
-                string fileName = Path.Combine(CreatDirectory(yearWord), "基金非營業日明細.xml");
+                XDocument document = new XDocument(new XElement(GlobalConst.XML_ROOT, fundXml));
+                string fileName = Path.Combine(CreatDirectory(yearWord), GlobalConst.FUND_NO_BUSINESS_DETAIL);
                 SaveXml(document, fileName);
             }
         }

@@ -17,10 +17,7 @@ namespace DayFuturesClass
     /// </summary>
     public abstract class DayFutures : DataBaseTable
     {
-        /// <summary>
-        /// 日期貨盤後交易行情的網址
-        /// </summary>
-        public const string DAY_FUTURES = "https://www.taifex.com.tw/cht/3/dlFutDataDown"; 
+
 
         /// <summary>
         /// 原始資料切割後的陣列與陣列內容的對應
@@ -55,7 +52,7 @@ namespace DayFuturesClass
             headers.Add(new StringContent("all"), "commodity_id");
             headers.Add(new StringContent(DateTime.Now.ToString("yyyy/MM/dd")), "queryStartDate");
             headers.Add(new StringContent(DateTime.Now.ToString("yyyy/MM/dd")), "queryEndDate");
-            string web = HtmlPost(DAY_FUTURES, headers, "BIG5");
+            string web = HtmlPost(GlobalConst.DAY_FUTURES, headers, "BIG5");
             SaveFile(web, $"{DateTime.Now.Year}.csv");
         }
 

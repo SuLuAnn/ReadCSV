@@ -17,10 +17,7 @@ namespace FundNoBusinessClass
     /// </summary>
     public abstract class FundNoBusiness : DataBaseTable
     {
-        /// <summary>
-        /// 中華民國證券投資信託暨顧問商業同業公會-基金非營業日的網址
-        /// </summary>
-        public const string FUND_NO_BUSINESS_DAY = "https://www.sitca.org.tw/ROC/Industry/IN2107.aspx?pid=IN2213_03";
+
 
         /// <summary>
         /// 建構子
@@ -35,38 +32,38 @@ namespace FundNoBusinessClass
         /// </summary>
         public override void GetWebs()
         {
-            string web = GetWebPage(FUND_NO_BUSINESS_DAY);
+            string web = GetWebPage(GlobalConst.FUND_NO_BUSINESS_DAY);
             //取得post要得form data值
-            MatchCollection headers = Regex.Matches(web, @"id=""(?<id>__.*?)"" value=""(?<value>.*?)""");
+            MatchCollection postDatas = Regex.Matches(web, @"id=""(?<id>__.*?)"" value=""(?<value>.*?)""");
             MatchCollection years = Regex.Matches(web, @"value=""(?<year>\d{4})"">");
             foreach (Match year in years)
             {
-                string yearWord = year.Groups["year"].Value.Trim();
-                MultipartFormDataContent header = new MultipartFormDataContent();
-                foreach (Match keyPair in headers)
+                string yearWord = year.Groups[GlobalConst.YEAR].Value.Trim();
+                MultipartFormDataContent formData = new MultipartFormDataContent();
+                foreach (Match postData in postDatas)
                 {
-                    header.Add(new StringContent(keyPair.Groups["value"].Value.Trim()), keyPair.Groups["id"].Value.Trim());
+                    formData.Add(new StringContent(postData.Groups[GlobalConst.VALUE].Value.Trim()), postData.Groups[GlobalConst.ID].Value.Trim());
                 }
-                header.Add(new StringContent(yearWord), "ctl00$ContentPlaceHolder1$ddlQ_Year");
-                header.Add(new StringContent(string.Empty), "ctl00$ContentPlaceHolder1$ddlQ_Comid");
-                header.Add(new StringContent(string.Empty), "ctl00$ContentPlaceHolder1$ddlQ_Fund");
-                header.Add(new StringContent(string.Empty), "ctl00$ContentPlaceHolder1$ddlQ_PAGESIZE");
-                header.Add(new StringContent("查詢"), "ctl00$ContentPlaceHolder1$BtnQuery");
-                string data = HtmlPost(FUND_NO_BUSINESS_DAY, header, "UTF-8");
+                formData.Add(new StringContent(yearWord), GlobalConst.POST_DATA_YEAR);
+                formData.Add(new StringContent(string.Empty), GlobalConst.POST_DATA_COMID);
+                formData.Add(new StringContent(string.Empty), GlobalConst.POST_DATA_FUND);
+                formData.Add(new StringContent(string.Empty), GlobalConst.POST_DATA_PAGESIZE);
+                formData.Add(new StringContent(GlobalConst.QUERY), GlobalConst.POST_DATA_QUERY);
+                string data = HtmlPost(GlobalConst.FUND_NO_BUSINESS_DAY, formData, GlobalConst.ENCODED);
                 SaveFile(data, $"{yearWord}.html");
             }
         }
 
         public override XDocument GetTotalXml(string tableName)
         {
-            XDocument TotalDocument = new XDocument(new XElement("Root"));
-            string web = GetWebPage(FUND_NO_BUSINESS_DAY);
+            XDocument TotalDocument = new XDocument(new XElement(GlobalConst.XML_ROOT));
+            string web = GetWebPage(GlobalConst.FUND_NO_BUSINESS_DAY);
             MatchCollection years = Regex.Matches(web, @"value=""(?<year>\d{4})"">");
             foreach (Match year in years)
             {
-                string yearWord = year.Groups["year"].Value.Trim();
-                string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", yearWord, $"{tableName}.xml");
-                TotalDocument.Add(XElement.Load(path).Elements("Data"));
+                string yearWord = year.Groups[GlobalConst.YEAR].Value.Trim();
+                string path = Path.Combine(Environment.CurrentDirectory, GlobalConst.FOLDER_NAME, yearWord, $"{tableName}.xml");
+                TotalDocument.Root.Add(XElement.Load(path).Elements(GlobalConst.XML_NODE_NAME));
             }
             return TotalDocument;
         }
