@@ -85,7 +85,9 @@ namespace DataTraning2
         private void ClickDeleteButton(object sender, EventArgs e)
         {
             //以多執行緒開始執行刪除方法，並傳入使用者所選表名
-            DeleteWorker.RunWorkerAsync(DropDownMenu.Text);
+            //DeleteWorker.RunWorkerAsync(DropDownMenu.Text);
+            Task task = new Task(Delete1);
+            task.Start();
         }
 
         /// <summary>
@@ -190,6 +192,10 @@ namespace DataTraning2
                 Stopwatch.Stop();
                 Log(step, result, Stopwatch.ElapsedMilliseconds.ToString());
             }
+        }
+        public void Delete1()
+        {
+            RepeatExecution($"清空{DropDownMenu.Text}的資料", Delete);
         }
     }
 }
