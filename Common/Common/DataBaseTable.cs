@@ -32,8 +32,6 @@ namespace Common
         /// </summary>
         public SqlConnection SQLConnection { get; set; }
 
-
-
         /// <summary>
         /// 建構子
         /// </summary>
@@ -120,6 +118,11 @@ namespace Common
             }
         }
 
+        /// <summary>
+        /// 讀存好的html檔
+        /// </summary>
+        /// <param name="fileName">檔名</param>
+        /// <returns></returns>
         public string ReadFile(string fileName)
         {
             //組檔案路徑
@@ -155,9 +158,20 @@ namespace Common
         /// </summary>
         public abstract void WriteDatabase();
 
+        /// <summary>
+        /// 取得這張表所有xml內容
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <returns>存好的所有xml內容</returns>
         public abstract XDocument GetTotalXml(string tableName);
 
-        public XElement ChangeNull(string name,string content)
+        /// <summary>
+        /// 判斷傳入的字串是否為空，是則回傳null，否則回傳內容為該字串的XElement節點
+        /// </summary>
+        /// <param name="name">節點的標籤名</param>
+        /// <param name="content">要判斷的字串</param>
+        /// <returns>組好的節點</returns>
+        public XElement ChangeNull(string name, string content)
         {
             content = content.Trim();
             if (string.IsNullOrEmpty(content))

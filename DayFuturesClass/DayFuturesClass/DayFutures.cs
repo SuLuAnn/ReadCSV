@@ -17,7 +17,6 @@ namespace DayFuturesClass
     /// </summary>
     public abstract class DayFutures : DataBaseTable
     {
-
         /// <summary>
         /// 建構子
         /// </summary>
@@ -40,6 +39,11 @@ namespace DayFuturesClass
             SaveFile(web, $"{DateTime.Now.Year}.csv");
         }
 
+        /// <summary>
+        /// 取得這張表所有xml內容
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <returns>存好的所有xml內容</returns>
         public override XDocument GetTotalXml(string tableName)
         {
             string path = Path.Combine(Environment.CurrentDirectory, "BackupFile", DateTime.Now.Year.ToString(), $"{tableName}.xml");

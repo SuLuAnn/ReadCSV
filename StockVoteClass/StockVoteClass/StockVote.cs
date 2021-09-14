@@ -17,8 +17,6 @@ namespace StockVoteClass
     /// </summary>
     public abstract class StockVote : DataBaseTable
     {
-
-
         /// <summary>
         /// 建構子
         /// </summary>
@@ -68,6 +66,11 @@ namespace StockVoteClass
             return year;
         }
 
+        /// <summary>
+        /// 取得這張表所有xml內容
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <returns>存好的所有xml內容</returns>
         public override XDocument GetTotalXml(string tableName)
         {
             XDocument TotalDocument = new XDocument(new XElement(GlobalConst.XML_ROOT));

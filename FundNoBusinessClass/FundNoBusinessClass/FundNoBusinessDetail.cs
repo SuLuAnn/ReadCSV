@@ -20,9 +20,6 @@ namespace FundNoBusinessClass
     [Export(typeof(IDataSheet))]
     public class FundNoBusinessDetail : FundNoBusiness
     {
-        
-
-
         /// <summary>
         /// 建構子
         /// </summary>
@@ -69,13 +66,12 @@ namespace FundNoBusinessClass
                                                                                                       });
                                                                                                       return funds;
                                                                                                   }) //做成xml檔
-                                                                                                  .Select(fund => new XElement(GlobalConst.XML_NODE_NAME
-                                                                                                  ,new XElement(GlobalConst.NO_BUSINESS, fund.非營業日),
-                                                                                                   ChangeNull(GlobalConst.COMPANY_CODE, fund.公司代號),
-                                                                                                    new XElement(GlobalConst.CHINESS_TAX_ID, fund.基金統編),
-                                                                                                   ChangeNull(GlobalConst.FUND_NAME, fund.基金名稱),
-                                                                                                   new XElement(GlobalConst.SORT, fund.排序)
-                                                                                                   ));
+                                                                                                  .Select(fund => new XElement(GlobalConst.XML_NODE_NAME, new XElement(GlobalConst.NO_BUSINESS, fund.非營業日),
+                                                                                                                                                                                                                        ChangeNull(GlobalConst.COMPANY_CODE, fund.公司代號),
+                                                                                                                                                                                                                         new XElement(GlobalConst.CHINESS_TAX_ID, fund.基金統編),
+                                                                                                                                                                                                                        ChangeNull(GlobalConst.FUND_NAME, fund.基金名稱),
+                                                                                                                                                                                                                        new XElement(GlobalConst.SORT, fund.排序)
+                                                                                                                                                                                                                        ));
                 XDocument document = new XDocument(new XElement(GlobalConst.XML_ROOT, fundXml));
                 string fileName = Path.Combine(CreatDirectory(yearWord), GlobalConst.FUND_NO_BUSINESS_DETAIL);
                 SaveXml(document, fileName);

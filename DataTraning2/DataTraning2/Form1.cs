@@ -74,7 +74,16 @@ namespace DataTraning2
         private void ClickAddReviseButton(object sender, EventArgs e)
         {
             //以多執行緒開始執行新增修改方法，並傳入使用者所選表名
-            AddReviseWorker.RunWorkerAsync(DropDownMenu.Text);
+            string tableName = DropDownMenu.Text;
+            Task originalData = Task.Run(() => 
+                                                                            {
+                                                                                //取得網站原始資料
+                                                                                RepeatExecution($"{tableName}的原始資料已取得", DataSheet.GetWebs);
+                                                                                //將原始資料轉為中介資料XML檔
+                                                                                RepeatExecution($"{tableName}的Xml已取得", DataSheet.GetXML);
+                                                                                //將中介資料轉入資料庫做新增修改
+                                                                                RepeatExecution($"{tableName}已更新並寫入資料庫", DataSheet.WriteDatabase);
+                                                                            });
         }
 
         /// <summary>
@@ -85,9 +94,8 @@ namespace DataTraning2
         private void ClickDeleteButton(object sender, EventArgs e)
         {
             //以多執行緒開始執行刪除方法，並傳入使用者所選表名
-            //DeleteWorker.RunWorkerAsync(DropDownMenu.Text);
-            Task task = new Task(Delete1);
-            task.Start();
+            string tableName = DropDownMenu.Text;
+            Task.Run(() => RepeatExecution($"清空{tableName}的資料", Delete));
         }
 
         /// <summary>
@@ -131,31 +139,6 @@ namespace DataTraning2
         }
 
         /// <summary>
-        /// 刪除所選資料表的所有內容
-        /// </summary>
-        /// <param name="sender">下拉選單物件</param>
-        /// <param name="e">觸發事件</param>
-        private void WorkDelete(object sender, DoWorkEventArgs e)
-        {
-            RepeatExecution($"清空{(string)e.Argument}的資料", Delete);
-        }
-
-        /// <summary>
-        /// 新增修改指定資料表
-        /// </summary>
-        /// <param name="sender">多執行緒物件</param>
-        /// <param name="e">觸發事件</param>
-        private void WorkAddRevise(object sender, DoWorkEventArgs e)
-        {
-            //取得網站原始資料
-            RepeatExecution($"{(string)e.Argument}的原始資料已取得", DataSheet.GetWebs);
-            //將原始資料轉為中介資料XML檔
-            RepeatExecution($"{(string)e.Argument}的Xml已取得", DataSheet.GetXML);
-            //將中介資料轉入資料庫做新增修改
-            RepeatExecution($"{(string)e.Argument}已更新並寫入資料庫", DataSheet.WriteDatabase);
-        }
-
-        /// <summary>
         /// 清空資料表的方法
         /// </summary>
         private void Delete() 
@@ -174,7 +157,7 @@ namespace DataTraning2
         private void RepeatExecution(string step, Action action)
         {
             string result = string.Empty;
-            int frequency = 3;//最多執行次數
+            int frequency = 3; //最多執行次數
             while (frequency > 0)
             {
                 Stopwatch.Restart();
@@ -192,10 +175,6 @@ namespace DataTraning2
                 Stopwatch.Stop();
                 Log(step, result, Stopwatch.ElapsedMilliseconds.ToString());
             }
-        }
-        public void Delete1()
-        {
-            RepeatExecution($"清空{DropDownMenu.Text}的資料", Delete);
         }
     }
 }

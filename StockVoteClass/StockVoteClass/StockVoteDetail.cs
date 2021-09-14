@@ -44,7 +44,6 @@ namespace StockVoteClass
                 List<XElement> voteDay = new List<XElement>();
                 foreach (Match data in stockVoteDatas)
                 {
-                    
                     Match detail = Regex.Match(data.Groups[GlobalConst.DATA].Value, pattern, RegexOptions.Singleline);
                     voteDay.Add(new XElement(GlobalConst.XML_NODE_NAME,
                         new XElement(GlobalConst.VOTE_DATE, ChangeYear(detail.Groups[GlobalConst.VOTE_START_DAY].Value.Replace(GlobalConst.SLASH, string.Empty).Trim())),

@@ -33,17 +33,17 @@ namespace DayFuturesClass
         {
             string OriginalWeb = ReadFile($"{DateTime.Now.Year}.csv");
             //只要盤後的資料
-            IEnumerable<string[]> datas = OriginalWeb.Trim().Split('\n').Skip(1).Select(data => data.Split(',')).Where(fields => fields[GlobalConst.TRADING_HOURS] == "盤後");
-            XDocument TotalDocument = new XDocument(new XElement("Root",
+            IEnumerable<string[]> datas = OriginalWeb.Trim().Split('\n').Skip(1).Select(data => data.Split(GlobalConst.COMMA)).Where(fields => fields[GlobalConst.TRADING_HOURS] == GlobalConst.CHINESS_TRADING_HOURS);
+            XDocument TotalDocument = new XDocument(new XElement(GlobalConst.XML_ROOT,
             datas.Select(data =>
-            new XElement("Data",
-                new XElement("交易日期", data[GlobalConst.TRANSACTION_DATE].Replace("/", string.Empty)),
-                new XElement("契約", data[GlobalConst.CONTRACT]),
-                new XElement("到期月份_週別", data[GlobalConst.EXPIRY_MONTH].Trim()),
-                decimal.TryParse(data[GlobalConst.OPENING_PRICE], out decimal openPrice) ? new XElement("開盤價", (decimal?)openPrice) : null,
-                decimal.TryParse(data[GlobalConst.HIGHEST_PRICE], out decimal highPrice) ? new XElement("最高價",  (decimal?)highPrice) : null,
-                decimal.TryParse(data[GlobalConst.LOWEST_PRICE], out decimal lowPrice) ? new XElement("最低價",  (decimal?)lowPrice) : null,
-                decimal.TryParse(data[GlobalConst.CLOSING_PRICE], out decimal closePrice) ? new XElement("收盤價", (decimal?)closePrice) : null
+            new XElement(GlobalConst.XML_NODE_NAME,
+                new XElement(GlobalConst.CHINESS_TRANSACTION_DATE, data[GlobalConst.TRANSACTION_DATE].Replace(GlobalConst.SLASH, string.Empty)),
+                new XElement(GlobalConst.CHINESS_CONTRACT, data[GlobalConst.CONTRACT]),
+                new XElement(GlobalConst.CHINESS_EXPIRY_MONTH, data[GlobalConst.EXPIRY_MONTH]),
+                decimal.TryParse(data[GlobalConst.OPENING_PRICE], out decimal openPrice) ? new XElement(GlobalConst.CHINESS_OPENING_PRICE, (decimal?)openPrice) : null,
+                decimal.TryParse(data[GlobalConst.HIGHEST_PRICE], out decimal highPrice) ? new XElement(GlobalConst.CHINESS_HIGHEST_PRICE,  (decimal?)highPrice) : null,
+                decimal.TryParse(data[GlobalConst.LOWEST_PRICE], out decimal lowPrice) ? new XElement(GlobalConst.CHINESS_LOWEST_PRICE,  (decimal?)lowPrice) : null,
+                decimal.TryParse(data[GlobalConst.CLOSING_PRICE], out decimal closePrice) ? new XElement(GlobalConst.CHINESS_CLOSING_PRICE, (decimal?)closePrice) : null
                 )
             )));
             //創建名稱為今年的資料夾，並將組好的xml放入

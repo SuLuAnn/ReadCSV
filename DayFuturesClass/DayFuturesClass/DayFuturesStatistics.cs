@@ -34,9 +34,9 @@ namespace DayFuturesClass
         {
             string OriginalWeb = ReadFile($"{DateTime.Now.Year}.csv");
             //只要盤後的資料
-            var datas = OriginalWeb.Trim().Split('\n').Skip(1).Select(data => data.Split(',')).Where(fields => fields[GlobalConst.TRADING_HOURS] == "盤後").Select(fields => new
+            var datas = OriginalWeb.Trim().Split('\n').Skip(1).Select(data => data.Split(',')).Where(fields => fields[GlobalConst.TRADING_HOURS] == GlobalConst.CHINESS_TRADING_HOURS).Select(fields => new
             {
-                交易日期 = fields[GlobalConst.TRANSACTION_DATE].Replace("/", string.Empty),
+                交易日期 = fields[GlobalConst.TRANSACTION_DATE].Replace(GlobalConst.SLASH, string.Empty),
                 契約 = fields[GlobalConst.CONTRACT],
                 開盤價 = decimal.TryParse(fields[GlobalConst.OPENING_PRICE], out decimal openPrice) ? (decimal?)openPrice : null,
                 最高價 = decimal.TryParse(fields[GlobalConst.HIGHEST_PRICE], out decimal highPrice) ? (decimal?)highPrice : null,
@@ -55,15 +55,15 @@ namespace DayFuturesClass
                 最低價 = value.Min(data => data.最低價),
                 收盤價 = value.Max(data => data.收盤價)
             });
-            XDocument TotalDocument = new XDocument(new XElement("Root",
+            XDocument TotalDocument = new XDocument(new XElement(GlobalConst.XML_ROOT,
             datas.Select(data =>
-            new XElement("Data",
-                new XElement("交易日期", data.交易日期),
-                new XElement("契約", data.契約),
-                data.開盤價 != null ? new XElement("開盤價", data.開盤價) : null,
-                data.最高價 != null ? new XElement("最高價", data.最高價) : null,
-                data.最低價 != null ? new XElement("最低價", data.最低價) : null,
-                data.收盤價 != null ? new XElement("收盤價", data.收盤價) : null
+            new XElement(GlobalConst.XML_NODE_NAME,
+                new XElement(GlobalConst.CHINESS_TRANSACTION_DATE, data.交易日期),
+                new XElement(GlobalConst.CHINESS_CONTRACT, data.契約),
+                data.開盤價 != null ? new XElement(GlobalConst.CHINESS_OPENING_PRICE, data.開盤價) : null,
+                data.最高價 != null ? new XElement(GlobalConst.CHINESS_HIGHEST_PRICE, data.最高價) : null,
+                data.最低價 != null ? new XElement(GlobalConst.CHINESS_LOWEST_PRICE, data.最低價) : null,
+                data.收盤價 != null ? new XElement(GlobalConst.CHINESS_CLOSING_PRICE, data.收盤價) : null
                 )
             )));
             //創建名稱為今年的資料夾，並將組好的xml放入
