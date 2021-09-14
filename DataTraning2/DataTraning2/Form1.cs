@@ -104,7 +104,7 @@ namespace DataTraning2
             }
             else 
             {
-                string log = $"Log時間：{DateTime.Now}, 步驟：{step}, 執行時間：{time}, 結果：{result}{Environment.NewLine}";
+                string log = $"Log時間：{DateTime.Now}, 步驟：{step}, 執行時間：{time} 毫秒, 結果：{result}{Environment.NewLine}";
                 TimeText.Text += log;
                 //讓scroll跟著新訊息捲動
                 TimeText.SelectionStart = TimeText.Text.Length;

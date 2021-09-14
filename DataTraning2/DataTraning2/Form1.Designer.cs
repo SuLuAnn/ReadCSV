@@ -42,20 +42,18 @@ namespace DataTraning2
             // 
             // TimeText
             // 
-            this.TimeText.Location = new System.Drawing.Point(429, 120);
-            this.TimeText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TimeText.Location = new System.Drawing.Point(12, 80);
             this.TimeText.Multiline = true;
             this.TimeText.Name = "TimeText";
             this.TimeText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TimeText.Size = new System.Drawing.Size(392, 150);
+            this.TimeText.Size = new System.Drawing.Size(537, 101);
             this.TimeText.TabIndex = 0;
             // 
             // AddReviseButton
             // 
-            this.AddReviseButton.Location = new System.Drawing.Point(459, 33);
-            this.AddReviseButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AddReviseButton.Location = new System.Drawing.Point(306, 22);
             this.AddReviseButton.Name = "AddReviseButton";
-            this.AddReviseButton.Size = new System.Drawing.Size(184, 54);
+            this.AddReviseButton.Size = new System.Drawing.Size(123, 36);
             this.AddReviseButton.TabIndex = 1;
             this.AddReviseButton.Text = "新增、修改";
             this.AddReviseButton.UseVisualStyleBackColor = true;
@@ -63,10 +61,9 @@ namespace DataTraning2
             // 
             // DeleteButton
             // 
-            this.DeleteButton.Location = new System.Drawing.Point(652, 32);
-            this.DeleteButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DeleteButton.Location = new System.Drawing.Point(435, 21);
             this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(171, 56);
+            this.DeleteButton.Size = new System.Drawing.Size(114, 37);
             this.DeleteButton.TabIndex = 2;
             this.DeleteButton.Text = "刪除";
             this.DeleteButton.UseVisualStyleBackColor = true;
@@ -75,10 +72,9 @@ namespace DataTraning2
             // DropDownMenu
             // 
             this.DropDownMenu.FormattingEnabled = true;
-            this.DropDownMenu.Location = new System.Drawing.Point(18, 46);
-            this.DropDownMenu.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DropDownMenu.Location = new System.Drawing.Point(12, 31);
             this.DropDownMenu.Name = "DropDownMenu";
-            this.DropDownMenu.Size = new System.Drawing.Size(408, 26);
+            this.DropDownMenu.Size = new System.Drawing.Size(273, 20);
             this.DropDownMenu.TabIndex = 3;
             this.DropDownMenu.SelectedIndexChanged += new System.EventHandler(this.ChangedDropDownMenu);
             // 
@@ -98,14 +94,13 @@ namespace DataTraning2
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(848, 286);
+            this.ClientSize = new System.Drawing.Size(565, 191);
             this.Controls.Add(this.DropDownMenu);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.AddReviseButton);
             this.Controls.Add(this.TimeText);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);

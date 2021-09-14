@@ -38,7 +38,7 @@ namespace StockVoteClass
             {
                 //取每頁html內容
                 string stockVotePage = GetWebPage($"{GlobalConst.STOCK_VOTE_PAGE}{i}");
-                string path = Path.Combine(CreatDirectory(DateTime.Today.ToString("yyyyMMdd")), $"{i}.html");
+                string path = Path.Combine(CreatDirectory(DateTime.Today.ToString(GlobalConst.DATE_FORMAT)), $"{i}.html");
                 SaveFile(stockVotePage, path);
             }
         }

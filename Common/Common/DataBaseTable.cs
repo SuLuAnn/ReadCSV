@@ -156,5 +156,15 @@ namespace Common
         public abstract void WriteDatabase();
 
         public abstract XDocument GetTotalXml(string tableName);
+
+        public XElement ChangeNull(string name,string content)
+        {
+            content = content.Trim();
+            if (string.IsNullOrEmpty(content))
+            {
+                return null;
+            }
+            return new XElement(name, content);
+        }
     }
 }

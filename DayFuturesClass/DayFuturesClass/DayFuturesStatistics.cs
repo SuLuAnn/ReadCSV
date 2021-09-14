@@ -34,14 +34,14 @@ namespace DayFuturesClass
         {
             string OriginalWeb = ReadFile($"{DateTime.Now.Year}.csv");
             //只要盤後的資料
-            var datas = OriginalWeb.Trim().Split('\n').Skip(1).Select(data => data.Split(',')).Where(fields => fields[(int)Futures.TRADING_HOURS] == "盤後").Select(fields => new
+            var datas = OriginalWeb.Trim().Split('\n').Skip(1).Select(data => data.Split(',')).Where(fields => fields[GlobalConst.TRADING_HOURS] == "盤後").Select(fields => new
             {
-                交易日期 = fields[(int)Futures.TRANSACTION_DATE].Replace("/", string.Empty),
-                契約 = fields[(int)Futures.CONTRACT],
-                開盤價 = decimal.TryParse(fields[(int)Futures.OPENING_PRICE], out decimal openPrice) ? (decimal?)openPrice : null,
-                最高價 = decimal.TryParse(fields[(int)Futures.HIGHEST_PRICE], out decimal highPrice) ? (decimal?)highPrice : null,
-                最低價 = decimal.TryParse(fields[(int)Futures.LOWEST_PRICE], out decimal lowPrice) ? (decimal?)lowPrice : null,
-                收盤價 = decimal.TryParse(fields[(int)Futures.CLOSING_PRICE], out decimal closePrice) ? (decimal?)closePrice : null
+                交易日期 = fields[GlobalConst.TRANSACTION_DATE].Replace("/", string.Empty),
+                契約 = fields[GlobalConst.CONTRACT],
+                開盤價 = decimal.TryParse(fields[GlobalConst.OPENING_PRICE], out decimal openPrice) ? (decimal?)openPrice : null,
+                最高價 = decimal.TryParse(fields[GlobalConst.HIGHEST_PRICE], out decimal highPrice) ? (decimal?)highPrice : null,
+                最低價 = decimal.TryParse(fields[GlobalConst.LOWEST_PRICE], out decimal lowPrice) ? (decimal?)lowPrice : null,
+                收盤價 = decimal.TryParse(fields[GlobalConst.CLOSING_PRICE], out decimal closePrice) ? (decimal?)closePrice : null
             }).GroupBy(data => new
             {
                 data.交易日期,
@@ -81,17 +81,21 @@ namespace DayFuturesClass
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());
             //dataSet.Tables[0].Rows[1]["收盤價"] = 0;//測試用
-            string sqlCommand = @"MERGE [dbo].[日期貨盤後統計表_luann] AS A USING @sourceTable AS B ON A.[交易日期] = B.[交易日期] 
-                                                           AND A.[契約] = B.[契約] WHEN MATCHED AND 
-                                                           (A.[開盤價] <> B.開盤價 OR (A.[開盤價] IS NULL AND B.開盤價 IS NOT NULL) OR (A.[開盤價] IS NOT NULL AND
-                                                           B.開盤價 IS NULL) OR A.[最高價] <> B.最高價 OR (A.[最高價] IS NULL AND B.最高價 IS NOT NULL) OR (A.[最高價] IS NOT NULL AND
-                                                           B.最高價 IS NULL) OR A.[最低價] <> B.最低價 OR (A.[最低價] IS NULL AND B.最低價 IS NOT NULL) OR (A.[最低價] IS NOT NULL AND
-                                                           B.最低價 IS NULL) OR A.[收盤價] <> B.收盤價 OR (A.[收盤價] IS NULL AND B.收盤價 IS NOT NULL) OR (A.[收盤價] IS NOT NULL AND
-                                                           B.收盤價 IS NULL)) THEN UPDATE SET[開盤價] = B.開盤價,[最高價] = B.最高價,[最低價] = B.最低價,[收盤價] 
-                                                           = B.收盤價,[MTIME] = (datediff(second, '1970-01-01', getutcdate())) WHEN NOT MATCHED BY TARGET 
-                                                           THEN INSERT([交易日期],[契約],[開盤價],[最高價],[最低價],[收盤價]) VALUES(B.交易日期, 
-                                                            B.契約,B.開盤價, B.最高價, B.最低價, B.收盤價) WHEN NOT MATCHED BY SOURCE 
-                                                            THEN DELETE;";
+            string sqlCommand = @"MERGE [dbo].[日期貨盤後統計表_luann] AS A USING @sourceTable AS B 
+                                                           ON A.[交易日期] = B.[交易日期] 
+                                                           AND A.[契約] = B.[契約] 
+                                                           WHEN MATCHED AND (ISNULL(A.[開盤價],-1000000) <> ISNULL(B.開盤價,-1000000)
+                                                                                             OR ISNULL(A.[最高價],-1000000) <> ISNULL(B.最高價,-1000000)
+                                                                                             OR ISNULL(A.[最低價],-1000000) <> ISNULL(B.最低價,-1000000)
+                                                                                             OR ISNULL(A.[收盤價],-1000000) <> ISNULL(B.收盤價,-1000000))
+														   THEN UPDATE SET [開盤價] = B.開盤價,
+                                                                                               [最高價] = B.最高價,
+                                                                                               [最低價] = B.最低價,
+                                                                                               [收盤價] = B.收盤價,
+                                                                                               [MTIME] = (datediff(second, '1970-01-01', getutcdate())) 
+                                                           WHEN NOT MATCHED BY TARGET THEN INSERT([交易日期],[契約],[開盤價],[最高價],[最低價],[收盤價])
+                                                                                                                                        VALUES(B.交易日期,B.契約,B.開盤價, B.最高價, B.最低價, B.收盤價) 
+                                                           WHEN NOT MATCHED BY SOURCE THEN DELETE;";
             SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
             SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
             tableParameter.SqlDbType = SqlDbType.Structured;
