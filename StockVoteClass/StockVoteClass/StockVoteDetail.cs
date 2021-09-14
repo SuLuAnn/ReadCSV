@@ -32,19 +32,17 @@ namespace StockVoteClass
         /// </summary>
         public override void GetXML()
         {
-            string allPattern = @"""Font_001"">(?<data>.*?)</tr>";
-            string pattern = $@"left"">(?<id>.*?)(<a.*?""_blank"">[\s]*?(?<nameLink>[^(]*)\(?(?<convenerLink>[\S]*?)\)?[\s]*?</a>|(?<name>[^(\s]*)\(?(?<convener>[\S]*?)\)?)[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td>";
+            string pattern = $@"""Font_001"">[\s]*?<td.*?left"">(?<id>.*?)(<a.*?""_blank"">[\s]*(?<nameLink>[^(\s]+)\(?(?<convenerLink>[^(]*?)\)?[\s]*?</a>|(?<name>[^(\s]*)\(?(?<convener>[\S]*?)\)?)[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td></tr>";
             int page = GetPageNumber();
             for (int i = 1; i <= page; i++)
             {
                 string path = Path.Combine(DateTime.Today.ToString(GlobalConst.DATE_FORMAT), $"{i}.html");
                 string web = ReadFile(path);
                 //存一頁的資料之後要弄成xml
-                MatchCollection stockVoteDatas = Regex.Matches(web, allPattern, RegexOptions.Singleline);
+                MatchCollection stockVoteDatas = Regex.Matches(web, pattern, RegexOptions.Singleline);
                 List<XElement> voteDay = new List<XElement>();
-                foreach (Match data in stockVoteDatas)
+                foreach (Match detail in stockVoteDatas)
                 {
-                    Match detail = Regex.Match(data.Groups[GlobalConst.DATA].Value, pattern, RegexOptions.Singleline);
                     voteDay.Add(new XElement(GlobalConst.XML_NODE_NAME,
                         new XElement(GlobalConst.VOTE_DATE, ChangeYear(detail.Groups[GlobalConst.VOTE_START_DAY].Value.Replace(GlobalConst.SLASH, string.Empty).Trim())),
                         new XElement(GlobalConst.STOCK_CODE, detail.Groups[GlobalConst.ID].Value.Trim()),
