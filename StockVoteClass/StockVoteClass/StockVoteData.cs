@@ -18,22 +18,28 @@ namespace StockVoteClass
     /// </summary>
     [ExportMetadata("TableName", "股東會投票資料表")]
     [Export(typeof(IDataSheet))]
-    public class StockVoteData : StockVote
+    public class StockVoteData : IDataSheet
     {
+        /// <summary>
+        /// 存物件所對應的資料表名稱
+        /// </summary>
+        public string DataTableName { get; set; }
+
         /// <summary>
         /// 建構子
         /// </summary>
-        public StockVoteData() : base("股東會投票資料表_luann")
+        public StockVoteData() 
         {
+            DataTableName = "股東會投票資料表_luann";
         }
 
         /// <summary>
         /// 取得xml中介資料
         /// </summary>
-        public override void GetXML()
+        public void GetXML()
         {
             string pattern = $@"""Font_001"">[\s]*?<td.*?left"">(?<id>.*?)(<a.*?""_blank"">[\s]*(?<nameLink>[^(\s]+)\(?(?<convenerLink>[^(]*?)\)?[\s]*?</a>|(?<name>[^(\s]*)\(?(?<convener>[\S]*?)\)?)[\s]*?</td>.*?left"">(?<meetingDate>.*?)</td>.*?left"">(?<voteStartDay>.*?)~(?<voteEndDay>.*?)</td>.*?""_blank"">(?<agency>.*?)</a>.*?left"">(?<phone>.*?)</td></tr>";
-            int page = GetPageNumber();
+            int page = StockVote.GetPageNumber();
             for (int i = 1; i <= page; i++)
             {
                 string path = Path.Combine(DateTime.Today.ToString(GlobalConst.DATE_FORMAT), $"{i}.html");
@@ -47,9 +53,9 @@ namespace StockVoteClass
                         new XElement(GlobalConst.STOCK_CODE, detail.Groups[GlobalConst.ID].Value.Trim()),
                         GlobalFunction.ChangeNull(GlobalConst.STOCK_NAME, $"{detail.Groups[GlobalConst.NAME_LINK].Value}{detail.Groups[GlobalConst.NAME].Value}"),
                         GlobalFunction.ChangeNull(GlobalConst.CHINESS_CONVENER, $"{detail.Groups[GlobalConst.CONVENER_LINK].Value}{detail.Groups[GlobalConst.CONVENER].Value}"),
-                        new XElement(GlobalConst.CHINESS_MEETING_DATE, ChangeYear(detail.Groups[GlobalConst.MEETING_DATE].Value.Replace(GlobalConst.SLASH, string.Empty).Trim())),
-                        GlobalFunction.ChangeNull(GlobalConst.CHINESS_VOTE_START_DAY, ChangeYear(detail.Groups[GlobalConst.VOTE_START_DAY].Value.Replace(GlobalConst.SLASH, string.Empty))),
-                        GlobalFunction.ChangeNull(GlobalConst.CHINESS_VOTE_END_DAY, ChangeYear(detail.Groups[GlobalConst.VOTE_END_DAY].Value.Replace(GlobalConst.SLASH, string.Empty))),
+                        new XElement(GlobalConst.CHINESS_MEETING_DATE, StockVote.ChangeYear(detail.Groups[GlobalConst.MEETING_DATE].Value.Replace(GlobalConst.SLASH, string.Empty).Trim())),
+                        GlobalFunction.ChangeNull(GlobalConst.CHINESS_VOTE_START_DAY, StockVote.ChangeYear(detail.Groups[GlobalConst.VOTE_START_DAY].Value.Replace(GlobalConst.SLASH, string.Empty))),
+                        GlobalFunction.ChangeNull(GlobalConst.CHINESS_VOTE_END_DAY, StockVote.ChangeYear(detail.Groups[GlobalConst.VOTE_END_DAY].Value.Replace(GlobalConst.SLASH, string.Empty))),
                         GlobalFunction.ChangeNull(GlobalConst.CHINESS_AGENCY, detail.Groups[GlobalConst.AGENCY].Value),
                         GlobalFunction.ChangeNull(GlobalConst.CHINESS_PHONE, detail.Groups[GlobalConst.PHONE].Value)
                     ));
@@ -63,9 +69,9 @@ namespace StockVoteClass
         /// <summary>
         /// 用xml中介資料更新資料庫
         /// </summary>
-        public override void WriteDatabase()
+        public void WriteDatabase()
         {
-            XDocument TotalDocument = GetTotalXml("股東會投票資料表");
+            XDocument TotalDocument = StockVote.GetTotalXml("股東會投票資料表");
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());
@@ -99,6 +105,23 @@ namespace StockVoteClass
                 command.ExecuteNonQuery();
                 SQLConnection.Close();
             }
+        }
+
+        /// <summary>
+        /// 取得資料表名稱，因介面沒有屬性，所以要給方法來讓主程式取得物件的資料表名稱
+        /// </summary>
+        /// <returns>資料表名稱</returns>
+        public string GetDataTableName()
+        {
+            return DataTableName;
+        }
+
+        /// <summary>
+        /// 取得網站原始資料
+        /// </summary>
+        public void GetWebs()
+        {
+            StockVote.GetWebs();
         }
     }
 }

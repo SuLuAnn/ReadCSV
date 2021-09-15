@@ -18,19 +18,25 @@ namespace DayFuturesClass
     /// </summary>
     [ExportMetadata("TableName", "日期貨盤後統計表")]
     [Export(typeof(IDataSheet))]
-    public class DayFuturesStatistics : DayFutures
+    public class DayFuturesStatistics : IDataSheet
     {
+        /// <summary>
+        /// 存物件所對應的資料表名稱
+        /// </summary>
+        public string DataTableName { get; set; }
+
         /// <summary>
         /// 建構子
         /// </summary>
-        public DayFuturesStatistics() : base("日期貨盤後統計表_luann")
+        public DayFuturesStatistics()
         {
+            DataTableName = "日期貨盤後統計表_luann";
         }
 
         /// <summary>
         /// 取得xml中介資料
         /// </summary>
-        public override void GetXML()
+        public void GetXML()
         {
             string OriginalWeb = GlobalFunction.ReadFile($"{DateTime.Now.Year}.csv");
             //只要盤後的資料
@@ -74,9 +80,9 @@ namespace DayFuturesClass
         /// <summary>
         /// 將資料寫入資料庫
         /// </summary>
-        public override void WriteDatabase()
+        public void WriteDatabase()
         {
-            XDocument TotalDocument = GetTotalXml("日期貨盤後統計表");
+            XDocument TotalDocument = DayFutures.GetTotalXml("日期貨盤後統計表");
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());
@@ -106,6 +112,23 @@ namespace DayFuturesClass
                 command.ExecuteNonQuery();
                 SQLConnection.Close();
             }
+        }
+
+        /// <summary>
+        /// 取得資料表名稱，因介面沒有屬性，所以要給方法來讓主程式取得物件的資料表名稱
+        /// </summary>
+        /// <returns>資料表名稱</returns>
+        public string GetDataTableName()
+        {
+            return DataTableName;
+        }
+
+        /// <summary>
+        /// 取得網站原始資料
+        /// </summary>
+        public void GetWebs()
+        {
+            DayFutures.GetWebs();
         }
     }
 }

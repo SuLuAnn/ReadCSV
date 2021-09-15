@@ -16,17 +16,19 @@ namespace Common
     public class GlobalFunction
     {
         /// <summary>
+        /// 爬蟲用的物件
+        /// </summary>
+        private readonly static HttpClient HttpGetter = new HttpClient();
+
+        /// <summary>
         /// 爬蟲的get方法
         /// </summary>
         /// <param name="url">要爬的網址</param>
         /// <returns>get取得的網站html文字內容</returns>
         public static string GetWebPage(string url)
         {
-            using (HttpClient HttpGetter = new HttpClient()) 
-            {
-                //直接取回字串
-                return HttpGetter.GetStringAsync(url).Result;
-            }
+            //直接取回字串
+            return HttpGetter.GetStringAsync(url).Result;
             //return responseMessage.Content.ReadAsStringAsync().Result;
         }
 
@@ -55,13 +57,10 @@ namespace Common
         /// <returns></returns>
         public static string HtmlPost(string requestUrl, MultipartFormDataContent content, string encoded)
         {
-            using (HttpClient HttpGetter = new HttpClient()) 
-            {
-                HttpResponseMessage response = HttpGetter.PostAsync(requestUrl, content).Result;
-                response.EnsureSuccessStatusCode();
-                response.Content.Headers.ContentType.CharSet = encoded;
-                return response.Content.ReadAsStringAsync().Result;
-            }
+            HttpResponseMessage response = HttpGetter.PostAsync(requestUrl, content).Result;
+            response.EnsureSuccessStatusCode();
+            response.Content.Headers.ContentType.CharSet = encoded;
+            return response.Content.ReadAsStringAsync().Result;
         }
 
         /// <summary>

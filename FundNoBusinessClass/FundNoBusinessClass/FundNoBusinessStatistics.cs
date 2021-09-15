@@ -18,19 +18,25 @@ namespace FundNoBusinessClass
     /// </summary>
     [ExportMetadata("TableName", "基金非營業日統計")]
     [Export(typeof(IDataSheet))]
-    public class FundNoBusinessStatistics : FundNoBusiness
+    public class FundNoBusinessStatistics : IDataSheet
     {
+        /// <summary>
+        /// 存物件所對應的資料表名稱
+        /// </summary>
+        public string DataTableName { get; set; }
+
         /// <summary>
         /// 建構子
         /// </summary>
-        public FundNoBusinessStatistics() : base("基金非營業日統計_luann")
+        public FundNoBusinessStatistics()
         {
+            DataTableName = "基金非營業日統計_luann";
         }
 
         /// <summary>
         /// 取得xml中介資料
         /// </summary>
-        public override void GetXML()
+        public void GetXML()
         {
             string pattern = @"<tr class=""r_blue"">[\s]*?<td.*?>(?<date>[\d]{8})</td><td.*?>(?<company>[\w]{5})</td><td.*?>(?<taxID>[\w]*?)</td><td.*?>(?<name>[\S]*?)</td>.*?</tr>";
             string web = GlobalFunction.GetWebPage(GlobalConst.FUND_NO_BUSINESS_DAY);
@@ -75,9 +81,9 @@ namespace FundNoBusinessClass
         /// <summary>
         /// 用xml中介資料更新資料庫
         /// </summary>
-        public override void WriteDatabase()
+        public void WriteDatabase()
         {
-            XDocument TotalDocument = GetTotalXml("基金非營業日統計");
+            XDocument TotalDocument = FundNoBusiness.GetTotalXml("基金非營業日統計");
             DataSet dataSet = new DataSet();
             //讀取xml
             dataSet.ReadXml(TotalDocument.CreateReader());
@@ -101,6 +107,23 @@ namespace FundNoBusinessClass
                 command.ExecuteNonQuery();
                 SQLConnection.Close();
             }
+        }
+
+        /// <summary>
+        /// 取得資料表名稱，因介面沒有屬性，所以要給方法來讓主程式取得物件的資料表名稱
+        /// </summary>
+        /// <returns>資料表名稱</returns>
+        public string GetDataTableName()
+        {
+            return DataTableName;
+        }
+
+        /// <summary>
+        /// 取得網站原始資料
+        /// </summary>
+        public void GetWebs()
+        {
+            FundNoBusiness.GetWebs();
         }
     }
 }
