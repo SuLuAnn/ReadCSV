@@ -158,7 +158,7 @@ namespace DataTraning2
         {
             string result = string.Empty;
             int frequency = 3; //最多執行次數
-            while (frequency > 0)
+            for (int i = 0; i < frequency; i++)
             {
                 Stopwatch.Restart();
                 try
@@ -170,7 +170,6 @@ namespace DataTraning2
                 catch (Exception ex)
                 {
                     result = $"失敗，因為{ex.Message}";
-                    frequency --;
                 }
                 Stopwatch.Stop();
                 Log(step, result, Stopwatch.ElapsedMilliseconds.ToString());

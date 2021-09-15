@@ -32,7 +32,7 @@ namespace DayFuturesClass
         /// </summary>
         public override void GetXML()
         {
-            string OriginalWeb = ReadFile($"{DateTime.Now.Year}.csv");
+            string OriginalWeb = GlobalFunction.ReadFile($"{DateTime.Now.Year}.csv");
             //只要盤後的資料
             var datas = OriginalWeb.Trim().Split('\n').Skip(1).Select(data => data.Split(',')).Where(fields => fields[GlobalConst.TRADING_HOURS] == GlobalConst.CHINESS_TRADING_HOURS).Select(fields => new
             {
@@ -67,8 +67,8 @@ namespace DayFuturesClass
                 )
             )));
             //創建名稱為今年的資料夾，並將組好的xml放入
-            string fileName = Path.Combine(CreatDirectory(DateTime.Now.Year.ToString()), "日期貨盤後統計表.xml");
-            SaveXml(TotalDocument, fileName);
+            string fileName = Path.Combine(GlobalFunction.CreatDirectory(DateTime.Now.Year.ToString()), "日期貨盤後統計表.xml");
+            GlobalFunction.SaveXml(TotalDocument, fileName);
         }
 
         /// <summary>
@@ -96,13 +96,16 @@ namespace DayFuturesClass
                                                            WHEN NOT MATCHED BY TARGET THEN INSERT([交易日期],[契約],[開盤價],[最高價],[最低價],[收盤價])
                                                                                                                                         VALUES(B.交易日期,B.契約,B.開盤價, B.最高價, B.最低價, B.收盤價) 
                                                            WHEN NOT MATCHED BY SOURCE THEN DELETE;";
-            SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
-            SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
-            tableParameter.SqlDbType = SqlDbType.Structured;
-            tableParameter.TypeName = "日期貨盤後統計表TableType";
-            SQLConnection.Open();
-            command.ExecuteNonQuery();
-            SQLConnection.Close();
+            using (SqlConnection SQLConnection = new SqlConnection(@"Data Source=192.168.10.180;Initial Catalog=StockDB;User ID=test;Password=test; Connection Timeout=180"))
+            {
+                SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
+                SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
+                tableParameter.SqlDbType = SqlDbType.Structured;
+                tableParameter.TypeName = "日期貨盤後統計表TableType";
+                SQLConnection.Open();
+                command.ExecuteNonQuery();
+                SQLConnection.Close();
+            }
         }
     }
 }

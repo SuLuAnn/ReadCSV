@@ -33,28 +33,28 @@ namespace FundNoBusinessClass
         public override void GetXML()
         {
             string pattern = @"<tr class=""r_blue"">[\s]*?<td.*?>(?<date>[\d]{8})</td><td.*?>(?<company>[\w]{5})</td><td.*?>(?<taxID>[\w]*?)</td><td.*?>(?<name>.*?)</td>.*?</tr>";
-            string web = GetWebPage(GlobalConst.FUND_NO_BUSINESS_DAY);
+            string web = GlobalFunction.GetWebPage(GlobalConst.FUND_NO_BUSINESS_DAY);
             MatchCollection years = Regex.Matches(web, @"value=""(?<year>\d{4})"">");
             foreach (Match year in years)
             {
                 string yearWord = year.Groups[GlobalConst.YEAR].Value.Trim();
-                string data = ReadFile($"{yearWord}.html");
+                string data = GlobalFunction.ReadFile($"{yearWord}.html");
                 //存一年的資料之後要弄成xml
                 MatchCollection results = Regex.Matches(data, pattern, RegexOptions.Singleline);
                 IEnumerable<XElement> fundXml = results.OfType<Match>()
                                                                                                   .Select(result => new FundDto
-                                                                                                                                                          {
-                                                                                                                                                              非營業日 = result.Groups[GlobalConst.DATE].Value,
-                                                                                                                                                              公司代號 = result.Groups[GlobalConst.COMPANY].Value,
-                                                                                                                                                              基金統編 = result.Groups[GlobalConst.TAX_ID].Value,
-                                                                                                                                                              基金名稱 = result.Groups[GlobalConst.NAME].Value
-                                                                                                                                                          })
+                                                                                                  {
+                                                                                                      非營業日 = result.Groups[GlobalConst.DATE].Value,
+                                                                                                      公司代號 = result.Groups[GlobalConst.COMPANY].Value,
+                                                                                                      基金統編 = result.Groups[GlobalConst.TAX_ID].Value,
+                                                                                                      基金名稱 = result.Groups[GlobalConst.NAME].Value
+                                                                                                  })
                                                                                                   .GroupBy(fund => fund.非營業日)
                                                                                                   .SelectMany(funds =>
                                                                                                   {
                                                                                                       int minLength = 0; //目前基金名稱字數
                                                                                                       byte rank = 0; //目前累積排名
-                                                                                                      funds.OrderByDescending(fund => fund.基金名稱.Length).ToList().ForEach(fund => 
+                                                                                                      funds.OrderByDescending(fund => fund.基金名稱.Length).ToList().ForEach(fund =>
                                                                                                       {
                                                                                                           if (fund.基金名稱.Length != minLength)
                                                                                                           {
@@ -67,14 +67,14 @@ namespace FundNoBusinessClass
                                                                                                       return funds;
                                                                                                   }) //做成xml檔
                                                                                                   .Select(fund => new XElement(GlobalConst.XML_NODE_NAME, new XElement(GlobalConst.NO_BUSINESS, fund.非營業日),
-                                                                                                                                                                                                                        ChangeNull(GlobalConst.COMPANY_CODE, fund.公司代號),
+                                                                                                                                                                                                                        GlobalFunction.ChangeNull(GlobalConst.COMPANY_CODE, fund.公司代號),
                                                                                                                                                                                                                          new XElement(GlobalConst.CHINESS_TAX_ID, fund.基金統編),
-                                                                                                                                                                                                                        ChangeNull(GlobalConst.FUND_NAME, fund.基金名稱),
+                                                                                                                                                                                                                        GlobalFunction.ChangeNull(GlobalConst.FUND_NAME, fund.基金名稱),
                                                                                                                                                                                                                         new XElement(GlobalConst.SORT, fund.排序)
                                                                                                                                                                                                                         ));
                 XDocument document = new XDocument(new XElement(GlobalConst.XML_ROOT, fundXml));
-                string fileName = Path.Combine(CreatDirectory(yearWord), GlobalConst.FUND_NO_BUSINESS_DETAIL);
-                SaveXml(document, fileName);
+                string fileName = Path.Combine(GlobalFunction.CreatDirectory(yearWord), GlobalConst.FUND_NO_BUSINESS_DETAIL);
+                GlobalFunction.SaveXml(document, fileName);
             }
         }
 
@@ -101,13 +101,16 @@ namespace FundNoBusinessClass
                                                            WHEN NOT MATCHED BY TARGET THEN INSERT([非營業日],[公司代號],[基金統編],[基金名稱],[排序])
                                                            VALUES(B.非營業日,B.公司代號, B.基金統編,B.基金名稱,B.排序)
                                                            WHEN NOT MATCHED BY SOURCE THEN DELETE;";
-            SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
-            SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
-            tableParameter.SqlDbType = SqlDbType.Structured;
-            tableParameter.TypeName = "基金非營業日明細TableType";
-            SQLConnection.Open();
-            command.ExecuteNonQuery();
-            SQLConnection.Close();
+            using (SqlConnection SQLConnection = new SqlConnection(@"Data Source=192.168.10.180;Initial Catalog=StockDB;User ID=test;Password=test; Connection Timeout=180"))
+            {
+                SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
+                SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
+                tableParameter.SqlDbType = SqlDbType.Structured;
+                tableParameter.TypeName = "基金非營業日明細TableType";
+                SQLConnection.Open();
+                command.ExecuteNonQuery();
+                SQLConnection.Close();
+            }
         }
     }
 }

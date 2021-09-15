@@ -33,12 +33,12 @@ namespace FundNoBusinessClass
         public override void GetXML()
         {
             string pattern = @"<tr class=""r_blue"">[\s]*?<td.*?>(?<date>[\d]{8})</td><td.*?>(?<company>[\w]{5})</td><td.*?>(?<taxID>[\w]*?)</td><td.*?>(?<name>[\S]*?)</td>.*?</tr>";
-            string web = GetWebPage(GlobalConst.FUND_NO_BUSINESS_DAY);
+            string web = GlobalFunction.GetWebPage(GlobalConst.FUND_NO_BUSINESS_DAY);
             MatchCollection years = Regex.Matches(web, @"value=""(?<year>\d{4})"">");
             foreach (Match year in years)
             {
                 string yearWord = year.Groups[GlobalConst.YEAR].Value.Trim();
-                string data = ReadFile($"{yearWord}.html");
+                string data = GlobalFunction.ReadFile($"{yearWord}.html");
                 //存一年的資料之後要弄成xml
                 MatchCollection results = Regex.Matches(data, pattern, RegexOptions.Singleline);
                 //取得同非營業日同公司代號基金總數
@@ -66,8 +66,8 @@ namespace FundNoBusinessClass
                                                                                                                                new XElement(GlobalConst.FUND_TOTAL, fund.基金總數)
                                                                                                                                ));
                 XDocument document = new XDocument(new XElement(GlobalConst.XML_ROOT, fundXml));
-                string fileName = Path.Combine(CreatDirectory(yearWord), GlobalConst.FUND_NO_BUSINESS_STATISTICS);
-                SaveXml(document, fileName);
+                string fileName = Path.Combine(GlobalFunction.CreatDirectory(yearWord), GlobalConst.FUND_NO_BUSINESS_STATISTICS);
+                GlobalFunction.SaveXml(document, fileName);
                 //所有xml存成一個，之後要匯入資料庫
             }
         }
@@ -91,13 +91,16 @@ namespace FundNoBusinessClass
                                                            WHEN NOT MATCHED BY TARGET THEN INSERT([非營業日],[公司代號],[基金總數])
                                                                                                                                         VALUES(B.非營業日,B.公司代號,B.基金總數)
                                                            WHEN NOT MATCHED BY SOURCE THEN DELETE; ";
-            SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
-            SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
-            tableParameter.SqlDbType = SqlDbType.Structured;
-            tableParameter.TypeName = "基金非營業日統計TableType";
-            SQLConnection.Open();
-            command.ExecuteNonQuery();
-            SQLConnection.Close();
+            using (SqlConnection SQLConnection = new SqlConnection(@"Data Source=192.168.10.180;Initial Catalog=StockDB;User ID=test;Password=test; Connection Timeout=180"))
+            {
+                SqlCommand command = new SqlCommand(sqlCommand, SQLConnection);
+                SqlParameter tableParameter = command.Parameters.AddWithValue("@sourceTable", dataSet.Tables[0]);
+                tableParameter.SqlDbType = SqlDbType.Structured;
+                tableParameter.TypeName = "基金非營業日統計TableType";
+                SQLConnection.Open();
+                command.ExecuteNonQuery();
+                SQLConnection.Close();
+            }
         }
     }
 }

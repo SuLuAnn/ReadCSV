@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBaseTable.cs" />
     <Compile Include="GlobalConst.cs" />
+    <Compile Include="GlobalFunction.cs" />
     <Compile Include="IDataSheet.cs" />
     <Compile Include="IDataSheetNews.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
