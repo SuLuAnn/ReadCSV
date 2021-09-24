@@ -50,7 +50,7 @@ namespace P382_日期貨盤後行情表_luann
             string sqlCmd = $"SELECT * FROM {ps.ProgramName} WHERE 日期='{cycle}'";
             SendMessage(msg, ps, 2, "取得原始資料表內容");
             DataTable dtable = DB.DoQuerySQLWithSchema(sqlCmd, connStr); //回傳的Table包含資料表Schema
-            string futuresSqlCmd = $"SELECT * FROM 期貨契約基本資料表 WHERE 年度='{cycle.Substring(0, 4)}'";
+            string futuresSqlCmd = $"SELECT [年度],[代號],[名稱] FROM 期貨契約基本資料表 WHERE 年度='{cycle.Substring(0, 4)}'";
             DataTable futuresDt = DB.DoQuerySQLWithSchema(futuresSqlCmd, connStr); //回傳的Table包含資料表Schema
             SendMessage(msg, ps, 2, "取得期貨契約基本資料表內容");
             DataTable dt = dtable.Clone();
@@ -69,6 +69,9 @@ namespace P382_日期貨盤後行情表_luann
                 {
                     sampleList = ps.Samples;
                 }
+                Dictionary<string, string> futureNameList = futuresDt.Rows.Cast<DataRow>().ToDictionary(row => row.Field<string>(GlobalConst.CODENAME), row => row.Field<string>(GlobalConst.NAME));
+                DateTime addTime = DateTime.Now;
+                int changeTime = DB.GetMTime();
                 foreach (SourceInfo src in ps.RunSourceInfo)
                 {
                     foreach (string sample in sampleList)
@@ -76,16 +79,14 @@ namespace P382_日期貨盤後行情表_luann
                         ParseResult firstSample = src.GetResult(cycle, sample); //先用第一樣本取出資料
                         foreach (string secondSample in firstSample.RowSamples)
                         {
-                            DataRow row = dt.NewRow();
+                            DataRow row = dtable.NewRow();
                             ParseResult srcData = firstSample.GetSingleResult(secondSample); //使用GetSingleResult()取出資料
-                            DataRow futureRow = futuresDt.AsEnumerable().SingleOrDefault(future => future.Field<string>("年度") == cycle.Substring(0, 4) && future.Field<string>("代號") == srcData.GetValue("契約"));
-                            ProcessData(row, srcData, futureRow);
-                            dt.Rows.Add(row);
+                            ProcessData(row, srcData, futureNameList, addTime, changeTime);
+                            UpdateData(dtable, row);
                         }
                     }
                 }
                 SendMessage(msg, ps, 2, "解析資料處理完成");
-                UpdateData(dtable, dt);
                 result.dtData = dtable;
                 result.Success = true;
                 SendMessage(msg, ps, 2, "成功更新資料庫");
@@ -94,82 +95,35 @@ namespace P382_日期貨盤後行情表_luann
         }
 
         /// <summary>
-        /// 用新的資料對原始資料作新增和更新
-        /// </summary>
-        /// <param name="dtable">原始資料表</param>
-        /// <param name="dt">新處理好的資料表</param>
-        public void UpdateData(DataTable dtable, DataTable dt)
-        {
-            IEnumerable<DataRow> AddRow = dt.AsEnumerable().Except(dtable.AsEnumerable(), new RowKeyComparer());
-            IEnumerable<DataRow> differentRow = dt.AsEnumerable().Except(dtable.AsEnumerable(), new RowComparer()).Except(AddRow, new RowKeyComparer());
-            foreach (DataRow i in AddRow)
-            {
-                dtable.Rows.Add(i.ItemArray);
-            }
-            foreach (DataRow i in differentRow)
-            {
-                DataRow target = dtable.AsEnumerable().SingleOrDefault(row => row.Field<string>("日期") == i.Field<string>("日期") &&
-                                                                                      row.Field<string>("代號") == i.Field<string>("代號") &&
-                                                                                      row.Field<string>("交割月份") == i.Field<string>("交割月份"));
-                target["名稱"] = i.Field<string>("名稱");
-                target["輸出代號"] = i.Field<string>("輸出代號");
-                target["開盤價"] = i.Field<decimal?>("開盤價");
-                target["最高價"] = i.Field<decimal?>("最高價");
-                target["最低價"] = i.Field<decimal?>("最低價");
-                target["收盤價"] = i.Field<decimal?>("收盤價");
-                target["漲跌"] = i.Field<decimal?>("漲跌");
-                target["成交量"] = i.Field<int?>("成交量");
-                target["未沖銷契約數"] = i.Field<int?>("未沖銷契約數");
-            }
-        }
-
-        /// <summary>
         /// 將解析後的資料處理成藥放入資料庫的樣子
         /// </summary>
         /// <param name="row">要放處理好資料的row</param>
         /// <param name="srcData">要處理的資料</param>
-        /// <param name="name">從期貨契約基本資料表取得的名稱</param>
-        public void ProcessData(DataRow row, ParseResult srcData, DataRow futureRow)
+        /// <param name="future">契約與名字對應的Dictionary</param>
+        /// <param name="addTime">CTIME</param>
+        /// <param name="changeTime">MTIME</param>
+        public void ProcessData(DataRow row, ParseResult srcData, Dictionary<string, string> future, DateTime addTime, int changeTime)
         {
-            row["CTIME"] = srcData.CTime;
-            row["MTIME"] = DB.GetMTime();
-            row["日期"] = srcData.GetValue("交易日期"); //使用GetValue()取出指定欄位值
-            row["代號"] = srcData.GetValue("契約");
-            if (futureRow != null)
+            row[GlobalConst.CTIME] = addTime;
+            row[GlobalConst.MTIME] = changeTime;
+            row[GlobalConst.DATE] = srcData.GetValue(GlobalConst.TRANSACTION_DATE); //使用GetValue()取出指定欄位值
+            string contract = srcData.GetValue(GlobalConst.CONTRACT);
+            row[GlobalConst.CODENAME] = contract;
+            if (future.TryGetValue(contract, out string name))
             {
-                row["名稱"] = futureRow.Field<string>("名稱");
+                row[GlobalConst.NAME] = name;
             }
-            row["輸出代號"] = $"{srcData.GetValue("契約")}{srcData.GetValue("到期月份(週別)")}PM";
-            row["交割月份"] = srcData.GetValue("到期月份(週別)");
-            if (decimal.TryParse(srcData.GetValue("開盤價"), out decimal openPrice))
+            row[GlobalConst.OUTPUT_CODE] = $"{srcData.GetValue(GlobalConst.CONTRACT)}{srcData.GetValue(GlobalConst.EXPIRY_MONTH)}{GlobalConst.PM}";
+            row[GlobalConst.DELIVERY_MONTH] = srcData.GetValue(GlobalConst.EXPIRY_MONTH);
+            PutDecimalRow(row, GlobalConst.OPENING_PRICE, srcData.GetValue(GlobalConst.OPENING_PRICE));
+            PutDecimalRow(row, GlobalConst.HIGHEST_PRICE, srcData.GetValue(GlobalConst.HIGHEST_PRICE));
+            PutDecimalRow(row, GlobalConst.LOWEST_PRICE, srcData.GetValue(GlobalConst.LOWEST_PRICE));
+            PutDecimalRow(row, GlobalConst.CLOSING_PRICE, srcData.GetValue(GlobalConst.CLOSING_PRICE));
+            PutDecimalRow(row, GlobalConst.UP_DOWN, srcData.GetValue(GlobalConst.UP_DOWN_PRICE));
+            row[GlobalConst.VOLUME] = srcData.GetValue(GlobalConst.VOLUME);
+            if (int.TryParse(srcData.GetValue(GlobalConst.CONTRACT_NUMBER), out int contractNum))
             {
-                openPrice = decimal.Truncate((decimal)openPrice * 100) / 100;
-                row["開盤價"] = openPrice;
-            }
-            if (decimal.TryParse(srcData.GetValue("最高價"), out decimal highPrice))
-            {
-                highPrice = decimal.Truncate((decimal)highPrice * 100) / 100;
-                row["最高價"] = highPrice;
-            }
-            if (decimal.TryParse(srcData.GetValue("最低價"), out decimal lowPrice))
-            {
-                lowPrice = decimal.Truncate((decimal)lowPrice * 100) / 100;
-                row["最低價"] = lowPrice;
-            }
-            if (decimal.TryParse(srcData.GetValue("收盤價"), out decimal closePrice))
-            {
-                closePrice = decimal.Truncate((decimal)closePrice * 100) / 100;
-                row["收盤價"] = closePrice;
-            }
-            if (decimal.TryParse(srcData.GetValue("漲跌價"), out decimal upDown))
-            {
-                upDown = decimal.Truncate((decimal)upDown * 100) / 100;
-                row["漲跌"] = upDown;
-            }
-            row["成交量"] = srcData.GetValue("成交量");
-            if (decimal.TryParse(srcData.GetValue("未沖銷契約數"), out decimal contractNumber))
-            {
-                row["未沖銷契約數"] = contractNumber;
+                row[GlobalConst.CONTRACT_NUMBER] = contractNum;
             }
         }
 
@@ -185,6 +139,50 @@ namespace P382_日期貨盤後行情表_luann
             msg.Part = part;
             msg.ProcessMessage = processMessage;
             ps.SendMessage(msg);
+        }
+
+        /// <summary>
+        /// 將decimal的欄位由字串轉decimal，並取到小數點後兩位，然後放入列裡
+        /// </summary>
+        /// <param name="row">要放入值的列</param>
+        /// <param name="rowName">該值的欄位名</param>
+        /// <param name="dataValue">要轉換的字串</param>
+        public void PutDecimalRow(DataRow row, string rowName, string dataValue)
+        {
+            if (decimal.TryParse(dataValue, out decimal value))
+            {
+                value = decimal.Truncate((decimal)value * 100) / 100;
+                row[rowName] = value;
+            }
+        }
+
+        /// <summary>
+        /// 判斷要不要更新並更新資料表的方法
+        /// </summary>
+        /// <param name="dtable">被更新的原資料表</param>
+        /// <param name="row">要判斷的資料內容</param>
+        public void UpdateData(DataTable dtable, DataRow row)
+        {
+            DataRow commonRow = dtable.Rows.Find(new object[] { row.Field<string>(GlobalConst.DATE), row.Field<string>(GlobalConst.CODENAME), row.Field<string>(GlobalConst.DELIVERY_MONTH) });
+            if (commonRow != null)
+            {
+                if (!(row.Field<string>(GlobalConst.NAME) == commonRow.Field<string>(GlobalConst.NAME) &&
+                       row.Field<string>(GlobalConst.OUTPUT_CODE) == commonRow.Field<string>(GlobalConst.OUTPUT_CODE) &&
+                       row.Field<decimal?>(GlobalConst.OPENING_PRICE) == commonRow.Field<decimal?>(GlobalConst.OPENING_PRICE) &&
+                       row.Field<decimal?>(GlobalConst.HIGHEST_PRICE) == commonRow.Field<decimal?>(GlobalConst.HIGHEST_PRICE) &&
+                       row.Field<decimal?>(GlobalConst.LOWEST_PRICE) == commonRow.Field<decimal?>(GlobalConst.LOWEST_PRICE) &&
+                       row.Field<decimal?>(GlobalConst.CLOSING_PRICE) == commonRow.Field<decimal?>(GlobalConst.CLOSING_PRICE) &&
+                       row.Field<decimal?>(GlobalConst.UP_DOWN) == commonRow.Field<decimal?>(GlobalConst.UP_DOWN) &&
+                       row.Field<int?>(GlobalConst.VOLUME) == commonRow.Field<int?>(GlobalConst.VOLUME) &&
+                       row.Field<int?>(GlobalConst.CONTRACT_NUMBER) == commonRow.Field<int?>(GlobalConst.CONTRACT_NUMBER)))
+                {
+                    commonRow.ItemArray = row.ItemArray;
+                }
+            }
+            else
+            {
+                dtable.Rows.Add(row);
+            }
         }
     }
 }

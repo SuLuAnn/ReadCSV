@@ -47,10 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalConst.cs" />
     <Compile Include="P382_DataProc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RowComparer.cs" />
-    <Compile Include="RowKeyComparer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
