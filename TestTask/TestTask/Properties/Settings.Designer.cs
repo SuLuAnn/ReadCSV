@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Dapper.Properties
+namespace TestTask.Properties
 {
 
 
