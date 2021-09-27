@@ -176,6 +176,7 @@ namespace P382_日期貨盤後行情表_luann
                        row.Field<int?>(GlobalConst.VOLUME) == commonRow.Field<int?>(GlobalConst.VOLUME) &&
                        row.Field<int?>(GlobalConst.CONTRACT_NUMBER) == commonRow.Field<int?>(GlobalConst.CONTRACT_NUMBER)))
                 {
+                    row[GlobalConst.CTIME] = commonRow[GlobalConst.CTIME];
                     commonRow.ItemArray = row.ItemArray;
                 }
             }
