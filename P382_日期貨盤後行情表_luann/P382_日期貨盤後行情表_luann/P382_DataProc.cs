@@ -93,71 +93,48 @@ namespace P382_日期貨盤後行情表_luann
         }
 
         /// <summary>
-        /// 將解析完的資料處理成進資料庫的樣子，和資料庫比對，不同則覆蓋，不存在則新增
-        /// </summary>
-        /// <param name="dtable">資料庫的資料</param>
-        /// <param name="srcData">解析好的資料</param>
-        /// <param name="future">期貨契約基本資料表經過處理的代號和名稱對應</param>
-        /// <param name="addTime">CTIME</param>
-        /// <param name="changeTime">MTIME</param>
-        public void ProcessData(DataTable dtable, ParseResult srcData, Dictionary<string, string> future, DateTime addTime, int changeTime)
-        {
-            string date = srcData.GetValue(GlobalConst.TRANSACTION_DATE); //使用GetValue()取出指定欄位值
-            string contract = srcData.GetValue(GlobalConst.CONTRACT);
-            string deliveryMonth = srcData.GetValue(GlobalConst.EXPIRY_MONTH);
-            future.TryGetValue(contract, out string name);
-            string outputCode = $"{srcData.GetValue(GlobalConst.CONTRACT)}{srcData.GetValue(GlobalConst.EXPIRY_MONTH)}{GlobalConst.PM}";
-            decimal? openingPrice = PutDecimalRow(srcData.GetValue(GlobalConst.OPENING_PRICE));
-            decimal? highestPrice = PutDecimalRow(srcData.GetValue(GlobalConst.HIGHEST_PRICE));
-            decimal? lowestPrice = PutDecimalRow(srcData.GetValue(GlobalConst.LOWEST_PRICE));
-            decimal? closingPrice = PutDecimalRow(srcData.GetValue(GlobalConst.CLOSING_PRICE));
-            decimal? onDownPrice = PutDecimalRow(srcData.GetValue(GlobalConst.UP_DOWN_PRICE));
-            int.TryParse(srcData.GetValue(GlobalConst.VOLUME), out int volume);
-            int.TryParse(srcData.GetValue(GlobalConst.CONTRACT_NUMBER), out int contractNum);
-            DataRow commonRow = dtable.Rows.Find(new object[] { date, contract, deliveryMonth });
-            bool isChange = false;
-            if (commonRow != null)
-            {
-                UpdateData<string>(name, commonRow, GlobalConst.NAME, ref isChange);
-                UpdateData<string>(outputCode, commonRow, GlobalConst.OUTPUT_CODE, ref isChange);
-                UpdateData<decimal?>(openingPrice, commonRow, GlobalConst.OPENING_PRICE, ref isChange);
-                UpdateData<decimal?>(highestPrice, commonRow, GlobalConst.HIGHEST_PRICE, ref isChange);
-                UpdateData<decimal?>(lowestPrice, commonRow, GlobalConst.LOWEST_PRICE, ref isChange);
-                UpdateData<decimal?>(closingPrice, commonRow, GlobalConst.CLOSING_PRICE, ref isChange);
-                UpdateData<decimal?>(onDownPrice, commonRow, GlobalConst.UP_DOWN, ref isChange);
-                UpdateData<int?>(volume, commonRow, GlobalConst.VOLUME, ref isChange);
-                UpdateData<int?>(contractNum, commonRow, GlobalConst.CONTRACT_NUMBER, ref isChange);
-                if (isChange)
-                {
-                    commonRow.SetField<int>(GlobalConst.MTIME, changeTime);
-                }  
-            }
-            else
-            {
-                DataRow row = dtable.NewRow();
-                row.ItemArray = new object[] {addTime, changeTime, date, contract, name, outputCode, deliveryMonth, openingPrice, highestPrice, lowestPrice, closingPrice, onDownPrice, volume, contractNum};
-                dtable.Rows.Add(row);
-            }
-        }
-
-        /// <summary>
         /// 確認進來的質是否和原本資料庫的值相同，不相同則覆蓋
         /// </summary>
-        /// <typeparam name="T">要比對的資料型別</typeparam>
-        /// <param name="dataValue">要比對的資料</param>
-        /// <param name="row">原始資料</param>
-        /// <param name="rowName">資料欄位名稱</param>
-        /// <param name="isChange">是否有更改</param>
-        public void UpdateData<T>(T dataValue, DataRow row, string rowName, ref bool isChange)
+        /// <param name="columnName">欄位名稱</param>
+        /// <param name="name">從期貨契約基本資料表找出的名稱與代號對應</param>
+        /// <param name="srcData">解析出來的資料</param>
+        /// <param name="row">要比對的row</param>
+        /// /// <param name="isChange">是否有更改</param>
+        public void UpdateData(string columnName, string name, ParseResult srcData, DataRow row, ref bool isChange)
         {
-
-            T rowValue = row.Field<T>(rowName);
-            if ((dataValue == null && rowValue == null) || dataValue.Equals(rowValue))
+            object value = null;
+            switch (columnName)
+            {
+                case GlobalConst.NAME:
+                    value = name;
+                    break;
+                case GlobalConst.OUTPUT_CODE:
+                    value = $"{srcData.GetValue(GlobalConst.CONTRACT)}{srcData.GetValue(GlobalConst.EXPIRY_MONTH)}{GlobalConst.PM}";
+                    break;
+                case GlobalConst.OPENING_PRICE:
+                case GlobalConst.HIGHEST_PRICE:
+                case GlobalConst.LOWEST_PRICE:
+                case GlobalConst.CLOSING_PRICE:
+                    value = PutDecimalRow(srcData.GetValue(columnName));
+                    break;
+                case GlobalConst.UP_DOWN:
+                    value = PutDecimalRow(srcData.GetValue(GlobalConst.UP_DOWN_PRICE));
+                    break;
+                case GlobalConst.VOLUME:
+                case GlobalConst.CONTRACT_NUMBER:
+                    int.TryParse(srcData.GetValue(columnName), out int number);
+                    value = number;
+                    break;
+                default:
+                    return;
+            }
+            object rowValue = row.Field<object>(columnName);
+            if ((value == null && rowValue == null) || (value != null && value.Equals(rowValue)))
             {
                 return;
             }
             isChange = true;
-            row.SetField<T>(rowName, dataValue);
+            row.SetField<object>(columnName, value);
         }
 
         /// <summary>
@@ -190,15 +167,23 @@ namespace P382_日期貨盤後行情表_luann
             ps.SendMessage(msg);
         }
 
-        public void ProcessData1(DataTable dtable, ParseResult srcData, Dictionary<string, string> future, DateTime addTime, int changeTime)
+        /// <summary>
+        /// 將解析完的資料處理成進資料庫的樣子，和資料庫比對，不同則覆蓋，不存在則新增
+        /// </summary>
+        /// <param name="dtable">資料庫的資料</param>
+        /// <param name="srcData">解析好的資料</param>
+        /// <param name="future">期貨契約基本資料表經過處理的代號和名稱對應</param>
+        /// <param name="addTime">CTIME</param>
+        /// <param name="changeTime">MTIME</param>
+        public void ProcessData(DataTable dtable, ParseResult srcData, Dictionary<string, string> future, DateTime addTime, int changeTime)
         {
             Dictionary<string, string> keyList = new Dictionary<string, string>();
-            string[] keyNames =new string[]{ GlobalConst.TRANSACTION_DATE, GlobalConst.CONTRACT,GlobalConst.EXPIRY_MONTH};
-            string[] keys = keyList.Values.ToArray();
+            string[] keyNames = new string[] { GlobalConst.TRANSACTION_DATE, GlobalConst.CONTRACT, GlobalConst.EXPIRY_MONTH };
             foreach (string keyName in keyNames)
             {
                 keyList.Add(keyName, srcData.GetValue(keyName));
             }
+            string[] keys = keyList.Values.ToArray();
             DataRow commonRow = dtable.Rows.Find(keys);
             if (commonRow == null)
             {
@@ -208,57 +193,18 @@ namespace P382_日期貨盤後行情表_luann
                     commonRow[dtable.PrimaryKey[i].ColumnName] = keys[i];
                 }
                 commonRow[GlobalConst.CTIME] = addTime;
+                commonRow[GlobalConst.OUTPUT_CODE] = "";
                 dtable.Rows.Add(commonRow);
             }
-            DataColumn[] copyColumns = new DataColumn[dtable.Columns.Count];
-            dtable.Columns.CopyTo(copyColumns, 0);
-            List<DataColumn> noKeyColumns = copyColumns.ToList<DataColumn>();
-            foreach (DataColumn column in dtable.PrimaryKey)
-            {
-                noKeyColumns.Remove(column);
-            }
-            foreach (DataColumn column in noKeyColumns)
-            {
-                switch (column.ColumnName)
-                {
-                    case GlobalConst.NAME:
-                        future.TryGetValue(keyList[GlobalConst.CONTRACT], out string name);
-                        break;
-                }
-                UpdateData<string>(name, commonRow, GlobalConst.OUTPUT_CODE, ref isChange);
-            }
-            
-            string outputCode = $"{srcData.GetValue(GlobalConst.CONTRACT)}{srcData.GetValue(GlobalConst.EXPIRY_MONTH)}{GlobalConst.PM}";
-            decimal? openingPrice = PutDecimalRow(srcData.GetValue(GlobalConst.OPENING_PRICE));
-            decimal? highestPrice = PutDecimalRow(srcData.GetValue(GlobalConst.HIGHEST_PRICE));
-            decimal? lowestPrice = PutDecimalRow(srcData.GetValue(GlobalConst.LOWEST_PRICE));
-            decimal? closingPrice = PutDecimalRow(srcData.GetValue(GlobalConst.CLOSING_PRICE));
-            decimal? onDownPrice = PutDecimalRow(srcData.GetValue(GlobalConst.UP_DOWN_PRICE));
-            int.TryParse(srcData.GetValue(GlobalConst.VOLUME), out int volume);
-            int.TryParse(srcData.GetValue(GlobalConst.CONTRACT_NUMBER), out int contractNum);
-            
+            future.TryGetValue(keyList[GlobalConst.CONTRACT], out string name);
             bool isChange = false;
-            if (commonRow != null)
+            foreach (DataColumn column in dtable.Columns)
             {
-                //UpdateData<string>(name, commonRow, GlobalConst.NAME, ref isChange);
-                UpdateData<string>(outputCode, commonRow, GlobalConst.OUTPUT_CODE, ref isChange);
-                UpdateData<decimal?>(openingPrice, commonRow, GlobalConst.OPENING_PRICE, ref isChange);
-                UpdateData<decimal?>(highestPrice, commonRow, GlobalConst.HIGHEST_PRICE, ref isChange);
-                UpdateData<decimal?>(lowestPrice, commonRow, GlobalConst.LOWEST_PRICE, ref isChange);
-                UpdateData<decimal?>(closingPrice, commonRow, GlobalConst.CLOSING_PRICE, ref isChange);
-                UpdateData<decimal?>(onDownPrice, commonRow, GlobalConst.UP_DOWN, ref isChange);
-                UpdateData<int?>(volume, commonRow, GlobalConst.VOLUME, ref isChange);
-                UpdateData<int?>(contractNum, commonRow, GlobalConst.CONTRACT_NUMBER, ref isChange);
-                if (isChange)
-                {
-                    commonRow.SetField<int>(GlobalConst.MTIME, changeTime);
-                }
+                UpdateData(column.ColumnName, name, srcData, commonRow, ref isChange);
             }
-            else
+            if (isChange)
             {
-                DataRow row = dtable.NewRow();
-                //row.ItemArray = new object[] { addTime, changeTime, date, contract, name, outputCode, deliveryMonth, openingPrice, highestPrice, lowestPrice, closingPrice, onDownPrice, volume, contractNum };
-                dtable.Rows.Add(row);
+                commonRow.SetField<int>(GlobalConst.MTIME, changeTime);
             }
         }
     }
