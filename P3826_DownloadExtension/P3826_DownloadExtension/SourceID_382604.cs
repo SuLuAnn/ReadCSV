@@ -82,7 +82,7 @@ namespace P3826_DownloadExtension
                 webSourceDatas.Add(newWebSource);
             }
             MailInfo mail = new MailInfo("P382");
-            mail.sendMail($"{originalWebSource.ID}蘇柔安測試寄信用", $"下載完成", "下載關鍵字錯誤");
+            mail.sendMail($"[測試]{originalWebSource.ID}蘇柔安測試寄信用", $"下載完成", "下載關鍵字錯誤");
             return webSourceDatas;
         }
 

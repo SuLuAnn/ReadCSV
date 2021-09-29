@@ -52,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceID_382604.cs" />
     <Compile Include="SourceID_382605.cs" />
+    <Compile Include="SourceID_382606.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

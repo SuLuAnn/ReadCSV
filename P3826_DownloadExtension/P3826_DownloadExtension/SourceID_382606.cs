@@ -34,9 +34,10 @@ namespace P3826_DownloadExtension
         {
             failedList = new List<WebSourceData>();
             List<WebSourceData> faildDatas = downloadedWebSourceDataList.Where(webSource => webSource.WebContent == null
-                                                                                                                                                                                     || webSource.WebContent.Length == 0)
+                                                                                                                                                                                     || webSource.WebContent.Length == 0
+                                                                                                                                                                                     || Encoding.GetEncoding(webSource.EncodingName).GetString(webSource.WebContent).Contains("網頁載入時發生錯誤"))
                                                                                                                                             .ToList();
-            downloadedWebSourceDataList.RemoveAll(webSource => faildDatas.Select(faildWebSource => faildWebSource.URI).Contains(webSource.URI));
+            downloadedWebSourceDataList.RemoveAll(webSource => faildDatas.Select(faildWebSource => faildWebSource.URL).Contains(webSource.URL));
             failedList = faildDatas;
             return failedList.Count() == 0;
         }
@@ -52,24 +53,18 @@ namespace P3826_DownloadExtension
         /// <returns>子任務的WebSourceData</returns>
         public List<WebSourceData> GetList(List<WebSourceData> webSourceDataPrototypeList, string cycleRange, string samples, string extraParameter, List<WebSourceData> parentList = null)
         {
-            List<WebSourceData> webSourceDatas = new List<WebSourceData>();
             //這個下載任務WebSourceData設定，設定只有一個
             WebSourceData originalWebSource = webSourceDataPrototypeList.FirstOrDefault();
             originalWebSource.Cycle = DateTime.Today.ToString("yyyyMMdd");
             //取得母任務結果
             string parentWebContent = Encoding.GetEncoding(originalWebSource.EncodingName).GetString(parentList.FirstOrDefault().WebContent);
-            int.TryParse(Regex.Match(parentWebContent, @"頁次：\d*?/(?<lastPage>\d+?)<").Groups["lastPage"].Value, out int page);
-            for (int sample = 1; sample <= page; sample++)
-            {
-                //用原始的WebSourceData藉由拼接uri及頁數來取得所有子任務的WebSourceData
-                WebSourceData newWebSource = new WebSourceData(originalWebSource);
-                newWebSource.URI = string.Format(newWebSource.URI, sample);
-                newWebSource.Sample = sample.ToString();
-                webSourceDatas.Add(newWebSource);
-            }
+            string pattern = @"ptoken=(?<ptoken>.*?)"".*uniqueToken"" value=""(?<uniqueToken>.*?)"".*rendertime_"" value=""(?<rendertime>.*?)"".*(?<id>j_id.*?)""";
+            Match postDatas = Regex.Match(parentWebContent, pattern, RegexOptions.Singleline);
+            originalWebSource.URL = string.Format(originalWebSource.URL, postDatas.Groups["ptoken"].Value);
+            originalWebSource.PostData = string.Format(originalWebSource.PostData, postDatas.Groups["uniqueToken"].Value, postDatas.Groups["rendertime"].Value, postDatas.Groups["id"].Value);
             MailInfo mail = new MailInfo("P382");
-            mail.sendMail($"{originalWebSource.ID}蘇柔安測試寄信用", $"下載完成", "下載關鍵字錯誤");
-            return webSourceDatas;
+            mail.sendMail($"[測試]{originalWebSource.ID}蘇柔安測試寄信用", $"下載完成", "下載關鍵字錯誤");
+            return webSourceDataPrototypeList;
         }
     }
 }
