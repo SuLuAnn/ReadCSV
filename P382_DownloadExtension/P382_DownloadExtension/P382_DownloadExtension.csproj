@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E9267725-8534-44E3-A145-1EA3E3718B0B}</ProjectGuid>
+    <ProjectGuid>{D9F8F6DD-4597-4565-B038-CE4FC0B3B8A9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>P3826_DownloadExtension</RootNamespace>
-    <AssemblyName>P3826_DownloadExtension</AssemblyName>
+    <RootNamespace>P382_DownloadExtension</RootNamespace>
+    <AssemblyName>P382_DownloadExtension</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -34,7 +34,8 @@
     <Reference Include="CMDSDataLibs">
       <HintPath>\\srv14\WebData\下載器\CMoneyDownloadSystem\CMDSDataLibs.dll</HintPath>
     </Reference>
-    <Reference Include="MailForHandler">
+    <Reference Include="MailForHandler, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>\\srv14\WebData\資料統一處理MDB\Proc\MailForHandler.dll</HintPath>
     </Reference>
     <Reference Include="System" />

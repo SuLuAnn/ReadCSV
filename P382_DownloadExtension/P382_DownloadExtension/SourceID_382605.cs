@@ -15,7 +15,7 @@ namespace P3826_DownloadExtension
     /// 為Sourceid382605做的擴充
     /// </summary>
     [Export(typeof(ITaskExtension))]
-    [ExportMetadata("Name", "P3826_DownloadExtension.SourceID_382605")] //TaskInfo.ExensionName
+    [ExportMetadata("Name", "P382_DownloadExtension.SourceID_382605")] //TaskInfo.ExensionName
     [ExportMetadata("ContainsDatabaseOperation", false)]//註明是否包含讀取資料庫內容的操作
     [ExportMetadata("ContainsInternetOperation", false)]//註明是否有額外存取網路資源的操作
     public class SourceID_382605 : ITaskExtension

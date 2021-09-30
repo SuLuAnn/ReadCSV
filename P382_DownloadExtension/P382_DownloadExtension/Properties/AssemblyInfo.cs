@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 組件的一般資訊是由下列的屬性集控制。
 // 變更這些屬性的值即可修改組件的相關
 // 資訊。
-[assembly: AssemblyTitle("P3826_DownloadExtension")]
+[assembly: AssemblyTitle("P382_DownloadExtension")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("P3826_DownloadExtension")]
+[assembly: AssemblyProduct("P382_DownloadExtension")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 下列 GUID 為專案公開 (Expose) 至 COM 時所要使用的 typelib ID
-[assembly: Guid("e9267725-8534-44e3-a145-1ea3e3718b0b")]
+[assembly: Guid("d9f8f6dd-4597-4565-b038-ce4fc0b3b8a9")]
 
 // 組件的版本資訊由下列四個值所組成: 
 //
