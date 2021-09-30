@@ -3,14 +3,12 @@ using DownloadSystem.DataLibs.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using DownloadSystem.DataLibs;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Web;
 using MailForHandler;
+using DownloadSystem.DataLibs.ExtensionLibs;
 
 namespace P3826_DownloadExtension
 {
@@ -20,7 +18,7 @@ namespace P3826_DownloadExtension
     [Export(typeof(ITaskExtension))]
     [ExportMetadata("Name", "P3826_DownloadExtension.SourceID_382604")] //TaskInfo.ExensionName
     [ExportMetadata("ContainsDatabaseOperation", false)]//註明是否包含讀取資料庫內容的操作
-    [ExportMetadata("ContainsInternetOperation", true)]//註明是否有額外存取網路資源的操作
+    [ExportMetadata("ContainsInternetOperation", false)]//註明是否有額外存取網路資源的操作
     public class SourceID_382604 : ITaskExtension
     {
         /// <summary>
@@ -33,14 +31,23 @@ namespace P3826_DownloadExtension
         public bool CheckContent(ref TaskInfo taskInfo, ref List<WebSourceData> downloadedWebSourceDataList, out List<WebSourceData> failedList)
         {
             failedList = new List<WebSourceData>();
+            string pattern = @"非營業日.*?公司代號.*?基金統編.*?基金名稱";
             //如果不是BIG5而是UTF-8的話系統維護中會是亂碼，但如果是BIG5正式資料會是亂碼，所以這邊才把確認是否出錯的編碼寫死
             List<WebSourceData> faildDatas = downloadedWebSourceDataList.Where(webSource => webSource.WebContent == null
-                                                                                                                                                                                     || webSource.WebContent.Length == 0
-                                                                                                                                                                                     || Encoding.GetEncoding("BIG5").GetString(webSource.WebContent).Contains("系統維護中"))
+                                                                                                                                                                                     || !Regex.IsMatch(webSource.GetWebContentString(), pattern))
                                                                                                                                             .ToList();
             downloadedWebSourceDataList.RemoveAll(webSource => faildDatas.Select(faildWebSource => faildWebSource.Cycle).Contains(webSource.Cycle));
             failedList = faildDatas;
-            return failedList.Count() == 0;
+            bool isSuccess = !failedList.Any();
+            if (isSuccess)
+            {
+                SendMail(taskInfo.ID, "下載成功");
+            }
+            else
+            {
+                SendMail(taskInfo.ID, "下載失敗");
+            }
+            return isSuccess;
         }
 
         /// <summary>
@@ -56,23 +63,23 @@ namespace P3826_DownloadExtension
         {
             List<WebSourceData> webSourceDatas = new List<WebSourceData>();
             //預設為今年
-            List<int> cycleList = new List<int> { DateTime.Now.Year };
+            List<int> cycleList = GetCycles(cycleRange, out string errorMessage);
             //如果有傳入週期，則將傳入的週期取出
-            if (!string.IsNullOrEmpty(cycleRange))
-            {
-                cycleList = GetCycles(cycleRange);
-            }
             //這個下載任務WebSourceData設定，設定只有一個
-            WebSourceData originalWebSource = webSourceDataPrototypeList.FirstOrDefault();
+            WebSourceData originalWebSource = webSourceDataPrototypeList.First();
             //取得母任務結果
-            string parentWebContent = Encoding.GetEncoding(originalWebSource.EncodingName).GetString(parentList.FirstOrDefault().WebContent);
+            string parentWebContent = parentList.First().GetWebContentString();
             //從母任務取得post所需的data
             string pattern = @"VIEWSTATE"" value=""(?<viewState>.*?)"".*?VIEWSTATEGENERATOR"" value=""(?<viewStateGenerator>.*?)"".*?EVENTVALIDATION"" value=""(?<eventValidation>.*?)""";
             Match postData = Regex.Match(parentWebContent, pattern, RegexOptions.Singleline);
+            if (!postData.Success)
+            {
+                errorMessage = $"{errorMessage}{Environment.NewLine}使用正則表示式解析母任務的post data失敗";
+            }
             //取得的post data要轉成url字串編碼
-            string viewState = HttpUtility.UrlEncode(postData.Groups["viewState"].Value.Trim());
-            string viewStateGenerator = postData.Groups["viewStateGenerator"].Value.Trim();
-            string eventValidation = HttpUtility.UrlEncode(postData.Groups["eventValidation"].Value.Trim());
+            string viewState = HttpUtility.UrlEncode(postData.Groups["viewState"].Value);
+            string viewStateGenerator = postData.Groups["viewStateGenerator"].Value;
+            string eventValidation = HttpUtility.UrlEncode(postData.Groups["eventValidation"].Value);
             foreach (int cycle in cycleList)
             {
                 //用原始的WebSourceData藉由拼接post data及年度來取得所有子任務的WebSourceData
@@ -81,8 +88,10 @@ namespace P3826_DownloadExtension
                 newWebSource.Cycle = cycle.ToString();
                 webSourceDatas.Add(newWebSource);
             }
-            MailInfo mail = new MailInfo("P382");
-            mail.sendMail($"[測試]{originalWebSource.ID}蘇柔安測試寄信用", $"下載完成", "下載關鍵字錯誤");
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                SendMail(originalWebSource.ID, errorMessage);
+            }
             return webSourceDatas;
         }
 
@@ -90,19 +99,20 @@ namespace P3826_DownloadExtension
         /// 取的週期
         /// </summary>
         /// <param name="cycleRange">週期期間的字串</param>
+        /// /// <param name="errorMessage">錯誤訊息</param>
         /// <returns>所有週期結果</returns>
-        public List<int> GetCycles(string cycleRange)
+        public List<int> GetCycles(string cycleRange, out string errorMessage)
         {
-            //起始日在第0個
-            int startDay = 0;
-            //結束日如果存在在第1個
-            int endDay = 1;
+            errorMessage = string.Empty;
             List<int> cycleList = new List<int>();
-            string[] cycleDays = cycleRange.Split('-');
-            if (int.TryParse(cycleDays[startDay], out int startCycleDay))
+            if (string.IsNullOrEmpty(cycleRange))
             {
-                //大於1代表輸入週期是一個區間，而非只有一個
-                if (cycleDays.Count() > 1 && int.TryParse(cycleDays[endDay], out int endCycleDay))
+                cycleList.Add(DateTime.Now.Year);
+            }
+            else
+            {
+                string[] cycleDays = cycleRange.Split('-');
+                if (int.TryParse(cycleDays.First(), out int startCycleDay) && int.TryParse(cycleDays.Last(), out int endCycleDay))
                 {
                     for (int i = startCycleDay; i <= endCycleDay; i++)
                     {
@@ -111,10 +121,21 @@ namespace P3826_DownloadExtension
                 }
                 else
                 {
-                    cycleList.Add(startCycleDay);
+                    errorMessage = "週期輸入錯誤";
                 }
             }
             return cycleList;
+        }
+
+        /// <summary>
+        /// 寄信的方法
+        /// </summary>
+        /// <param name="taskID">這則任務的taskID，用在信件主旨</param>
+        /// <param name="message">信件內容</param>
+        public void SendMail(int taskID, string message)
+        {
+            MailInfo mail = new MailInfo("P382");
+            mail.sendMail($"[測試]{taskID}蘇柔安測試寄信用", message, "下載關鍵字錯誤");
         }
     }
 }
