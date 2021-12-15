@@ -128,7 +128,7 @@ namespace M382_重要國際指數與個股_luann
         private DataTable GetTargetTable(ProgramSetting programSetting, string cycle)
         {
             string connectString = DB.GetSysDataSetting(UPPER_PROGRAM, programSetting.SysDataDB, CONNECT_STRING);
-            string sqlCommand = $"SELECT * FROM [StockDB].[dbo].[重要國際指數與個股_luann] WHERE [日期] = '{cycle}'";
+            string sqlCommand = $"SELECT * FROM [StockDB].[dbo].[重要國際指數與個股_luann] WHERE [日期] = N'{cycle}'";
             return DB.DoQuerySQLWithSchema(sqlCommand, connectString);
         }
 

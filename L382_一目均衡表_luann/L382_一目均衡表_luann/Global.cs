@@ -134,44 +134,12 @@ namespace L382_一目均衡表_luann
         {
             if (!year.Equals(MappingYear))
             {
-                string sqlCommand = $"SELECT [股票代號],[股票名稱] FROM [StockDb].[dbo].[上市櫃基本資料表] WHERE [年度] = '{year}' UNION (SELECT [代號],[名稱] FROM [StockDb].[dbo].[ETF基本資料表] WHERE [年度] = '{year}')";
+                string sqlCommand = $"SELECT [股票代號],[股票名稱] FROM [StockDb].[dbo].[上市櫃基本資料表] WHERE [年度] = '{year}' UNION ALL (SELECT [代號],[名稱] FROM [StockDb].[dbo].[ETF基本資料表] WHERE [年度] = '{year}')";
                 NameMapping = DB.DoQuerySQLWithSchema(sqlCommand, connectString).AsEnumerable().ToDictionary(row => row.Field<string>(STOCK_ID), row => row.Field<string>(STOCK_NAME));
                 MappingYear = year;
             }
 
             return NameMapping;
-        }
-
-        /// <summary>
-        /// 取得[日收盤還原表]的所有日期
-        /// </summary>
-        /// <param name="connectString">連線字串</param>
-        private static void GetAllDate(string connectString)
-        {
-            string sqlCommand = $"SELECT DISTINCT([日期]) FROM [StockDb].[dbo].[日收盤還原表] ORDER BY [日期] DESC";
-            AllDate = DB.DoQuerySQLWithSchema(sqlCommand, connectString).AsEnumerable().Select(row => int.Parse(row.Field<string>(DATE))).ToList();
-        }
-
-        /// <summary>
-        /// 取得目標週期的近幾天的範圍
-        /// </summary>
-        /// <param name="connectString">連線字串</param>
-        /// <param name="day">日期</param>
-        /// <param name="dayNumber">要近多少天</param>
-        /// <returns>串起來的日期字串</returns>
-        public static string GetNearlyDate(string connectString, int day, int dayNumber)
-        {
-            string result = null;
-            if (AllDate == null)
-            {
-                GetAllDate(connectString);
-            }
-            string[] days = AllDate.Where(number => number <= day).Take(dayNumber).Select(number => $"'{number}'").ToArray();
-            if (days.Length == dayNumber)
-            {
-                result = string.Join(",", days);
-            }
-            return result;
         }
     }
 }

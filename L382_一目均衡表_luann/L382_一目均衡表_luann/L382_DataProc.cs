@@ -58,7 +58,7 @@ namespace L382_一目均衡表_luann
                 {
                     int sourceId = sourceInfo.SourceID;
                     DataTable sourceTable = GetDayCloseReduction(connectString, cycle);
-                    if (sourceTable == null)
+                    if (sourceTable.Rows.Count == 0)
                     {
                         message = $"{message}{Environment.NewLine}週期:{cycle} 沒有近9天或近26天";
                         continue;
@@ -85,30 +85,17 @@ namespace L382_一目均衡表_luann
         private DataTable GetDayCloseReduction(string connectString, string cycle)
         {
             int day = int.Parse(cycle);
-            string nearly9Day = GetNearlyDate(connectString, day, DAYS_9);
-            string nearly26Day = GetNearlyDate(connectString, day, DAYS_26);
-            string sqlCommand = null;
-            if (nearly26Day != null)
-            {
-                sqlCommand = $@"; WITH CTE AS (SELECT [股票代號],(MAX([最高價])+MIN([最低價]))/2 AS [轉換線] FROM [StockDb].[dbo].[日收盤還原表] 
-                                                              WHERE [日期] IN ({nearly9Day}) GROUP BY [股票代號])
-                                                            , CTE2 AS(SELECT[股票代號], (MAX([最高價]) + MIN([最低價]))/ 2 AS[樞紐線] FROM[StockDb].[dbo].[日收盤還原表] 
-                                                            WHERE[日期] IN({nearly26Day}) GROUP BY[股票代號])
-                                                            ,CTE3 AS(SELECT A.[股票代號], [轉換線], [樞紐線] FROM CTE AS A INNER JOIN CTE2 AS B ON A.股票代號 = B.股票代號)
-                                                            SELECT[日期],A.[股票代號],[股票名稱],[轉換線],[樞紐線],[收盤價] AS [日收盤還原表收盤價] FROM[StockDb].[dbo].[日收盤還原表] 
-                                                            AS A INNER JOIN CTE3 AS B ON A.股票代號 = B.股票代號 WHERE[日期] = '{cycle}'";
-            }
-            else if (nearly9Day != null)
-            {
-                sqlCommand = $@"; WITH CTE AS (SELECT [股票代號],(MAX([最高價])+MIN([最低價]))/2 AS [轉換線] FROM [StockDb].[dbo].[日收盤還原表] 
-                                                                    WHERE [日期] IN ({nearly9Day}) GROUP BY [股票代號])
-                                                                    SELECT[日期],A.[股票代號],[股票名稱],[轉換線],[收盤價] AS [日收盤還原表收盤價] FROM[StockDb].[dbo].[日收盤還原表] 
-                                                                    AS A INNER JOIN CTE AS B ON A.股票代號 = B.股票代號 WHERE[日期] = '{cycle}'";
-            }
-            else
-            {
-                return null;
-            }
+            int oneYear = 10000;
+            string sqlCommand =  $@";WITH CTE AS (SELECT [股票代號],[最高價],[最低價],ROW_NUMBER() OVER (PARTITION BY [股票代號] ORDER BY [日期] DESC) AS [序號] 
+                                                              FROM [dbo].[日收盤還原表] WHERE [日期] BETWEEN N'{day-oneYear}' AND N'{day}'  AND [最高價] IS NOT NULL AND [最低價] IS NOT NULL),
+                                                              CTE2 AS (SELECT [股票代號],(MAX([最高價])+MIN([最低價]))/2 AS [轉換線] FROM CTE WHERE [序號] <= 9 GROUP BY [股票代號] 
+                                                              HAVING COUNT(*) = 9),
+                                                              CTE3 AS (SELECT [股票代號],(MAX([最高價])+MIN([最低價]))/2 AS [樞紐線] FROM CTE WHERE [序號] <= 26 GROUP BY [股票代號] 
+                                                              HAVING COUNT(*) = 26),
+                                                              CTE4 AS(SELECT A.[股票代號],[轉換線],[樞紐線] FROM CTE2 AS A LEFT JOIN CTE3 AS B ON A.[股票代號] = B.[股票代號])
+                                                              SELECT [日期],A.[股票代號],[股票名稱],[轉換線],[樞紐線],[收盤價] AS [日收盤還原表收盤價] FROM[StockDb].[dbo].[日收盤還原表] 
+                                                              AS A LEFT JOIN CTE4 AS B ON A.股票代號 = B.股票代號 WHERE[日期] = N'{day}'";
+
             return DB.DoQuerySQLWithSchema(sqlCommand, connectString);
         }
 
@@ -120,7 +107,7 @@ namespace L382_一目均衡表_luann
         /// <returns>一目均衡表_luann的資料</returns>
         private DataTable GetTargetTable(string connectString, string cycle)
         {
-            string sqlCommand = $"SELECT * FROM [StockDB].[dbo].[一目均衡表_luann] WHERE [日期] = '{cycle}'";
+            string sqlCommand = $"SELECT * FROM [StockDB].[dbo].[一目均衡表_luann] WHERE [日期] = N'{cycle}'";
             return DB.DoQuerySQLWithSchema(sqlCommand, connectString);
         }
 
@@ -137,7 +124,6 @@ namespace L382_一目均衡表_luann
             DateTime ctime = DateTime.Now;
             int mtime = DB.GetMTime();
             string[] columnNames = new string[] { DATE, STOCK_ID, CLOSE_PRICE, CHANGE_LINE, HUB_LINE};
-            columnNames = columnNames.Where(column => sourceTable.Columns.Contains(column)).ToArray();
             foreach (DataRow sourceRow in sourceTable.Rows)
             {
                 string stockId = sourceRow.Field<string>(STOCK_ID);
