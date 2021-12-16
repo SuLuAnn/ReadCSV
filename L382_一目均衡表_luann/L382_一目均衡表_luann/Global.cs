@@ -59,14 +59,34 @@ namespace L382_一目均衡表_luann
         public const string HUB_LINE = "樞紐線";
 
         /// <summary>
-        /// [重要國際指數與個股_luann]的欄位名稱
+        /// [一目均衡表_luann]的欄位名稱
         /// </summary>
         public const string UPPER_PROGRAM = "上端程式";
 
         /// <summary>
-        /// [重要國際指數與個股_luann]的欄位名稱
+        /// [一目均衡表_luann]的欄位名稱
         /// </summary>
         public const string CONNECT_STRING = "連線字串";
+
+        /// <summary>
+        ///  [日收盤還原表]的暫存欄位，之後用來算[一目均衡表_luann]的轉換線
+        /// </summary>
+        public const string NEARLY_9_MAX_PRICE = "近9日最高價";
+
+        /// <summary>
+        ///  [日收盤還原表]的暫存欄位，之後用來算[一目均衡表_luann]的轉換線
+        /// </summary>
+        public const string NEARLY_9_MIN_PRICE = "近9日最低價";
+
+        /// <summary>
+        ///  [日收盤還原表]的暫存欄位，之後用來算[一目均衡表_luann]的樞紐線
+        /// </summary>
+        public const string NEARLY_26_MAX_PRICE = "近26日最高價";
+
+        /// <summary>
+        ///  [日收盤還原表]的暫存欄位，之後用來算[一目均衡表_luann]的樞紐線
+        /// </summary>
+        public const string NEARLY_26_MIN_PRICE = "近26日最低價";
 
         /// <summary>
         /// 股票名稱對應表
@@ -77,11 +97,6 @@ namespace L382_一目均衡表_luann
         /// 股票名稱對應表的當前年份
         /// </summary>
         private static string MappingYear;
-
-        /// <summary>
-        /// 所有日期資料
-        /// </summary>
-        private static List<int> AllDate;
 
         /// <summary>
         /// 轉換線 = (近9日[最高價]+近9日[最低價])/2
