@@ -30,15 +30,12 @@ namespace P382_DownloadExtension
         /// <returns>是否下載結果都正常</returns>
         public bool CheckContent(ref TaskInfo taskInfo, ref List<WebSourceData> downloadedWebSourceDataList, out List<WebSourceData> failedList)
         {
-            failedList = new List<WebSourceData>();
             string worstWord = "Symbol not exists";
-            List<WebSourceData> notExistIds = downloadedWebSourceDataList.Where(webSource => webSource.GetWebContentString().Contains(worstWord))
-                                                                                                                                            .ToList();
             List<WebSourceData> faildDatas = downloadedWebSourceDataList.Where(webSource => webSource.WebContent == null
-                                                                                                                                                                                     || webSource.WebContent.Count() == 0)
+                                                                                                                                                                                     || webSource.WebContent.Count() == 0
+                                                                                                                                                                                     || webSource.GetWebContentString().Contains(worstWord))
                                                                                                                                             .ToList();
-            notExistIds.AddRange(faildDatas);
-            List<string> failUrls = notExistIds.Select(faildWebSource => faildWebSource.Sample).ToList();
+            List<string> failUrls = faildDatas.Select(faildWebSource => faildWebSource.Sample).ToList();
             downloadedWebSourceDataList.RemoveAll(webSource => failUrls.Contains(webSource.Sample));
             failedList = faildDatas;
             return !failedList.Any();
@@ -78,13 +75,11 @@ namespace P382_DownloadExtension
         /// <returns>股票代號對應表</returns>
         private Dictionary<string, string> GetStockIDs()
         {
-            string id = "代號";
-            string exchangeId = "交易所樣本代號";
-            string command = $@"SELECT [{id}],[{exchangeId}] FROM [StockDB_US].[dbo].[代號總表] WHERE [{exchangeId}] LIKE 'A%^%'";
+            string command = $@"SELECT [代號],[交易所樣本代號] FROM [代號總表] WHERE [交易所樣本代號] LIKE 'A%^%'";
             return DB.DoQuerySQL(command, StocksUS.Util.CONN_STR_STOCKSDB_US)
                                                                                        .AsEnumerable()
-                                                                                       .ToDictionary(row => row.Field<string>(id), 
-                                                                                                                 row => row.Field<string>(exchangeId));
+                                                                                       .ToDictionary(row => row.Field<string>("代號"), 
+                                                                                                                 row => row.Field<string>("交易所樣本代號"));
         }
     }
 }

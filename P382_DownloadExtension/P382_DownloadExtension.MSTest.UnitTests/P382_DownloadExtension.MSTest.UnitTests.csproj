@@ -57,7 +57,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SourceID_382608_MOPS詳細資料Tests.cs" />
+    <Compile Include="SourceID_382608_MOPS詳細資料Tests.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="SourceID_382608_股票代號與期別Tests.cs" />
     <Compile Include="SourceID_382610Tests.cs" />
   </ItemGroup>

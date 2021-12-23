@@ -73,9 +73,8 @@ namespace P382_DownloadExtension
         /// <returns>不重複的有價證券代號</returns>
         public List<string> GetSecuritiesCode(string webContent)
         {
-            string securitiesCode = "ID";
-            string pattern = $@"bgcolor=#FAFAD2>(?<{securitiesCode}>\d+).</td>";
-            return Regex.Matches(webContent, pattern).Cast<Match>().Select(match => match.Groups[securitiesCode].Value).Distinct().ToList();
+            string pattern = $@"bgcolor=#FAFAD2>(?<ID>\d+)[A-Z]*?</td>";
+            return Regex.Matches(webContent, pattern).Cast<Match>().Select(match => match.Groups["ID"].Value).Distinct().ToList();
         }
     }
 }

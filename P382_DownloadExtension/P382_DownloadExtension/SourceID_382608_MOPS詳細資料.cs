@@ -78,14 +78,12 @@ namespace P382_DownloadExtension
         /// <returns>股票代號與最大期別</returns>
         public Dictionary<string, string> GetStockIDs(string webContent)
         {
-            string period = "Period";
-            string stockID = "StockID";
-            string pattern = $@"seq_no.value='(?<{period}>\d+)'.*co_id.value='(?<{stockID}>.+?)'";
+            string pattern = $@"seq_no.value='(?<Period>\d+)'.*co_id.value='(?<StockID>.+?)'";
             return Regex.Matches(webContent, pattern).Cast<Match>()
                                                                                               .Select(match => new
                                                                                                                                         {
-                                                                                                                                            period = int.Parse(match.Groups[period].Value),
-                                                                                                                                            stockID = match.Groups[stockID].Value
+                                                                                                                                            period = int.Parse(match.Groups["Period"].Value),
+                                                                                                                                            stockID = match.Groups["StockID"].Value
                                                                                                                                         })
                                                                                                                                         .GroupBy(stock => stock.stockID)
                                                                                                                                         .ToDictionary(stock => stock.Key,

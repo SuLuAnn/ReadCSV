@@ -80,9 +80,8 @@ namespace P382_DownloadExtension
         /// <returns>資料日期</returns>
         public string GetCycle(string webContent)
         {
-            string unixTime = "UnixTime";
-            string pattern = $@"""TranDate"":""\\\/Date\((?<{unixTime}>\d+?)\)";
-            unixTime = Regex.Match(webContent, pattern).Groups[unixTime].Value;
+            string pattern = $@"""TranDate"":""\\\/Date\((?<UnixTime>\d+?)\)";
+            string unixTime = Regex.Match(webContent, pattern).Groups["UnixTime"].Value;
             string result = string.Empty;
             if (!string.IsNullOrEmpty(unixTime))
             {
