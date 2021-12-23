@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.1525
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P382_DownloadExtension", "P382_DownloadExtension\P382_DownloadExtension.csproj", "{D9F8F6DD-4597-4565-B038-CE4FC0B3B8A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P382_DownloadExtension.MSTest.UnitTests", "P382_DownloadExtension.MSTest.UnitTests\P382_DownloadExtension.MSTest.UnitTests.csproj", "{EEDD4D8C-DD55-4688-A79C-95A06FF19E33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D9F8F6DD-4597-4565-B038-CE4FC0B3B8A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9F8F6DD-4597-4565-B038-CE4FC0B3B8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9F8F6DD-4597-4565-B038-CE4FC0B3B8A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEDD4D8C-DD55-4688-A79C-95A06FF19E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEDD4D8C-DD55-4688-A79C-95A06FF19E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEDD4D8C-DD55-4688-A79C-95A06FF19E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEDD4D8C-DD55-4688-A79C-95A06FF19E33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
