@@ -44,8 +44,8 @@ namespace P382_ParseExtension
 
             foreach (IGrouping<object, DataRow> stock in stocks)
             {
-                DataRow earlyStock = stock.SingleOrDefault(data => data.Field<string>(RECOVER_DATE) == EMPTY_SYMBLE);
-                DataRow latelyStock = stock.SingleOrDefault(data => data.Field<string>(STOP_DATE) == EMPTY_SYMBLE);
+                DataRow earlyStock = stock.Single(data => data.Field<string>(RECOVER_DATE) == EMPTY_SYMBLE);
+                DataRow latelyStock = stock.Single(data => data.Field<string>(STOP_DATE) == EMPTY_SYMBLE);
                 earlyStock[RECOVER_DATE] = latelyStock[RECOVER_DATE];
                 earlyStock[RECOVER_TIME] = latelyStock[RECOVER_TIME];
                 securitiesTable.Rows.Remove(latelyStock);
