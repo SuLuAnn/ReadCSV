@@ -21,6 +21,11 @@ namespace Readcsv2020LuAnn
         private Dictionary<string, List<Stock>> Stocks;
 
         /// <summary>
+        /// 存放選單的對應
+        /// </summary>
+        private Dictionary<string, string> Menus;
+
+        /// <summary>
         /// 計時器
         /// </summary>
         private static Stopwatch Stopwatch;
@@ -31,6 +36,11 @@ namespace Readcsv2020LuAnn
         public const string ALL = "All";
 
         /// <summary>
+        /// 時間顯示格式
+        /// </summary>
+        private const string TIME_FORMAT = @"hh\:mm\:ss\:fff";
+
+        /// <summary>
         /// ReadCSV建構子，初始化Stocks和Stopwatch
         /// </summary>
         public ReadCSV()
@@ -38,6 +48,7 @@ namespace Readcsv2020LuAnn
             InitializeComponent();
             Stocks = new Dictionary<string, List<Stock>>();
             Stopwatch = new Stopwatch();
+            Menus = new Dictionary<string, string>();
         }
 
         /// <summary>
@@ -84,8 +95,8 @@ namespace Readcsv2020LuAnn
                 }
             }
             Stocks.Add(ALL, new List<Stock>());
-            var list = stocks.GroupBy(stock => stock.StockID).ToDictionary(stock => stock.Key, stock => stock.ToList());
-            foreach (var stock in list)
+            Dictionary<string, List<Stock>> list = stocks.GroupBy(stock => stock.StockID).ToDictionary(stock => stock.Key, stock => stock.ToList());
+            foreach (KeyValuePair<string, List<Stock>> stock in list)
             {
                 Stocks[ALL].AddRange(stock.Value);
                 Stocks.Add(stock.Key, stock.Value);
@@ -110,14 +121,15 @@ namespace Readcsv2020LuAnn
         /// </summary>
         public void SetDropMenu()
         {
-            DropMenu.BeginUpdate();
             Stopwatch.Restart();
-            var menu = Stocks.Skip(1).Select(stocks => $"{stocks.Key} - {stocks.Value.First().StockName}").ToArray();
-            DropMenu.Items.Add(ALL);
-            DropMenu.Items.AddRange(menu);
+            Menus.Add(ALL, ALL);
+            foreach (KeyValuePair<string, List<Stock>> stock in Stocks.Skip(1))
+            {
+                Menus.Add($"{stock.Key} - {stock.Value.First().StockName}", stock.Key);
+            }
+            DropMenu.Items.AddRange(Menus.Keys.ToArray());
             DropMenu.Text = ALL;
-            DropMenu.EndUpdate();
-            TextDisplay.Text += $"{Environment.NewLine}ComboBox時間:{EndStopwatch()}";
+            TextDisplay.Text = $"{ TextDisplay.Text}{Environment.NewLine}ComboBox時間:{EndStopwatch()}";
         }
 
         /// <summary>
@@ -144,7 +156,7 @@ namespace Readcsv2020LuAnn
         public void DisplayTime(object sender, RunWorkerCompletedEventArgs runWorker)
         {
             TotalList.DataSource = new BindingList<TotalStockDto>((IList<TotalStockDto>)runWorker.Result);
-            TextDisplay.Text += $"{Environment.NewLine}查詢時間:{EndStopwatch()}";
+            TextDisplay.Text = $"{TextDisplay.Text}{Environment.NewLine}查詢時間:{EndStopwatch()}";
         }
 
         /// <summary>
@@ -153,29 +165,27 @@ namespace Readcsv2020LuAnn
         /// <returns>股票集合</returns>
         private List<Stock> ReadDropMenu()
         {
-            string option = DropMenu.Text;
-            string[] datas;
-            if (option.Contains('-'))
+            List<string> datas;
+            if (DropMenu.SelectedItem == null)
             {
-                datas = new string[] { option.Split('-').First().Trim()};
+                datas = DropMenu.Text.Split(',').Distinct().ToList();
             }
-            else 
+            else
             {
-                datas = option.Split(',');
+                datas = new List<string>() {Menus[DropMenu.Text]};
             }
             List<Stock> stocks = new List<Stock>();
-            foreach (var data in datas)
+            foreach (string data in datas)
             {
-                string mark = data;
-                if (Stocks.TryGetValue(mark, out List<Stock> stock) && !stocks.Contains(stock.First()) && !stock.Contains(stocks.FirstOrDefault()))
+                if (Stocks.TryGetValue(data, out List<Stock> stock))
                 {
                     stocks.AddRange(stock);
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(mark))
+                    if (!string.IsNullOrEmpty(data))
                     {
-                        MessageBox.Show($"搜尋條件錯誤{mark}為無效或重複搜尋");
+                        MessageBox.Show($"搜尋條件錯誤{data}為無效或重複搜尋");
                     }
                 }
             }
@@ -211,7 +221,7 @@ namespace Readcsv2020LuAnn
                     stockList.Add(stock.StockID, new TotalStockDto(stock));
                 }
             }
-            var totalList = stockList.Values.ToList();
+            List<TotalStockDto> totalList = stockList.Values.ToList();
             foreach (var total in totalList)
             {
                 total.SettleTotal();
@@ -229,7 +239,7 @@ namespace Readcsv2020LuAnn
             Stopwatch.Restart();
             List<Stock> stocks = ReadDropMenu();
             Top50List.DataSource = new BindingList<Top50Dto>(GetTop50(stocks));
-            TextDisplay.Text += $"{Environment.NewLine}Top50 產生時間 :{EndStopwatch()}";
+            TextDisplay.Text = $"{TextDisplay.Text}{Environment.NewLine}Top50 產生時間 :{EndStopwatch()}";
         }
 
         /// <summary>
@@ -242,7 +252,7 @@ namespace Readcsv2020LuAnn
             Dictionary<string, Top50Dto> result = new Dictionary<string, Top50Dto>();
             List<Top50Dto> result50 = new List<Top50Dto>();
             string stockID = stocks.First().StockID;
-            foreach (var stock in stocks)
+            foreach (Stock stock in stocks)
             {
                 if (stockID != stock.StockID)
                 {
@@ -293,7 +303,7 @@ namespace Readcsv2020LuAnn
         public string EndStopwatch()
         {
             Stopwatch.Stop();
-            return Stopwatch.Elapsed.ToString(@"hh\:mm\:ss\:fff");
+            return Stopwatch.Elapsed.ToString(TIME_FORMAT);
         }
     }
 }
