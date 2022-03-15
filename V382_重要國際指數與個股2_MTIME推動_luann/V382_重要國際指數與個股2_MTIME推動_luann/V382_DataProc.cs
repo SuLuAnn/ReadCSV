@@ -48,13 +48,15 @@ namespace V382_重要國際指數與個股2_MTIME推動_luann
         public DataResult GetProc(ProgramSetting ps)
         {
             string cycle = ps.DateRange.FirstOrDefault();
-            string message = $"CMID: {ps.CMenuID} Task編號:{ps.ProcSerialNumber.ToString()} 週期:{cycle} 樣本:{string.Join(",", ps.Samples)}";
+            string message = $"CMID: {ps.CMenuID} Task編號:{ps.ProcSerialNumber.ToString()} 週期:{cycle} 樣本:{string.Join(",", ps.Samples)}{Environment.NewLine}";
             using (StreamWriter writer = new StreamWriter(PATH, true))
             {
                 writer.WriteLine(message);
             }
-            DataResult result = new DataResult();
-            result.Success = true;
+            DataResult result = new DataResult
+            {
+                Success = true
+            };
             return result;
         }
     }

@@ -21,7 +21,6 @@ namespace P382_DownloadExtension
     [ExportMetadata("ContainsInternetOperation", false)]//註明是否有額外存取網路資源的操作
     public class SourceID_382604 : ITaskExtension
     {
-        int a = 4;
         /// <summary>
         /// 排除錯誤下載結果、提供下載器需要處理的下載資訊
         /// </summary>
@@ -62,7 +61,6 @@ namespace P382_DownloadExtension
         /// <returns>子任務的WebSourceData</returns>
         public List<WebSourceData> GetList(List<WebSourceData> webSourceDataPrototypeList, string cycleRange, string samples, string extraParameter, List<WebSourceData> parentList = null)
         {
-            a--;
             List<WebSourceData> webSourceDatas = new List<WebSourceData>();
             //預設為今年
             List<int> cycleList = GetCycles(cycleRange, out string errorMessage);

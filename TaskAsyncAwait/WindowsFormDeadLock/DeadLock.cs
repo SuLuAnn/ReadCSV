@@ -46,7 +46,17 @@ namespace WindowsFormDeadLock
 
         private  void Dead1_Click(object sender, EventArgs e)
         {
-            textBox1.Text = GetJsonAsync("https://www.google.com.tw/").Result;
+            textBox1.Text = GetStringAsync().Result;
+        }
+
+        private async Task<string> GetStringAsync()
+        {
+            return await _httpClient.GetStringAsync("https://www.google.com").ConfigureAwait(false);
+        }
+        static HttpClient _httpClient = new HttpClient();
+        private void button1_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = GetStringAsync().Result;
         }
 
         private async void Dead2_Click_1(object sender, EventArgs e)
@@ -57,9 +67,9 @@ namespace WindowsFormDeadLock
         private void Dead3_Click(object sender, EventArgs e)
         {
             //從當前的同步環境取得工作排程器
-            var uiSynchronizationContext = TaskScheduler.FromCurrentSynchronizationContext();
-            var result = GetJsonAsync("https://www.google.com.tw/");
-           result.ContinueWith(task => textBox1.Text =  task.Result, uiSynchronizationContext);
+            var synchronizationContext = TaskScheduler.FromCurrentSynchronizationContext();
+            var result = GetStringAsync();
+           result.ContinueWith(task => textBox1.Text =  task.Result, synchronizationContext);
         }
 
         private void Dead4_Click(object sender, EventArgs e)

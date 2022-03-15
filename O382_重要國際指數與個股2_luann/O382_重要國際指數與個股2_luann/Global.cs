@@ -22,9 +22,14 @@ namespace O382_重要國際指數與個股2_luann
         public const string STOCK_ID = "代號";
 
         /// <summary>
-        /// [StockDB].[dbo].[重要國際指數與個股2_luann] 的欄位名稱 SourceID
+        /// [StockDB].[dbo].[重要國際指數與個股2_優先權_luann] 的欄位名稱 SourceID
         /// </summary>
         public const string SOURCE_ID = "SourceID";
+
+        /// <summary>
+        ///  [StockDB].[dbo].[重要國際指數與個股2_luann] 的欄位名稱 ColumnSourceID
+        /// </summary>
+        public const string COLUMN_SOURCE_ID = "ColumnSourceID";
 
         /// <summary>
         /// [StockDB].[dbo].[重要國際指數與個股2_luann] 的欄位名稱 開盤價
@@ -55,5 +60,20 @@ namespace O382_重要國際指數與個股2_luann
         /// [StockDB].[dbo].[重要國際指數與個股2_luann] 的欄位名稱 MTIME
         /// </summary>
         public const string MTIME = "MTIME";
+
+        /// <summary>
+        /// [StockDB].[dbo].[重要國際指數與個股2_luann] 的欄位名稱 ColumnName
+        /// </summary>
+        public const string COLUMN_NAME = "ColumnName";
+
+        /// <summary>
+        ///  [StockDB].[dbo].[重要國際指數與個股2_luann] 的欄位名稱 Priority
+        /// </summary>
+        public const string PRIORITY = "Priority";
+
+        /// <summary>
+        /// 同為decimal的欄位，在新增及更新時會做相同的事
+        /// </summary>
+        public static readonly string[] PRICE_COLUMN_NAMES = new string[] { OPEN_PRICE, HIGHEST_PRICE, LOWEST_PRICE, CLOSE_PRICE };
     }
 }

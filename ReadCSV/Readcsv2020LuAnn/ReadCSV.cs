@@ -41,6 +41,11 @@ namespace Readcsv2020LuAnn
         private const string TIME_FORMAT = @"hh\:mm\:ss\:fff";
 
         /// <summary>
+        /// 
+        /// </summary>
+        private const char COMMA = ',';
+
+        /// <summary>
         /// ReadCSV建構子，初始化Stocks和Stopwatch
         /// </summary>
         public ReadCSV()
@@ -90,7 +95,7 @@ namespace Readcsv2020LuAnn
                 streamReader.ReadLine();
                 while (!streamReader.EndOfStream)
                 {
-                    string[] datas = streamReader.ReadLine().Split(',');
+                    string[] datas = streamReader.ReadLine().Split(COMMA);
                     stocks.Add(new Stock(datas));
                 }
             }

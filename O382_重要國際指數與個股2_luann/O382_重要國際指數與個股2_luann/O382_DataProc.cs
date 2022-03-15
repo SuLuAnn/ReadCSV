@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static O382_重要國際指數與個股2_luann.Global;
 
@@ -48,11 +49,10 @@ namespace O382_重要國際指數與個股2_luann
         {
             string cycle = ps.DateRange.First();
             string connectString = DB.GetSysDataSetting("上端程式", ps.SysDataDB, "連線字串");
-            DataTable targetTable = GetTargetTable(connectString, cycle);
-            Dictionary<int, int> priorityTable = GetPriorityTable(connectString, ps.CMenuID);
+            DataTable targetTable = GetTargetTable(connectString, cycle, ps.ProgramName);
+            Dictionary<string, Dictionary<string, int>> priorityTable = GetPriorityTable(connectString, ps.CMenuID);
             DateTime ctime = DateTime.Now;
             int mtime = DB.GetMTime();
-            string[] columnNames = new string[] {OPEN_PRICE, HIGHEST_PRICE, LOWEST_PRICE, CLOSE_PRICE };
             
             foreach (SourceInfo source in ps.RunSourceInfo)
             {
@@ -61,33 +61,30 @@ namespace O382_重要國際指數與個股2_luann
                 foreach (string sample in sampleList)
                 {
                     ParseResult parseResult = source.GetResult(cycle, sample);
+                    if (parseResult == null)
+                    {
+                        continue;
+                    }
                     DataRow targetRow = targetTable.Rows.Find(new object[] {cycle, sample});
+                    
                     if (targetRow == null)
                     {
                         targetRow = targetTable.NewRow();
-                        targetRow[DATE] = cycle;
-                        targetRow[STOCK_ID] = sample;
-                        targetRow[SOURCE_ID] = source.SourceID;
-                        targetRow[CTIME] = ctime;
-                        targetRow[MTIME] = mtime;
-                        AddTargetTable(parseResult, targetRow, columnNames);
-                        targetTable.Rows.Add(targetRow);
+                        targetRow.ItemArray = new object[] { cycle, sample, null, null, null, null, null, ctime, mtime };
+                        AddTargetTable(parseResult, targetRow, source.SourceID, targetTable);
                     }
                     else
                     {
-                        int targetSource = targetRow.Field<int>(SOURCE_ID);
-                        //如果進來source的優先權大於原本source或source是原本的source則判斷是否更新
-                        if (source.SourceID == targetSource || priorityTable[source.SourceID] > priorityTable[targetSource])
-                        {
-                            UpdateTargetTable(parseResult, targetRow, columnNames, mtime, source.SourceID);
-                        }
+                        UpdateTargetTable(parseResult, targetRow, mtime, source.SourceID.ToString(), priorityTable);
                     }
                 }
             }
 
-            DataResult result = new DataResult();
-            result.Success = true;
-            result.dtData = targetTable;
+            DataResult result = new DataResult
+            {
+                Success = true,
+                dtData = targetTable.GetChanges()
+            };
 
             return result;
         }
@@ -126,9 +123,9 @@ namespace O382_重要國際指數與個股2_luann
         /// <param name="connectString">連線字串</param>
         /// <param name="cycle">週期</param>
         /// <returns>目標資料表</returns>
-        private DataTable GetTargetTable(string connectString, string cycle)
+        private DataTable GetTargetTable(string connectString, string cycle, string tableName)
         {
-            string sqlCommand = $"SELECT * FROM [重要國際指數與個股2_luann] WHERE [日期] = '{cycle}'";
+            string sqlCommand = $"SELECT * FROM  {tableName} WHERE [日期] = '{cycle}'";
             return DB.DoQuerySQLWithSchema(sqlCommand, connectString);
         }
 
@@ -138,12 +135,14 @@ namespace O382_重要國際指數與個股2_luann
         /// <param name="connectString">連線字串</param>
         /// <param name="cmenuID">此次的CMenuID</param>
         /// <returns>Source與優先權的對應</returns>
-        private Dictionary<int, int> GetPriorityTable(string connectString, string cmenuID)
+        private Dictionary<string, Dictionary<string, int>> GetPriorityTable(string connectString, string cmenuID)
         {
-            string sqlCommand = $"SELECT [SourceID],[Priority] FROM [StockDB].[dbo].[重要國際指數與個股2_優先權_luann] WHERE [CmenuID] = '{cmenuID}'";
+            string sqlCommand = $"SELECT [SourceID],[{COLUMN_NAME}],[{PRIORITY}] FROM [StockDB].[dbo].[重要國際指數與個股2_優先權_luann] WHERE [CmenuID] = '{cmenuID}'";
             return DB.DoQuerySQLWithSchema(sqlCommand, connectString).AsEnumerable()
-                                                                                                                                       .ToDictionary(row => row.Field<int>(SOURCE_ID),
-                                                                                                                                                                 row => row.Field<int>("Priority"));
+                                                                                                                                        .GroupBy(row => row.Field<string>(COLUMN_NAME))
+                                                                                                                                        .ToDictionary(source => source.Key,
+                                                                                                                                                                 source => source.ToDictionary(row => row.Field<int>(SOURCE_ID).ToString(),
+                                                                                                                                                                                                                            row => row.Field<int>(PRIORITY)));
         }
 
         /// <summary>
@@ -151,15 +150,24 @@ namespace O382_重要國際指數與個股2_luann
         /// </summary>
         /// <param name="parseResult">解析完的原始資料</param>
         /// <param name="row">要被新增資料的列</param>
-        /// <param name="columnNames">要新增資料的欄位名稱</param>
-        private void AddTargetTable(ParseResult parseResult, DataRow row, string[] columnNames)
+        /// <param name="sourceID">sourceID</param>
+        /// <param name="targetTable">目標資料表</param>
+        private void AddTargetTable(ParseResult parseResult, DataRow row, int sourceID, DataTable targetTable)
         {
-            foreach (string column in columnNames)
+            List<string> containPriceColumn = new List<string>();
+            foreach (string column in PRICE_COLUMN_NAMES)
             {
                 if (decimal.TryParse(parseResult.GetValue(column), out decimal price))
                 {
                     row[column] = price;
+                    containPriceColumn.Add($"{column}:{sourceID}");
                 }
+            }
+            //如果資料 開盤價,收盤價,最高價,最低價都不存在，不新增這個資料列
+            if (containPriceColumn.Count() != 0)
+            {
+                row[COLUMN_SOURCE_ID] = string.Join(",", containPriceColumn);
+                targetTable.Rows.Add(row);
             }
         }
 
@@ -168,26 +176,40 @@ namespace O382_重要國際指數與個股2_luann
         /// </summary>
         /// <param name="parseResult">解析完的原始資料</param>
         /// <param name="targetRow">要被更新資料的列</param>
-        /// <param name="columnNames">要更新資料的欄位名稱</param>
-        /// <param name="mtime">MTIME</param>
-        /// <param name="sourceID">SourceID</param>
-        private void UpdateTargetTable(ParseResult parseResult, DataRow targetRow, string[] columnNames, int mtime, int sourceID)
+        /// <param name="mtime">更新時間</param>
+        /// <param name="parseSourceID">SourceID</param>
+        /// <param name="priorityTable">Source與優先權的對應</param>
+        private void UpdateTargetTable(ParseResult parseResult, DataRow targetRow, int mtime, string parseSourceID, Dictionary<string, Dictionary<string, int>> priorityTable)
         {
-            foreach (string column in columnNames)
+            bool isChange = false;
+
+            foreach (string column in PRICE_COLUMN_NAMES)
             {
-                if (decimal.TryParse(parseResult.GetValue(column), out decimal price))
+                string pattern = $@"{column}:(?<SourceID>\d+)";
+                string columnSourceID = targetRow.Field<string>(COLUMN_SOURCE_ID);
+                string targetSourceID = Regex.Match(columnSourceID, pattern).Groups[SOURCE_ID].Value;
+                if ((string.IsNullOrEmpty(targetSourceID) || targetSourceID == parseSourceID || priorityTable[column][targetSourceID] < priorityTable[column][parseSourceID]) && decimal.TryParse(parseResult.GetValue(column), out decimal price))
                 {
+                    if (string.IsNullOrEmpty(targetSourceID))
+                    {
+                        targetRow[COLUMN_SOURCE_ID] = $"{columnSourceID},{column}:{parseSourceID}";
+                        isChange = true;
+                    }
+                    else if (targetSourceID != parseSourceID)
+                    {
+                        targetRow[COLUMN_SOURCE_ID] = Regex.Replace(columnSourceID, pattern, $"{column}:{parseSourceID}");
+                        isChange = true;
+                    }
                     if (!targetRow[column].Equals(price))
                     {
                         targetRow[column] = price;
-                        targetRow[MTIME] = mtime;
+                        isChange = true;
                     }
                 }
             }
 
-            if (sourceID != targetRow.Field<int>(SOURCE_ID))
+            if (isChange)
             {
-                targetRow[SOURCE_ID] = sourceID;
                 targetRow[MTIME] = mtime;
             }
         }

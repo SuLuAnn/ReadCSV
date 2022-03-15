@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,7 +17,14 @@ namespace TestTask
     {
         public Form1()
         {
+            //string aaa = File.ReadAllText(@"\\Srv14\201原始資料存檔\中文新聞來源\美股\新浪\內文\2021\1.htm").Replace("\r\n", string.Empty);
+
             InitializeComponent();
+            object a =new string[] {"aa", "bb" };
+            string[] aa = (string[])a;
+            string A = "京城銀行,EPS";
+            Regex regex = new Regex(@"(?<StockId>[^,]+)");
+            var matchCollection = regex.Matches(A);
         }
 
         private void button1_Click(object sender, EventArgs e)
